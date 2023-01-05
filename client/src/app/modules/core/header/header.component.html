@@ -1,0 +1,220 @@
+<header class="top-header top-header-bg">
+    <div class="container">
+        <div class="top-inner-bg">
+            <div class="row align-items-center">
+                <div class="col-lg-3 col-md-4">
+                    <div class="header-left">
+                        <p>Welcome To Balance Dyte Health!</p>
+                    </div>
+                </div>
+                <div class="col-lg-9 col-md-8">
+                    <div class="header-right d-flex align-items-center">
+                        <div class="header-item">
+                            <ul>
+                                <li class="title">Follow us :</li>
+                                <li>
+                                    <a href="https://www.facebook.com/" target="_blank">
+                                        <i class='bx bxl-facebook'></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.instagram.com/" target="_blank">
+                                        <i class='bx bxl-instagram'></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://twitter.com/" target="_blank">
+                                        <i class='bx bxl-twitter'></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.youtube.com/" target="_blank">
+                                        <i class='bx bxl-youtube'></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="header-item">
+                            <a  class="cart-top-btn cart-top-btn-two">
+                                <i class='bx bx-shopping-bag'></i>
+                                <span>0</span>
+                            </a>
+                        </div>
+                        <div class="header-item">
+                            <div class="header-language dropdown language-option">
+                                <button class="dropdown-toggle" type="button" id="language1" data-bs-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                    <i class='bx bx-world'></i>
+                                    <span class="lang-name"></span>
+                                </button>
+                                <div class="dropdown-menu language-dropdown-menu" aria-labelledby="language1">
+                                    <a class="dropdown-item" href="#">
+                                        <img src="assets/images/uk.png" alt="flag">
+                                        English
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <img src="assets/images/china.png" alt="flag">
+                                        简体中文
+                                    </a>
+                                    <a class="dropdown-item" href="#">
+                                        <img src="assets/images/uae.png" alt="flag">
+                                        العربيّة
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
+<div class="navbar-area">
+    <div class="mobile-responsive-nav">
+        <div class="container">
+            <div class="mobile-responsive-menu">
+                <div class="logo">
+                    <a routerLink="" (click)="scrollTop()">
+                        <h4 class="logo-one">Balance Dyte</h4>
+                        <h4 class="logo-two">Balance Dyte</h4>
+                        <!-- <img src="assets/images/logo.png" class="logo-one" alt="Logo">
+                        <img src="assets/images/logo-white.png" class="logo-two" alt="Logo"> -->
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="desktop-nav desktop-nav-one nav-area">
+        <div class="container">
+            <nav class="navbar navbar-expand-md navbar-light ">
+                <a class="navbar-brand" routerLink="" (click)="scrollTop()">
+                    <h2 class="logo-one">Balance Dyte</h2>
+                        <h2 class="logo-two">Balance Dyte</h2>
+                    <!-- <img src="assets/images/logo.png" class="logo-one" alt="Logo">
+                    <img src="assets/images/logo-white.png" class="logo-two" alt="Logo"> -->
+                </a>
+                <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
+                    <ul class="navbar-nav m-auto">
+                        <li class="nav-item">
+                            <a routerLink="/" (click)="scrollTop()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
+                                Home
+                            </a>
+                            
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="about" (click)="scrollTop()" routerLinkActive="active" class="nav-link">
+                                About
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                Account
+                                <i class='bx bx-chevron-down'></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link">Shop</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">Cart</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">Checkout</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">Wishlist</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">Shop Details</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                Services
+                                <i class='bx bx-chevron-down'></i>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link">
+                                        Services Style One
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">
+                                        Services Style Two
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link">
+                                        Service Details
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="privacy-policy" (click)="scrollTop()" routerLinkActive="active" class="nav-link">
+                                Privacy Policy
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a routerLink="contact" (click)="scrollTop()" routerLinkActive="active" class="nav-link">
+                                Contact Us
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="others-options d-flex align-items-center">
+                        <div class="optional-item">
+                            <div class="search-btn">
+                                <a class="#" href="#searchmodal" data-bs-toggle="modal" data-bs-target="#searchmodal">
+                                    <i class='bx bx-search'></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="optional-item">
+                            <a class="default-btn two" routerLink="diet-plans" routerLinkActive="active" (click)="scrollTop()" [routerLinkActiveOptions]="{exact:true}">Diet Plans</a>
+                        </div>
+                    </div>
+                    <div class="mobile-nav">
+                        <div class="mobile-other d-flex align-items-center">
+                            <div class="optional-item">
+                                <div class="search-btn">
+                                    <a class="#" href="#searchmodal" data-bs-toggle="modal"
+                                        data-bs-target="#searchmodal">
+                                        <i class='bx bx-search'></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="optional-item">
+                                <a class="default-btn two">Appointment</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade fade-scale searchmodal" id="searchmodal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-bs-dismiss="modal">
+                    <i class='bx bx-x'></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="modal-search-form">
+                    <input type="search" class="search-field" placeholder="Search...">
+                    <button type="submit"><i class='bx bx-search-alt'></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
