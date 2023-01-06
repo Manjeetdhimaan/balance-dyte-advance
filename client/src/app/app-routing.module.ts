@@ -8,6 +8,10 @@ const routes: Routes = [
     data: { animation: 'openClosePage' }
   },
   {
+    path: 'user', loadChildren: () => import('./modules/register/register.module').then(m => m.RegisterModule),
+    data: { animation: 'openClosePage' }
+  },
+  {
     path: 'not-found', component: PageNotFoundComponent, data: {title: 'Page Not Found'}
   },
   {

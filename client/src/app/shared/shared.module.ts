@@ -1,10 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PricingPlanComponent } from './components/resusable-components/pricing-plan/pricing-plan.component';
 import { RouterModule } from '@angular/router';
 
-
-
+import { PricingPlanComponent } from './components/resusable-components/pricing-plan/pricing-plan.component';
 
 @NgModule({
   declarations: [
