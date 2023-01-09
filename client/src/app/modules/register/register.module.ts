@@ -7,6 +7,7 @@ import { UserLoginComponent } from './components/user-login/user-login.component
 import { UserSignUpComponent } from './components/user-sign-up/user-sign-up.component';
 import { RequestResetComponent } from './components/reset-password/request-reset/request-reset.component';
 import { ResponseResetComponent } from './components/reset-password/response-reset/response-reset.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,9 @@ import { ResponseResetComponent } from './components/reset-password/response-res
   ],
   imports: [
     CommonModule,
-    RegisterRoutingModule
+    RegisterRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class RegisterModule { }

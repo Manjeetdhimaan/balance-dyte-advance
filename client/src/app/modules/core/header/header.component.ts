@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserApiService } from 'src/app/shared/services/user-api.service';
 
 @Component({
   selector: 'app-header',
@@ -8,8 +9,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
 
-  constructor(private router: Router) {
-
+  constructor(private router: Router, private userApiService: UserApiService) {
   }
 
   scrollTop() {
@@ -18,5 +18,14 @@ export class HeaderComponent {
       behavior: 'auto'
     });
     // this.router.navigate([route])
+  }
+
+  isLoggedIn() {
+    return this.userApiService.isLoggedIn();
+  }
+
+  onLogOut() {
+    this.userApiService.deleteToken();
+    this.router.navigate(['/diet-plans/advance-plan']);
   }
 }

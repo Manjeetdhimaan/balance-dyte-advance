@@ -4,7 +4,7 @@ export interface PricingPlan {
     planName: string;
     inclusions: any[];
     selectPlanBtnName: string;
-    planRouterLink: string;
+    planUrlLink: string;
   }
   
   export interface UserList {

@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
         trim: true
     },
     age: {
-        type: Number,
+        type: String,
         trim: true,
         required: [true, 'Please mention your age']
     },
@@ -116,15 +116,17 @@ userSchema.methods.verifyPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
 };
 
+const LOCAL_JWT_SECRET = 'secret123@123#123';
+const LOCAL_JWT_EXP = '1112m';
+
 userSchema.methods.generateJwt = function () {
     return jwt.sign({
             _id: this._id
         },
-        process.env.JWT_SECRET, {
-            expiresIn: process.env.JWT_EXP
+        process.env.JWT_SECRET || LOCAL_JWT_SECRET, {
+            expiresIn: process.env.JWT_EXP || LOCAL_JWT_EXP
         });
 }
-
 
 
 mongoose.model('User', userSchema);

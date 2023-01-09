@@ -10,3 +10,4 @@ mongoose.connect(process.env.MONGODB_URI || LOCAL_MONGODB_URI, { useUnifiedTopol
 });
 
 require('./user.model');
+require('./orders.model');

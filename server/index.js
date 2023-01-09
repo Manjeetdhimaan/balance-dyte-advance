@@ -2,7 +2,7 @@
 // require('dotenv').config();
 
 require('./models/db.model');
-// require('./config/passportConfig');
+require('./config/passportConfig');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -12,7 +12,7 @@ const path = require('path');
 const compression = require('compression')
 
 const PORT = process.env.PORT || 3200;
-// const rtsIndex = require('./routes/index.router');
+const userRoutes = require('./routes/user.routes');
 // const rtsAdmin = require('./routes/admin.router');
 
 const app = express();
@@ -23,7 +23,7 @@ app.use(compression())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
-// app.use('/api', rtsIndex);
+app.use('/api/user', userRoutes);
 // app.use('/api/admin', rtsAdmin);
 
 // error handler

@@ -20,11 +20,11 @@
                 <div class="user-all-form">
                     <div class="contact-form">
                         <h3>Log In</h3>
-                        <form id="contactForm">
+                        <form [formGroup]="loginForm" (ngSubmit)="submitForm()" id="contactForm">
                             <div class="row">
                                 <div class="col-lg-12 ">
                                     <div class="form-group">
-                                        <input type="text" name="name"
+                                        <input type="text" formControlName="email" 
                                             id="name"
                                             class="form-control"
                                             required data-error="Please
@@ -37,7 +37,7 @@
                                     <div class="form-group">
                                         <input class="form-control"
                                             type="password"
-                                            name="password"
+                                            formControlName="password" 
                                             placeholder="Password">
                                     </div>
                                 </div>

@@ -22,7 +22,7 @@ export class PricingPlanService {
         '24/7 Support'
       ],
       selectPlanBtnName: 'Purchase',
-      planRouterLink: '/diet-plans/starter-plan'
+      planUrlLink: '/diet-plans/starter-plan'
     },
 
     {
@@ -38,7 +38,7 @@ export class PricingPlanService {
         '24/7 Support'
       ],
       selectPlanBtnName: 'Purchase',
-      planRouterLink: '/diet-plans/advance-plan'
+      planUrlLink: '/diet-plans/advance-plan'
     },
 
     {
@@ -54,7 +54,7 @@ export class PricingPlanService {
         '24/7 Support'
       ],
       selectPlanBtnName: 'Purchase',
-      planRouterLink: '/diet-plans/premium-plan'
+      planUrlLink: '/diet-plans/premium-plan'
     }
   ]
 

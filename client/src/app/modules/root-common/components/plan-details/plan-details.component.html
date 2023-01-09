@@ -18,70 +18,96 @@
         <form [formGroup]="userForm" (ngSubmit)="submitForm()">
             <div class="row">
                 <div class="col-lg-8">
-                    <div class="checkout-user">
+                    <div class="checkout-user" *ngIf="!isLoggedIn()">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Returning customer? <a routerLink="/user/login"
                                 (click)="scrollTop()">Click here to Log In</a></span>
                     </div>
+                    <div class="checkout-user" *ngIf="isLoggedIn()"
+                        style="background-color: #72ae44; color: #ffffff">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span style="color: #ffffff;">These are default details
+                            from your account. You can change these details now
+                            before placing order.</span>
+                    </div>
 
                     <div class="billing-details">
-                        <h3 class="title">Billing details</h3>
+                        <h3 class="title">Plan details</h3>
                         <div class="row">
-                            <div class="col-lg-6 col-md-6">
+                            <div class="col-lg-6 col-md-6"
+                                *ngIf="!isLoggedIn()">
                                 <div class="form-group">
                                     <label>Full Name <span class="required">*</span></label>
-                                    <input formControlName="fullName" type="text" class="form-control">
+                                    <input formControlName="fullName"
+                                        type="text" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6">
+                            <div class="col-lg-6 col-md-6"
+                                *ngIf="!isLoggedIn()">
                                 <div class="form-group">
                                     <label>Email Address <span class="required">*</span></label>
-                                    <input formControlName="email" type="email" class="form-control">
+                                    <input formControlName="email" type="email"
+                                        class="form-control">
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6">
+                            <div class="col-lg-6 col-md-6"
+                                *ngIf="!isLoggedIn()">
                                 <div class="form-group">
                                     <label>Set Password <span class="required">*</span></label>
-                                    <input formControlName="password" type="password" class="form-control">
+                                    <input formControlName="password"
+                                        type="password" class="form-control">
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6">
+                            <div class="col-lg-6 col-md-6"
+                                *ngIf="!isLoggedIn()">
                                 <div class="form-group">
-                                    <label>Confirm Password <span class="required">*</span></label>
-                                    <input formControlName="confirmPassword" type="password" class="form-control">
+                                    <label>Confirm Password <span
+                                            class="required">*</span></label>
+                                    <input formControlName="confirmPassword"
+                                        type="password" class="form-control">
+                                </div>
+                                <div
+                                    *ngIf="userForm.controls['confirmPassword'].errors?.['confirmedValidator']
+                                    ||
+                                    userForm.controls['password'].errors?.['confirmedValidator']">
+                                    Passwords do not match
                                 </div>
                             </div>
-                            <div *ngIf="userForm.controls['confirmPassword'].errors?.['confirmedValidator'] || userForm.controls['password'].errors?.['confirmedValidator']">
-                                Passwords do not match
-                            </div>
-                            <div class="col-lg-6 col-md-6">
+                            <div class="col-lg-6 col-md-6"
+                                *ngIf="!isLoggedIn()">
                                 <div class="form-group">
                                     <label>Phone <span class="required">*</span></label>
-                                    <input formControlName="phone" type="text" class="form-control">
+                                    <input formControlName="phone" type="text"
+                                        class="form-control">
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6">
+                            <div [ngClass]="{'col-lg-6 col-md-6': !isLoggedIn(),
+                                'col-lg-12 col-md-6' : isLoggedIn() }">
                                 <div class="form-group">
                                     <label>Your Goals <span class="required">*</span></label>
-                                    <input formControlName="goals" type="text" class="form-control">
+                                    <input formControlName="goals" type="text"
+                                        class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="form-group">
                                     <label>Age <span class="required">*</span></label>
-                                    <input formControlName="age" type="text" class="form-control">
+                                    <input formControlName="age" type="text"
+                                        class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="form-group">
                                     <label>Height <span class="required">*</span></label>
-                                    <input formControlName="height" type="text" class="form-control">
+                                    <input formControlName="height" type="text"
+                                        class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
                                 <div class="form-group">
                                     <label>Weight <span class="required">*</span></label>
-                                    <input formControlName="weight" type="text" class="form-control">
+                                    <input formControlName="weight" type="text"
+                                        class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
@@ -112,11 +138,13 @@
                                         <div class="payment-method">
                                             <p class="radio-group">
                                                 <input type="radio"
-                                                    id="lose" value="Lose" formControlName="loseOrGain">
+                                                    id="lose" value="Lose"
+                                                    formControlName="loseOrGain">
                                                 <label
                                                     for="lose">Lose</label>
                                                 <input type="radio"
-                                                    id="gain" value="Gain" formControlName="loseOrGain">
+                                                    id="gain" value="Gain"
+                                                    formControlName="loseOrGain">
                                                 <label
                                                     for="gain">Gain</label>
                                             </p>
@@ -131,11 +159,13 @@
                                         <div class="payment-method">
                                             <p class="radio-group">
                                                 <input type="radio"
-                                                    id="yes" value="Yes" formControlName="goingGym">
+                                                    id="yes" value="Yes"
+                                                    formControlName="goingGym">
                                                 <label
                                                     for="yes">Yes</label>
                                                 <input type="radio"
-                                                    id="no" value="No" formControlName="goingGym">
+                                                    id="no" value="No"
+                                                    formControlName="goingGym">
                                                 <label
                                                     for="no">No</label>
                                             </p>
@@ -150,15 +180,19 @@
                                         <div class="payment-method">
                                             <p class="radio-group">
                                                 <input type="radio"
-                                                    id="veg" value="Veg" formControlName="foodType">
+                                                    id="veg" value="Veg"
+                                                    formControlName="foodType">
                                                 <label
                                                     for="veg">Veg</label>
                                                 <input type="radio"
-                                                    id="non-veg" value="Non-Veg" formControlName="foodType">
+                                                    id="non-veg" value="Non-Veg"
+                                                    formControlName="foodType">
                                                 <label
                                                     for="non-veg">Non-veg</label>
                                                 <input type="radio"
-                                                    id="just-egg" value="Just-egg" formControlName="foodType">
+                                                    id="just-egg"
+                                                    value="Just-egg"
+                                                    formControlName="foodType">
                                                 <label
                                                     for="just-egg">Just egg</label>
                                             </p>
@@ -169,13 +203,15 @@
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>Any Medical Issue</label>
-                                    <input formControlName="medicalIssue" type="text" class="form-control">
+                                    <input formControlName="medicalIssue"
+                                        type="text" class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="form-group">
                                     <label>Any food you are having allergy with?</label>
-                                    <input formControlName="foodAllergy" type="text" class="form-control">
+                                    <input formControlName="foodAllergy"
+                                        type="text" class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -184,18 +220,34 @@
 
                 <div class="col-lg-4">
                     <div class="billing-sildbar pl-20">
+                        <div class="payment-box">
+                            <div class="payment-method">
+                                <h3>Select Plan Duration</h3>
+                                <p>
+                                    <input type="radio"
+                                        id="3" value="3"
+                                        formControlName="planDuration">
+                                    <label for="3">3 months</label>
+                                </p>
+                                <p>
+                                    <input type="radio"
+                                        id="6" value="6"
+                                        formControlName="planDuration">
+                                    <label for="6">6 months</label>
+                                </p>
+                                <p>
+                                    <input type="radio"
+                                    id="9" value="9"
+                                    formControlName="planDuration">
+                                    <label for="9">9 months</label>
+                                </p>
+                            </div>
+                           
+
+                        </div>
                         <div class="billing-totals">
                             <h3>Checkout Summary</h3>
-                            <!-- <div class="shop-desc pl-20">
-                            <div class="input-count-area">
-                                <h3>Plan Duration(in months)</h3>
-                                <div class="input-counter">
-                                    <span class="minus-btn"><i class='bx bx-minus'></i></span>
-                                    <input type="text" min="1" value="1">
-                                    <span class="plus-btn"><i class='bx bx-plus'></i></span>
-                                </div>
-                            </div>
-                        </div> -->
+                           
                             <ul>
                                 <li>Plan Price <span>{{
                                         selectedPricingPlan['planPrice'] |
@@ -204,44 +256,14 @@
                             <li>Coupon <span>$20.00</span></li>
                             <li>Total <span><b>$160.00</b></span></li> -->
                                 <li>Payable Total <span><b>{{
-                                            selectedPricingPlan['planPrice'] |
+                                    onGetPayableTotal() |
                                             currency:"INR":"symbol":'2.0' }}</b></span></li>
                             </ul>
-                        </div>
-                        <div class="payment-box">
-                            <div class="payment-method">
-                                <h3>Payment Method</h3>
-                                <p>
-                                    <input type="radio"
-                                        id="direct-bank-transfer"
-                                        name="radio-group" checked>
-                                    <label for="direct-bank-transfer">Direct
-                                        Bank
-                                        Transfer</label>
-                                    Make your payment directly into our bank
-                                    account. Please use your Order
-                                    ID as the payment reference. Your order will
-                                    not
-                                    be shipped until the funds have
-                                    cleared in our account.
-                                </p>
-                                <p>
-                                    <input type="radio" id="paypal"
-                                        name="radio-group">
-                                    <label for="paypal">PayPal</label>
-                                </p>
-                                <p>
-                                    <input type="radio" id="cash-on-delivery"
-                                        name="radio-group">
-                                    <label for="cash-on-delivery">Cash On
-                                        Delivery</label>
-                                </p>
-                            </div>
                             <button class="default-btn" type="submit">
-                                    Place to Order
+                                Place to Order
                             </button>
-                           
                         </div>
+                       
                     </div>
                 </div>
             </div>
