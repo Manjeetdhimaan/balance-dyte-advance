@@ -101,3 +101,16 @@ p [type=radio]:not(:checked)+label::after {
     text-align: center;
     width: 100%;
 }
+
+.error-msg {
+    color: red;
+}
+
+.form-group.has-error input {
+    background: rgba(255,64,64,.2);
+    border: 1px solid #FF4040;
+}
+
+.m-top {
+    margin-bottom: 1.6rem;
+}

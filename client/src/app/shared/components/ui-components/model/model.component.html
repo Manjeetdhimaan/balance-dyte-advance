@@ -1,0 +1,72 @@
+    <div class="custom-backdrop" id="custom-backdrop" (click)="closeModal()">
+    
+    </div>
+    <div class="custom-modal" id="custom-modal">
+        <div >
+            <div class="user-area pt-100 pb-70" style="width: 100%">
+                <div class="container" >
+                    <div class="row align-items-center">
+                        <div class="col-lg-12">
+                            <div class="user-all-form">
+                                <div class="contact-form">
+                                    <p class="model-text">An account with this email exists already, if this account belongs to you, Log In here!</p>
+                                    <form [formGroup]="loginForm" (ngSubmit)="submitForm()" id="contactForm">
+                                        <div class="row">
+                                            <div class="col-lg-12 ">
+                                                <div class="form-group">
+                                                    <input type="text" formControlName="email" 
+                                                        id="name"
+                                                        class="form-control"
+                                                        placeholder="Email Address">
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="form-group">
+                                                    <input class="form-control"
+                                                        type="password"
+                                                        formControlName="password" 
+                                                        placeholder="Password">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 form-condition">
+                                                <div class="agree-label">
+                                                    <input type="checkbox"
+                                                        id="chb1">
+                                                    <label for="chb1">
+                                                        Remember Me <a
+                                                            class="forget"
+                                                            routerLink="/user/reset-password" (click)="scrollTop()">Forgot
+                                                            My Password?</a>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 error-div-outer" *ngIf="serverErrorMessages">
+                                                <div class="form-group">
+                                                    <div class="error-div-inner">
+                                                        {{serverErrorMessages}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-md-12
+                                                text-center">
+                                                <button type="submit"
+                                                    class="default-btn">
+                                                    Log In Now
+                                                </button>
+                                            </div>
+                                            <div class="col-12">
+                                                <p class="account-desc text-center">
+                                                    Or place order with different email 
+                                                    <a (click)="closeModal();scrollToDiv()">here</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-spinner *ngIf="isLoading"></app-spinner>

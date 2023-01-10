@@ -11,7 +11,9 @@ const passport = require('passport');
 const path = require('path');
 const compression = require('compression')
 
-const PORT = process.env.PORT || 3200;
+const localENV = require('./localenv/localenv');
+
+const PORT = process.env.PORT || localENV.LOCAL_PORT;
 const userRoutes = require('./routes/user.routes');
 // const rtsAdmin = require('./routes/admin.router');
 

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const mongoose = require('mongoose');
 // const Admin = mongoose.model('Admin');
-const LOCAL_JWT_SECRET = 'secret123@123#123';
+const localENV = require('../localenv/localenv');
 
 module.exports.verifyJwtToken = (req, res, next) => {
     let token;
@@ -14,7 +14,7 @@ module.exports.verifyJwtToken = (req, res, next) => {
             message: 'No token provided.'
         });
     else {
-        jwt.verify(token, process.env.JWT_SECRET || LOCAL_JWT_SECRET,
+        jwt.verify(token, process.env.JWT_SECRET || localENV.LOCAL_JWT_SECRET,
             (err, decoded) => {
                 if (err)
                     return res.status(500).send({

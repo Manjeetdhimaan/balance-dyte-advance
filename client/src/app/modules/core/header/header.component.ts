@@ -26,6 +26,6 @@ export class HeaderComponent {
 
   onLogOut() {
     this.userApiService.deleteToken();
-    this.router.navigate(['/diet-plans/advance-plan']);
+    this.router.navigate(['/user/login']);
   }
 }

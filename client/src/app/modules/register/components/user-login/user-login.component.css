@@ -1,0 +1,13 @@
+.error-div-outer {
+    margin: auto;
+    text-align: center;
+}
+
+.error-div-inner {
+    margin: auto;
+    color: #d32a2a;
+    background: rgba(255,64,64,.2);
+    border: 1px solid #FF4040;
+    text-align: center;
+    padding: 10px;
+}

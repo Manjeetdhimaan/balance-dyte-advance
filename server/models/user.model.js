@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const localENV = require('../localenv/localenv');
+
 const userSchema = new mongoose.Schema({
     fullName: {
         type: String,
@@ -116,15 +118,13 @@ userSchema.methods.verifyPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
 };
 
-const LOCAL_JWT_SECRET = 'secret123@123#123';
-const LOCAL_JWT_EXP = '1112m';
 
 userSchema.methods.generateJwt = function () {
     return jwt.sign({
             _id: this._id
         },
-        process.env.JWT_SECRET || LOCAL_JWT_SECRET, {
-            expiresIn: process.env.JWT_EXP || LOCAL_JWT_EXP
+        process.env.JWT_SECRET || localENV.LOCAL_JWT_SECRET, {
+            expiresIn: process.env.JWT_EXP || localENV.LOCAL_JWT_EXP
         });
 }
 

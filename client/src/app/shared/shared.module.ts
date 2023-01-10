@@ -3,17 +3,26 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { PricingPlanComponent } from './components/resusable-components/pricing-plan/pricing-plan.component';
+import { ModelComponent } from './components/ui-components/model/model.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SpinnerComponent } from './components/ui-components/spinner/spinner.component';
 
 @NgModule({
   declarations: [
-    PricingPlanComponent
+    PricingPlanComponent,
+    ModelComponent,
+    SpinnerComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
-    PricingPlanComponent
+    PricingPlanComponent,
+    ModelComponent,
+    SpinnerComponent
   ]
 })
 export class SharedModule { }

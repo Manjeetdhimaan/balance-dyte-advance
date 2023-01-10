@@ -27,10 +27,7 @@
                                         <input type="text" formControlName="email" 
                                             id="name"
                                             class="form-control"
-                                            required data-error="Please
-                                            enter your Username or
-                                            Email" placeholder="Username
-                                            or Email">
+                                            placeholder="Email Address">
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -41,6 +38,13 @@
                                             placeholder="Password">
                                     </div>
                                 </div>
+                                <div class="col-12 error-div-outer" *ngIf="serverErrorMessages">
+                                    <div class="form-group">
+                                        <div class="error-div-inner">
+                                            {{serverErrorMessages}}</div>
+                                    </div>
+                                </div>
+                                
                                 <div class="col-lg-12 form-condition">
                                     <div class="agree-label">
                                         <input type="checkbox"
@@ -55,9 +59,9 @@
                                 </div>
                                 <div class="col-lg-12 col-md-12
                                     text-center">
-                                    <button type="submit"
+                                    <button type="submit" [disabled]="isLoading"
                                         class="default-btn">
-                                        Log In Now
+                                        {{ !isLoading ? 'Log In Now' : 'Logging in...'}}
                                     </button>
                                 </div>
                                 <div class="col-12">
@@ -74,3 +78,4 @@
         </div>
     </div>
 </div>
+<app-spinner *ngIf="isLoading"></app-spinner>

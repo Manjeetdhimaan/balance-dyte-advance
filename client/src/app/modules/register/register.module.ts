@@ -8,6 +8,7 @@ import { UserSignUpComponent } from './components/user-sign-up/user-sign-up.comp
 import { RequestResetComponent } from './components/reset-password/request-reset/request-reset.component';
 import { ResponseResetComponent } from './components/reset-password/response-reset/response-reset.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     RegisterRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class RegisterModule { }

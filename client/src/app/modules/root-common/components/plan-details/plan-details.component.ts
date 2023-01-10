@@ -5,6 +5,7 @@ import { RegexEnum } from 'src/app/shared/common/constants/regex';
 import { PricingPlan } from 'src/app/shared/models/pricing-plan/pricing-plan.model';
 
 import { PricingPlanService } from 'src/app/shared/services/pricing-plan.service';
+import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
 import { UserApiService } from 'src/app/shared/services/user-api.service';
 
 @Component({
@@ -13,13 +14,19 @@ import { UserApiService } from 'src/app/shared/services/user-api.service';
   styleUrls: ['./plan-details.component.css']
 })
 export class PlanDetailsComponent implements OnInit {
-  constructor(private pricingPlanService: PricingPlanService, private router: Router, private fb: FormBuilder, private userApiService: UserApiService) { }
+  constructor(private pricingPlanService: PricingPlanService, private router: Router, private fb: FormBuilder, private userApiService: UserApiService, private toastMessageService: ToasTMessageService) { }
+
+
   pricingPlans: PricingPlan[] = [];
   selectedPricingPlan: PricingPlan;
-  userForm: FormGroup
-
+  userForm: FormGroup;
+  submitted: boolean;
+  isLoading: boolean = false;
+  isConflictErr: boolean = false;
+  emailInputValue: string;
+  popModel = document.getElementById("pop-model") as HTMLElement;
   ngOnInit(): void {
-   
+    this.popModel.style.display = "none";
     // user form
     this.userForm = this.fb.group({
       fullName: new FormControl('', [Validators.required]),
@@ -38,8 +45,12 @@ export class PlanDetailsComponent implements OnInit {
       planDuration: new FormControl('3', [Validators.required]),
       medicalIssue: new FormControl(''),
       foodAllergy: new FormControl(''),
+
       // image: new FormControl('', {asyncValidators: mimeType})
-    });
+    },
+      {
+        validator: this.ConfirmedValidator('password', 'confirmPassword'),
+      });
 
     // getting pricing plans
     this.pricingPlans = this.pricingPlanService.getPricingPlans();
@@ -67,8 +78,8 @@ export class PlanDetailsComponent implements OnInit {
       this.userForm.controls['confirmPassword'].clearValidators();
       this.userForm.controls['phone'].setErrors(null);
       this.userForm.controls['phone'].clearValidators();
-      
-      this.userApiService.getUserProfile().subscribe((res:any) => {
+
+      this.userApiService.getUserProfile().subscribe((res: any) => {
         this.userForm.patchValue({
           goals: res['user']['goals'],
           age: res['user']['age'],
@@ -85,8 +96,11 @@ export class PlanDetailsComponent implements OnInit {
     }
   }
 
-  ConfirmedValidator(controlName: string, matchingControlName: string) {
+  get f() {
+    return this.userForm.controls;
+  }
 
+  ConfirmedValidator(controlName: string, matchingControlName: string) {
     return (formGroup: FormGroup) => {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
@@ -106,11 +120,13 @@ export class PlanDetailsComponent implements OnInit {
 
 
   submitForm() {
+    this.submitted = true;
     if (!this.userForm.valid) {
       console.log('form not valid');
       return;
     }
     if (!this.isLoggedIn()) {
+      this.isLoading = true;
       const formBody = {
         fullName: this.userForm.value.fullName,
         email: this.userForm.value.email,
@@ -133,8 +149,8 @@ export class PlanDetailsComponent implements OnInit {
         planDuration: this.userForm.value.planDuration + ' months',
       }
       this.userApiService.postRegisterUser(formBody).subscribe((res: any) => {
-        console.log('resRegister', res);
-        // this.toastMessageService.success(res['message']);
+        this.isLoading = false;
+        this.toastMessageService.success(res['message']);
         // if (this.router.url.split('?')[0] === '/admin/employees') {
         //   this.router.navigate(['admin/employees/leaves/check']);
         // }
@@ -142,7 +158,19 @@ export class PlanDetailsComponent implements OnInit {
         //   this.router.navigate(['admin/employees']);
         // }
       }, error => {
-        console.log("error", error);
+        if (error.status === 409 || error.statusText === "Conflict") {
+          // this.toastMessageService.error(error.error.message);
+          this.isConflictErr = true;
+          this.emailInputValue = this.userForm.value.email;
+          this.isLoading = false;
+          if (this.isConflictErr) {
+            this.popModel.style.display = "block";
+          }
+        }
+        else {
+          this.isLoading = false;
+          this.toastMessageService.info(error.error.message);
+        }
         // if (Array.isArray(error.error)) {
         //   this.toastMessageService.info(error.error[0]);
         //   if (this.router.url.split('?')[0] === '/admin/employees') {
@@ -164,7 +192,7 @@ export class PlanDetailsComponent implements OnInit {
       })
     }
     else {
-      console.log('user is logged in');
+      this.isLoading = true;
       const formBody = {
         goals: this.userForm.value.goals,
         email: this.userForm.value.email,
@@ -189,8 +217,8 @@ export class PlanDetailsComponent implements OnInit {
       //     planName: 'req.body.planName',
       //     planDuration: 'req.body.planDuration',
       this.userApiService.postPlaceOrder(formBody).subscribe((res: any) => {
-        console.log('resLogin', res);
-        // this.toastMessageService.success(res['message']);
+        this.isLoading = false;
+        this.toastMessageService.success(res['message']);
         // if (this.router.url.split('?')[0] === '/admin/employees') {
         //   this.router.navigate(['admin/employees/leaves/check']);
         // }
@@ -198,7 +226,9 @@ export class PlanDetailsComponent implements OnInit {
         //   this.router.navigate(['admin/employees']);
         // }
       }, error => {
+        this.isLoading = false;
         console.log("error", error);
+
         // if (Array.isArray(error.error)) {
         //   this.toastMessageService.info(error.error[0]);
         //   if (this.router.url.split('?')[0] === '/admin/employees') {
@@ -223,7 +253,7 @@ export class PlanDetailsComponent implements OnInit {
   }
 
   onGetPayableTotal() {
-    return +(this.selectedPricingPlan['planPrice']) * +(this.userForm.value.planDuration/3)
+    return +(this.selectedPricingPlan['planPrice']) * +(this.userForm.value.planDuration / 3)
   }
 
   scrollTop() {
@@ -236,5 +266,21 @@ export class PlanDetailsComponent implements OnInit {
   isLoggedIn() {
     return this.userApiService.isLoggedIn();
   }
+
+  showModel() {
+    const backdrop = document.getElementById('custom-backdrop') as HTMLElement;
+    backdrop.style.visibility = 'visible';
+    backdrop.style.opacity = '1';
+    const model = document.getElementById('custom-modal') as HTMLElement;
+    model.style.transform = 'translateY(0)'
+  }
+  // closeModel() {
+  //   const backdrop = document.getElementById('custom-backdrop') as HTMLElement;
+  //   backdrop.style.visibility = 'hidden';
+  //   backdrop.style.opacity = '0';
+  //   const model = document.getElementById('custom-modal') as HTMLElement;
+  //   model.style.transform = 'translateY(100vh)';
+  //   console.log('clicked')
+  // }
 
 }

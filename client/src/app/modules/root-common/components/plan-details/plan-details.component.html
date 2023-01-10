@@ -16,7 +16,7 @@
 <section class="checkout-area pt-100 pb-70">
     <div class="container">
         <form [formGroup]="userForm" (ngSubmit)="submitForm()">
-            <div class="row">
+            <div class="row" id="plan-details">
                 <div class="col-lg-8">
                     <div class="checkout-user" *ngIf="!isLoggedIn()">
                         <i class="fas fa-sign-out-alt"></i>
@@ -36,86 +36,241 @@
                         <div class="row">
                             <div class="col-lg-6 col-md-6"
                                 *ngIf="!isLoggedIn()">
-                                <div class="form-group">
+                                <div class="form-group"
+                                    [ngClass]="(f['fullName'].invalid &&
+                                    ((f['fullName'].dirty ||
+                                    f['fullName'].touched))) ||
+                                    (f['fullName'].hasError('required') &&
+                                    submitted)?'has-error':''">
                                     <label>Full Name <span class="required">*</span></label>
                                     <input formControlName="fullName"
                                         type="text" class="form-control">
+                                    <div class="error-msg"
+                                        *ngIf="(f['fullName'].hasError('required')
+                                        && f['fullName'].touched) ||
+                                        (f['fullName'].hasError('required') &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Please
+                                        enter your name.
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6"
                                 *ngIf="!isLoggedIn()">
-                                <div class="form-group">
+                                <div class="form-group"
+                                    [ngClass]="(f['email'].invalid &&
+                                    ((f['email'].dirty || f['email'].touched)))
+                                    || (f['email'].hasError('required') &&
+                                    submitted)?'has-error':''">
                                     <label>Email Address <span class="required">*</span></label>
                                     <input formControlName="email" type="email"
                                         class="form-control">
+                                    <div class="error-msg"
+                                        *ngIf="(f['email'].hasError('required')
+                                        && f['email'].touched) ||
+                                        (f['email'].hasError('required') &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Please
+                                        enter email address.
+                                    </div>
+                                    <div class="error-msg"
+                                        *ngIf="(f['email'].hasError('pattern')
+                                        && f['email'].touched) ||
+                                        (f['email'].hasError('pattern') &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Please
+                                        enter a valid email address.
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6"
                                 *ngIf="!isLoggedIn()">
-                                <div class="form-group">
+                                <div class="form-group"
+                                    [ngClass]="(f['password'].invalid &&
+                                    ((f['password'].dirty ||
+                                    f['password'].touched))) ||
+                                    (f['password'].hasError('required') &&
+                                    submitted)?'has-error':''">
                                     <label>Set Password <span class="required">*</span></label>
                                     <input formControlName="password"
                                         type="password" class="form-control">
+                                    <div class="error-msg"
+                                        *ngIf="(f['password'].hasError('required')
+                                        && f['password'].touched) ||
+                                        (f['password'].hasError('required') &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Please
+                                        enter password.
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6"
                                 *ngIf="!isLoggedIn()">
-                                <div class="form-group">
+                                <div class="form-group"
+                                    [ngClass]="(f['confirmPassword'].invalid &&
+                                    ((f['confirmPassword'].dirty ||
+                                    f['confirmPassword'].touched))) ||
+                                    (f['confirmPassword'].hasError('required')
+                                    &&
+                                    submitted)?'has-error':''">
                                     <label>Confirm Password <span
                                             class="required">*</span></label>
                                     <input formControlName="confirmPassword"
                                         type="password" class="form-control">
+                                    <div class="error-msg"
+                                        *ngIf="(f['confirmPassword'].hasError('required')
+                                        && f['confirmPassword'].touched) ||
+                                        (f['confirmPassword'].hasError('required')
+                                        &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Please
+                                        confirm password.
+                                    </div>
+                                    <div class="error-msg"
+                                        *ngIf="f['confirmPassword'].hasError('confirmedValidator')
+                                        ||
+                                        f['password'].hasError('confirmedValidator')">
+                                        Passwords do not match
+                                    </div>
                                 </div>
-                                <div
-                                    *ngIf="userForm.controls['confirmPassword'].errors?.['confirmedValidator']
-                                    ||
-                                    userForm.controls['password'].errors?.['confirmedValidator']">
-                                    Passwords do not match
-                                </div>
+
                             </div>
                             <div class="col-lg-6 col-md-6"
                                 *ngIf="!isLoggedIn()">
-                                <div class="form-group">
+                                <div class="form-group"
+                                    [ngClass]="(f['phone'].invalid &&
+                                    ((f['phone'].dirty ||
+                                    f['phone'].touched))) ||
+                                    (f['phone'].hasError('required') &&
+                                    submitted)?'has-error':''">
                                     <label>Phone <span class="required">*</span></label>
                                     <input formControlName="phone" type="text"
                                         class="form-control">
+                                    <div class="error-msg"
+                                        *ngIf="(f['phone'].hasError('required')
+                                        && f['phone'].touched) ||
+                                        (f['phone'].hasError('required') &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Please
+                                        enter your phone number.
+                                    </div>
                                 </div>
                             </div>
                             <div [ngClass]="{'col-lg-6 col-md-6': !isLoggedIn(),
                                 'col-lg-12 col-md-6' : isLoggedIn() }">
-                                <div class="form-group">
+                                <div class="form-group"
+                                    [ngClass]="(f['goals'].invalid &&
+                                    ((f['goals'].dirty ||
+                                    f['goals'].touched))) ||
+                                    (f['goals'].hasError('required')
+                                    &&
+                                    submitted)?'has-error':''">
                                     <label>Your Goals <span class="required">*</span></label>
                                     <input formControlName="goals" type="text"
                                         class="form-control">
+                                    <div class="error-msg"
+                                        *ngIf="(f['goals'].hasError('required')
+                                        && f['goals'].touched) ||
+                                        (f['goals'].hasError('required') &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Please
+                                        enter your fitness goals.
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
-                                <div class="form-group">
-                                    <label>Age <span class="required">*</span></label>
+                                <div class="form-group"
+                                    [ngClass]="(f['age'].invalid &&
+                                    ((f['age'].dirty ||
+                                    f['age'].touched))) ||
+                                    (f['age'].hasError('required')
+                                    &&
+                                    submitted)?'has-error':''">
+                                    <label>Age (in years) <span
+                                            class="required">*</span></label>
                                     <input formControlName="age" type="text"
                                         class="form-control">
+                                    <div class="error-msg"
+                                        *ngIf="(f['age'].hasError('required')
+                                        && f['age'].touched) ||
+                                        (f['age'].hasError('required') &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Enter
+                                        your age in years.
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
-                                <div class="form-group">
+                                <div class="form-group"
+                                    [ngClass]="(f['height'].invalid &&
+                                    ((f['height'].dirty ||
+                                    f['height'].touched))) ||
+                                    (f['height'].hasError('required')
+                                    &&
+                                    submitted)?'has-error':''">
                                     <label>Height <span class="required">*</span></label>
                                     <input formControlName="height" type="text"
                                         class="form-control">
+                                    <div class="error-msg"
+                                        *ngIf="(f['height'].hasError('required')
+                                        && f['height'].touched) ||
+                                        (f['height'].hasError('required') &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Height
+                                        in feet inches.
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-6">
-                                <div class="form-group">
+                                <div class="form-group"
+                                    [ngClass]="(f['weight'].invalid &&
+                                    ((f['weight'].dirty ||
+                                    f['weight'].touched))) ||
+                                    (f['weight'].hasError('required')
+                                    &&
+                                    submitted)?'has-error':''">
                                     <label>Weight <span class="required">*</span></label>
                                     <input formControlName="weight" type="text"
                                         class="form-control">
+                                    <div class="error-msg"
+                                        *ngIf="(f['weight'].hasError('required')
+                                        && f['weight'].touched) ||
+                                        (f['weight'].hasError('required') &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Enter
+                                        weight in Kg(s).
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="form-group radio-group">
+                            <div class="col-lg-6 col-md-6" [ngClass]="(f['goingGym'].invalid &&
+                            ((f['goingGym'].dirty ||
+                            f['goingGym'].touched))) ||
+                            (f['goingGym'].hasError('required')
+                            &&
+                            submitted)?'m-top':''">
+                                <div class="form-group radio-group"
+                                    [ngClass]="(f['gender'].invalid &&
+                                    ((f['gender'].dirty ||
+                                    f['gender'].touched))) ||
+                                    (f['gender'].hasError('required')
+                                    &&
+                                    submitted)?'has-error m-top':''">
                                     <label>Gender <span class="required">*</span></label>
-                                    <div class="payment-box">
+                                    <div class="payment-box"
+                                        style="margin-bottom: 10px;">
                                         <div class="payment-method">
-                                            <p class="radio-group">
+                                            <p style="margin-bottom: 0;"
+                                                class="radio-group">
                                                 <input type="radio"
                                                     id="male" value="Male"
                                                     formControlName="gender">
@@ -127,16 +282,40 @@
                                                 <label
                                                     for="female">Female</label>
                                             </p>
+                                            <span style="margin-bottom: 10px;"
+                                                class="error-msg"
+                                                *ngIf="(f['gender'].hasError('required')
+                                                && f['gender'].touched) ||
+                                                (f['gender'].hasError('required')
+                                                &&
+                                                submitted)">
+                                                <i aria-hidden="true"
+                                                    class="fa
+                                                    fa-exclamation-triangle"></i>
+                                                Please select your gender.
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="form-group radio-group">
+                            <div class="col-lg-6 col-md-6" [ngClass]="(f['goingGym'].invalid &&
+                            ((f['goingGym'].dirty ||
+                            f['goingGym'].touched))) ||
+                            (f['goingGym'].hasError('required')
+                            &&
+                            submitted)?'m-top':''">
+                                <div class="form-group radio-group"
+                                    [ngClass]="(f['loseOrGain'].invalid &&
+                                    ((f['loseOrGain'].dirty ||
+                                    f['loseOrGain'].touched))) ||
+                                    (f['loseOrGain'].hasError('required')
+                                    &&
+                                    submitted)?'has-error m-top':''">
                                     <label>Lose/Gain <span class="required">*</span></label>
                                     <div class="payment-box">
                                         <div class="payment-method">
-                                            <p class="radio-group">
+                                            <p class="radio-group"
+                                                style="margin-bottom: 0;">
                                                 <input type="radio"
                                                     id="lose" value="Lose"
                                                     formControlName="loseOrGain">
@@ -148,16 +327,39 @@
                                                 <label
                                                     for="gain">Gain</label>
                                             </p>
+                                            <span style="margin-bottom: 10px"
+                                                class="error-msg"
+                                                *ngIf="(f['loseOrGain'].hasError('required')
+                                                && f['loseOrGain'].touched) ||
+                                                (f['loseOrGain'].hasError('required')
+                                                &&
+                                                submitted)">
+                                                <i aria-hidden="true"
+                                                    class="fa
+                                                    fa-exclamation-triangle"></i>
+                                                Select weight goal(Lose/gain).
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="form-group radio-group">
+                            <div class="col-lg-6 col-md-6" [ngClass]="(f['goingGym'].invalid &&
+                            ((f['goingGym'].dirty ||
+                            f['goingGym'].touched))) ||
+                            (f['goingGym'].hasError('required')
+                            &&
+                            submitted)?'m-top':''">
+                                <div class="form-group radio-group"
+                                    [ngClass]="(f['goingGym'].invalid &&
+                                    ((f['goingGym'].dirty ||
+                                    f['goingGym'].touched))) ||
+                                    (f['goingGym'].hasError('required')
+                                    &&
+                                    submitted)?'has-error m-top':''">
                                     <label>Going gym? <span class="required">*</span></label>
                                     <div class="payment-box">
                                         <div class="payment-method">
-                                            <p class="radio-group">
+                                            <p style="margin-bottom: 0;" class="radio-group">
                                                 <input type="radio"
                                                     id="yes" value="Yes"
                                                     formControlName="goingGym">
@@ -169,16 +371,39 @@
                                                 <label
                                                     for="no">No</label>
                                             </p>
+                                            <span style="margin-bottom:
+                                            10px" class="error-msg"
+                                            *ngIf="(f['goingGym'].hasError('required')
+                                            && f['goingGym'].touched) ||
+                                            (f['goingGym'].hasError('required')
+                                            &&
+                                            submitted)">
+                                            <i aria-hidden="true"
+                                                class="fa
+                                                fa-exclamation-triangle"></i>
+                                            Are you going to gym?(Yes/No).
+                                        </span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6">
-                                <div class="form-group radio-group">
+                            <div class="col-lg-6 col-md-6" [ngClass]="(f['goingGym'].invalid &&
+                            ((f['goingGym'].dirty ||
+                            f['goingGym'].touched))) ||
+                            (f['goingGym'].hasError('required')
+                            &&
+                            submitted)?'m-top':''">
+                                <div class="form-group radio-group" 
+                                [ngClass]="(f['foodType'].invalid &&
+                                    ((f['foodType'].dirty ||
+                                    f['foodType'].touched))) ||
+                                    (f['foodType'].hasError('required')
+                                    &&
+                                    submitted)?'has-error m-top':''">
                                     <label>Food Type <span class="required">*</span></label>
                                     <div class="payment-box">
                                         <div class="payment-method">
-                                            <p class="radio-group">
+                                            <p style="margin-bottom: 0;" class="radio-group">
                                                 <input type="radio"
                                                     id="veg" value="Veg"
                                                     formControlName="foodType">
@@ -196,6 +421,18 @@
                                                 <label
                                                     for="just-egg">Just egg</label>
                                             </p>
+                                            <span style="margin-bottom:
+                                            10px" class="error-msg"
+                                            *ngIf="(f['foodType'].hasError('required')
+                                            && f['foodType'].touched) ||
+                                            (f['foodType'].hasError('required')
+                                            &&
+                                            submitted)">
+                                            <i aria-hidden="true"
+                                                class="fa
+                                                fa-exclamation-triangle"></i>
+                                            Please select your food type.
+                                        </span>
                                         </div>
                                     </div>
                                 </div>
@@ -237,17 +474,17 @@
                                 </p>
                                 <p>
                                     <input type="radio"
-                                    id="9" value="9"
-                                    formControlName="planDuration">
+                                        id="9" value="9"
+                                        formControlName="planDuration">
                                     <label for="9">9 months</label>
                                 </p>
                             </div>
-                           
+
 
                         </div>
                         <div class="billing-totals">
                             <h3>Checkout Summary</h3>
-                           
+
                             <ul>
                                 <li>Plan Price <span>{{
                                         selectedPricingPlan['planPrice'] |
@@ -256,11 +493,11 @@
                             <li>Coupon <span>$20.00</span></li>
                             <li>Total <span><b>$160.00</b></span></li> -->
                                 <li>Payable Total <span><b>{{
-                                    onGetPayableTotal() |
+                                            onGetPayableTotal() |
                                             currency:"INR":"symbol":'2.0' }}</b></span></li>
                             </ul>
                             <button class="default-btn" type="submit">
-                                Place to Order
+                               {{ !isLoading ? 'Place to Order' : 'Placing Order...' }}
                             </button>
                         </div>
                        
@@ -270,3 +507,7 @@
         </form>
     </div>
 </section>
+<app-spinner *ngIf="isLoading"></app-spinner>
+<div id="pop-model">
+    <app-model [emailInputValue]="emailInputValue"></app-model>
+</div>

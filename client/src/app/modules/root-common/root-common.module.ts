@@ -12,8 +12,6 @@ import { ContactComponent } from './components/contact/contact.component';
 import { PlanDetailsComponent } from './components/plan-details/plan-details.component';
 import { DietPlansComponent } from './components/diet-plans/diet-plans.component';
 
-
-
 @NgModule({
   declarations: [
     HomeComponent,
@@ -29,6 +27,7 @@ import { DietPlansComponent } from './components/diet-plans/diet-plans.component
     SharedModule,
     ReactiveFormsModule,
     FormsModule
-  ]
+  ],
+  providers: []
 })
 export class RootCommonModule { }
