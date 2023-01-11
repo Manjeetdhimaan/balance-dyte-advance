@@ -11,7 +11,7 @@ import { UserApiService } from 'src/app/shared/services/user-api.service';
 export class ModelComponent {
 
   @Input() component:any;
-  @Input() emailInputValue:string = '';
+  @Input() emailInputValue:string;
 
   constructor(private formBuilder: FormBuilder, private userApiService: UserApiService, private router: Router) {}
 
@@ -22,7 +22,7 @@ export class ModelComponent {
   serverErrorMessages: string;
 
   ngOnInit(): void {
-    console.log(this.emailInputValue)
+    console.log(this.emailInputValue);
     this.loginForm = this.formBuilder.group({
       email: [this.emailInputValue, [Validators.required]],
       password: ['', [Validators.required]]
@@ -39,7 +39,6 @@ export class ModelComponent {
       this.userApiService.postLogin(this.loginForm.value).subscribe(
         (res: any) => {
           this.isLoading = false;
-          localStorage.setItem('name', res['name']);
           this.userApiService.setToken(res['token']);
           this.scrollToDiv();
           this.closeModal();

@@ -7,5 +7,5 @@
  module.exports.LOCAL_PORT =  "3200" ;
  module.exports.LOCAL_MONGODB_URI =  "mongodb+srv://manjeetuser:manjeet@employee-database.dxtzx.mongodb.net/balance-dyte?retryWrites=true&w=majority" ;
  module.exports.LOCAL_JWT_SECRET =  "secret123@123#123" ;
- module.exports.LOCAL_JWT_EXP =  "2m" ;
+ module.exports.LOCAL_JWT_EXP =  "112m" ;
  module.exports.LOCAL_NODE_ENV =  "development" ;

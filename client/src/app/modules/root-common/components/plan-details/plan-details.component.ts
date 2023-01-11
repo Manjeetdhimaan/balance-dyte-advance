@@ -24,9 +24,8 @@ export class PlanDetailsComponent implements OnInit {
   isLoading: boolean = false;
   isConflictErr: boolean = false;
   emailInputValue: string;
-  popModel = document.getElementById("pop-model") as HTMLElement;
+  
   ngOnInit(): void {
-    this.popModel.style.display = "none";
     // user form
     this.userForm = this.fb.group({
       fullName: new FormControl('', [Validators.required]),
@@ -118,7 +117,6 @@ export class PlanDetailsComponent implements OnInit {
     };
   }
 
-
   submitForm() {
     this.submitted = true;
     if (!this.userForm.valid) {
@@ -151,20 +149,13 @@ export class PlanDetailsComponent implements OnInit {
       this.userApiService.postRegisterUser(formBody).subscribe((res: any) => {
         this.isLoading = false;
         this.toastMessageService.success(res['message']);
-        // if (this.router.url.split('?')[0] === '/admin/employees') {
-        //   this.router.navigate(['admin/employees/leaves/check']);
-        // }
-        // else {
-        //   this.router.navigate(['admin/employees']);
-        // }
       }, error => {
         if (error.status === 409 || error.statusText === "Conflict") {
-          // this.toastMessageService.error(error.error.message);
           this.isConflictErr = true;
           this.emailInputValue = this.userForm.value.email;
           this.isLoading = false;
           if (this.isConflictErr) {
-            this.popModel.style.display = "block";
+            this.showModel();
           }
         }
         else {
@@ -210,43 +201,13 @@ export class PlanDetailsComponent implements OnInit {
         planDuration: this.userForm.value.planDuration + ' months',
       }
 
-      // paymentStatus: 'Success',
-      // payableTotal: 'req.body.payableTotal',
-      // planPrice: 'req.body.planPrice',
-      // planDetails: {
-      //     planName: 'req.body.planName',
-      //     planDuration: 'req.body.planDuration',
       this.userApiService.postPlaceOrder(formBody).subscribe((res: any) => {
         this.isLoading = false;
         this.toastMessageService.success(res['message']);
-        // if (this.router.url.split('?')[0] === '/admin/employees') {
-        //   this.router.navigate(['admin/employees/leaves/check']);
-        // }
-        // else {
-        //   this.router.navigate(['admin/employees']);
-        // }
+
       }, error => {
         this.isLoading = false;
         console.log("error", error);
-
-        // if (Array.isArray(error.error)) {
-        //   this.toastMessageService.info(error.error[0]);
-        //   if (this.router.url.split('?')[0] === '/admin/employees') {
-        //     this.router.navigate(['admin/employees/leaves/check']);
-        //   }
-        //   else {
-        //     this.router.navigate(['admin/employees']);
-        //   }
-        // }
-        // else {
-        //   this.toastMessageService.info(error.error.message);
-        //   if (this.router.url.split('?')[0] === '/admin/employees') {
-        //     this.router.navigate(['admin/employees/leaves/check']);
-        //   }
-        //   else {
-        //     this.router.navigate(['admin/employees']);
-        //   }
-        // }
       })
     }
 

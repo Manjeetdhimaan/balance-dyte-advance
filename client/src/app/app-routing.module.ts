@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UserAuthGuard } from './shared/auth/user-auth.guard';
 import { PageNotFoundComponent } from './shared/components/ui-components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
@@ -10,6 +11,10 @@ const routes: Routes = [
   {
     path: 'user', loadChildren: () => import('./modules/register/register.module').then(m => m.RegisterModule),
     data: { animation: 'openClosePage' }
+  },
+  {
+    path: 'account', loadChildren: () => import('./modules/account-and-settings/account-and-settings.module').then(m => m.AccountAndSettingsModule),
+    data: { animation: 'openClosePage' }, canActivate: [UserAuthGuard]
   },
   {
     path: 'not-found', component: PageNotFoundComponent, data: {title: 'Page Not Found'}
