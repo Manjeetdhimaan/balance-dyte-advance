@@ -6,6 +6,7 @@ import { ChangePasswordComponent } from './components/settings/change-password/c
 import { EditProfileComponent } from './components/settings/edit-profile/edit-profile.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { OrdersComponent } from './components/orders/orders.component';
 
 
 
@@ -13,14 +14,15 @@ import { SharedModule } from 'src/app/shared/shared.module';
   declarations: [
     ProfileComponent,
     EditProfileComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
+    OrdersComponent
   ],
   imports: [
     CommonModule,
     AccountSettingsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
   ]
 })
 export class AccountAndSettingsModule { }

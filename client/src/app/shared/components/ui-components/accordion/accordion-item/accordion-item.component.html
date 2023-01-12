@@ -1,0 +1,11 @@
+<li class="accordion-item" (click)="toggle()">
+    <a class="accordion-title" [ngClass]="!showBody?'':'active'">
+        {{ title }}
+        <i [ngClass]="!showBody?'bx bx-plus':'bx bx-minus'"></i>
+    </a>    
+</li>
+<div [@smoothCollapse]="!showBody?'initial':'final'">
+    <div class="accordion-content show">
+        <ng-content ></ng-content>
+    </div>
+</div>

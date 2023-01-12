@@ -169,22 +169,142 @@ module.exports.authenticate = (req, res, next) => {
 
 module.exports.getUserProfile = (req, res, next) => {
     try {
-        User.findOne({
+         User.findOne({
                 _id: req._id
-            },
-            (err, user) => {
-                if (!user)
+            }).then(user => {
+                if (!user) {
                     return res.status(404).json({
                         status: false,
                         message: 'User record not found.'
                     });
-                else
+                }
+                else {
                     return res.status(200).json({
                         status: true,
                         user: user
                     });
+                }
+            }).catch(err => {
+                return next(err);
+            })
+    } catch (err) {
+        return next(err);
+    }
+}
+
+module.exports.patchUpdateUserProfile = (req, res, next) => {
+    try {
+        const id = req._id;
+        User.findOne({
+            _id: id
+        }, (err, foundedObject) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send();
+            } else {
+                if (!foundedObject) {
+                    res.status(404).send();
+                } else {
+                    if (req.body.fullName) {
+                        foundedObject.fullName = req.body.fullName;
+                    }
+                    if (req.body.service) {
+                        foundedObject.service = req.body.service;
+                    }
+                    if (req.body.email) {
+                        foundedObject.email = req.body.email;
+                    }
+                    if (req.body.password) {
+                        foundedObject.password = User.hashPassword(req.body.password);
+                    }
+                    if (req.body.bio || req.body.bio === "") {
+                        foundedObject.bio = req.body.bio;
+                    }
+                    if (req.body.phone) {
+                        foundedObject.phone = req.body.phone;
+                    }
+                    if (req.body.goals) {
+                        foundedObject.goals = req.body.goals;
+                    }
+                    if (req.body.age) {
+                        foundedObject.age = req.body.age;
+                    }
+                    if (req.body.height) {
+                        foundedObject.height = req.body.height;
+                    }
+                    if (req.body.weight) {
+                        foundedObject.weight = req.body.weight;
+                    }
+                    if (req.body.loseOrGain) {
+                        foundedObject.loseOrGain = req.body.loseOrGain;
+                    }
+                    if (req.body.goingGym) {
+                        foundedObject.goingGym = req.body.goingGym;
+                    }
+                    if (req.body.foodType) {
+                        foundedObject.foodType = req.body.foodType;
+                    }
+                    if (req.body.medicalIssue) {
+                        foundedObject.medicalIssue = req.body.medicalIssue;
+                    }
+                    if (req.body.foodAllergy) {
+                        foundedObject.foodAllergy = req.body.foodAllergy;
+                    }
+
+                    foundedObject.save((err, updatedObject) => {
+                        if (err) {
+                            res.status(500).send({
+                                message: err
+                            });
+                        } else {
+                            res.send({
+                                message: 'Profile Updated Successfully!',
+                                user: updatedObject
+                            })
+                        }
+                    })
+                }
             }
-        );
+        })
+    } catch (err) {
+        return next(err);
+    }
+}
+
+module.exports.getUserOrders = (req, res, next) => {
+    try {
+        User.findOne({
+                _id: req._id
+            }).then(user => {
+                if (!user) {
+                    return res.status(404).json({
+                        status: false,
+                        message: 'User record not found.'
+                    });
+                }
+                else {
+                    Order.find().then(orders => {
+                        if(!orders) {
+                            return res.status(404).json({
+                                status: false,
+                                message: 'No Orders found.'
+                            });
+                        }
+                        else {
+                            return res.status(200).json({
+                                status: true,
+                                orders: orders
+                            });
+                        }
+                    }).catch(err => {
+                        console.log(err)
+                        return next(err);
+                    })
+                }
+            }).catch(err => {
+                return next(err);
+            })
+        
     } catch (err) {
         return next(err);
     }

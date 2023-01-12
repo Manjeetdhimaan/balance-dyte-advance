@@ -28,6 +28,14 @@ export class UserApiService {
     return this.http.post(environment.apiBaseUrl + '/user/postPlaceOrder', order);
   }
 
+  postUpdateUserProfile(userBody:any) {
+    return this.http.patch(environment.apiBaseUrl + '/user/patchUpdateUserProfile', userBody);
+  }
+
+  getUserOrders() {
+    return this.http.get(environment.apiBaseUrl + '/user/getUserOrders');
+  }
+
   //Helper Methods
 
   setToken(token: string) {

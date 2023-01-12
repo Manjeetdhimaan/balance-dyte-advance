@@ -391,8 +391,13 @@
                                         type="text" class="form-control">
                                 </div>
                             </div>
+                            <button [disabled]="!userForm.valid || !userForm.dirty" class="default-btn" type="submit">
+                                {{ !isLoading ? 'Save changes' : 'Saving...' }}
+                            </button>
                         </div>
+                        
                     </div>
+                    
                 </div>
 
                 <div class="col-lg-4">
@@ -434,10 +439,10 @@
                                             onGetPayableTotal() |
                                             currency:"INR":"symbol":'2.0' }}</b></span></li> -->
                             </ul>
-                            <button class="default-btn" type="submit">
+                            <!-- <button class="default-btn" type="submit">
                                 {{ !isLoading ? 'Place to Order' : 'Placing
                                 Order...' }}
-                            </button>
+                            </button> -->
                         </div>
 
                     </div>

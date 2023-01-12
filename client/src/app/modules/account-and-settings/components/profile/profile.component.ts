@@ -20,11 +20,10 @@ export class ProfileComponent implements OnInit {
   emailInputValue: string;
   
   ngOnInit(): void {
+    this.isLoading = true;
     this.userForm = this.fb.group({
       fullName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.email)]),
-      password: new FormControl('', [Validators.required]),
-      confirmPassword: new FormControl('', [Validators.required]),
       phone: new FormControl('', [Validators.required]),
       age: new FormControl('', [Validators.required]),
       goals: new FormControl('', [Validators.required]),
@@ -58,6 +57,11 @@ export class ProfileComponent implements OnInit {
           medicalIssue: res['user']['medicalIssue'],
           foodAllergy: res['user']['foodAllergy']
         })
+        this.isLoading = false;
+      }, err => {
+        this.toastMessageService.error('An unknown error occured!');
+        this.isLoading = false;
+        console.log(err)
       })
     }
   }
@@ -66,94 +70,35 @@ export class ProfileComponent implements OnInit {
     return this.userForm.controls;
   }
 
-  ConfirmedValidator(controlName: string, matchingControlName: string) {
-    return (formGroup: FormGroup) => {
-      const control = formGroup.controls[controlName];
-      const matchingControl = formGroup.controls[matchingControlName];
-      if (
-        matchingControl.errors &&
-        !matchingControl.errors['confirmedValidator']
-      ) {
-        return;
-      }
-      if (control.value !== matchingControl.value) {
-        matchingControl.setErrors({ confirmedValidator: true });
-      } else {
-        matchingControl.setErrors(null);
-      }
-    };
-  }
-
   submitForm() {
-    this.submitted = true;
     if (!this.userForm.valid) {
-      console.log('form not valid');
+      console.log('Form not valid');
       return;
-    }
-    if (!this.isLoggedIn()) {
-      this.isLoading = true;
-      const formBody = {
-        fullName: this.userForm.value.fullName,
-        email: this.userForm.value.email,
-        password: this.userForm.value.password,
-        confirmPassword: this.userForm.value.confirmPassword,
-        phone: this.userForm.value.phone,
-        gender: this.userForm.value.gender,
-        goals: this.userForm.value.goals,
-        age: this.userForm.value.age,
-        height: this.userForm.value.height,
-        weight: this.userForm.value.weight,
-        loseOrGain: this.userForm.value.loseOrGain,
-        goingGym: this.userForm.value.goingGym,
-        foodType: this.userForm.value.foodType,
-        medicalIssue: this.userForm.value.medicalIssue,
-        foodAllergy: this.userForm.value.foodAllergy,
-        planDuration: this.userForm.value.planDuration + ' months',
-      }
-      this.userApiService.postRegisterUser(formBody).subscribe((res: any) => {
-        this.isLoading = false;
-        this.toastMessageService.success(res['message']);
-      }, error => {
-        if (error.status === 409 || error.statusText === "Conflict") {
-          this.isConflictErr = true;
-          this.emailInputValue = this.userForm.value.email;
-          this.isLoading = false;
-          if (this.isConflictErr) {
-            this.showModel();
-          }
-        }
-        else {
-          this.isLoading = false;
-          this.toastMessageService.info(error.error.message);
-        }
-      })
     }
     else {
       this.isLoading = true;
-      const formBody = {
-        goals: this.userForm.value.goals,
-        email: this.userForm.value.email,
-        age: this.userForm.value.age,
-        height: this.userForm.value.height,
-        weight: this.userForm.value.weight,
-        loseOrGain: this.userForm.value.loseOrGain,
-        goingGym: this.userForm.value.goingGym,
-        foodType: this.userForm.value.foodType,
-        medicalIssue: this.userForm.value.medicalIssue,
-        foodAllergy: this.userForm.value.foodAllergy,
-        planDuration: this.userForm.value.planDuration + ' months',
+      const formData = this.userForm.value;
+      try {
+        this.userApiService.postUpdateUserProfile(formData).subscribe((res: any) => {
+          // this.showSucessMessage = true;
+          this.toastMessageService.success(res['message']);
+          Object.keys( this.userForm.controls).forEach(key => {
+            this.userForm.controls[key].markAsPristine();
+           });
+          this.isLoading = false;
+        },
+          err => {
+            console.log(err);
+            this.toastMessageService.success(err['message']);
+            this.isLoading = false;
+          })
       }
-
-      this.userApiService.postPlaceOrder(formBody).subscribe((res: any) => {
+      catch {
+        this.toastMessageService.success('An unknown error occured!');
         this.isLoading = false;
-        this.toastMessageService.success(res['message']);
-
-      }, error => {
-        this.isLoading = false;
-        console.log("error", error);
-      })
+      }
     }
-
+   
   }
 
   scrollTop() {

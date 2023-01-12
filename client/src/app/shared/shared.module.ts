@@ -6,12 +6,16 @@ import { PricingPlanComponent } from './components/resusable-components/pricing-
 import { ModelComponent } from './components/ui-components/model/model.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SpinnerComponent } from './components/ui-components/spinner/spinner.component';
+import { AccordionComponent } from './components/ui-components/accordion/accordion.component';
+import { AccordionItemComponent } from './components/ui-components/accordion/accordion-item/accordion-item.component';
 
 @NgModule({
   declarations: [
     PricingPlanComponent,
     ModelComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    AccordionComponent,
+    AccordionItemComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +26,9 @@ import { SpinnerComponent } from './components/ui-components/spinner/spinner.com
   exports: [
     PricingPlanComponent,
     ModelComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    AccordionComponent,
+    AccordionItemComponent
   ]
 })
 export class SharedModule { }

@@ -83,3 +83,14 @@ p [type=radio]:not(:checked)+label::after {
 .m-top {
     margin-bottom: 1.6rem;
 }
+
+.save-btn {
+    float: right;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    pointer-events: all;
+    opacity: 0.5;
+  }
+

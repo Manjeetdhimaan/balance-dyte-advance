@@ -10,7 +10,7 @@ import { UserApiService } from 'src/app/shared/services/user-api.service';
   styleUrls: ['./user-login.component.css']
 })
 export class UserLoginComponent implements OnInit {
-  constructor(private formBuilder: FormBuilder, private userApiService: UserApiService, private router: Router, private toastMessageService: ToasTMessageService) {}
+  constructor(private formBuilder: FormBuilder, private userApiService: UserApiService, private router: Router, private toastMessageService: ToasTMessageService) { }
 
   loginForm: FormGroup;
   errMsg: String = '';
@@ -26,27 +26,32 @@ export class UserLoginComponent implements OnInit {
   }
 
   submitForm() {
-    this.serverErrorMessages= '';
+    this.serverErrorMessages = '';
     if (!this.loginForm.valid) {
       return;
     }
     else {
       this.isLoading = true;
-      this.userApiService.postLogin(this.loginForm.value).subscribe(
-        (res: any) => {
-          console.log(res);
-          this.userApiService.setToken(res['token']);
-          this.router.navigate([`/diet-plans`]);
-          this.scrollTop();
-          this.isLoading = false;
-        },
-        err => {
-          this.serverErrorMessages = err.error['message'];
-          this.isLoading = false;
-        }
-      );
+      try {
+        this.userApiService.postLogin(this.loginForm.value).subscribe(
+          (res: any) => {
+            this.userApiService.setToken(res['token']);
+            this.router.navigate([`/diet-plans`]);
+            this.scrollTop();
+            this.isLoading = false;
+          },
+          err => {
+            this.serverErrorMessages = err.error['message'];
+            this.isLoading = false;
+          }
+        );
+      }
+      catch {
+        this.toastMessageService.error('An unknown error occured! Please try again after sometime.')
+      }
+
     }
-   
+
   }
 
   scrollTop() {
