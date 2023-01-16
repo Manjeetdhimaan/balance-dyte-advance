@@ -13,13 +13,16 @@ export class OrdersComponent implements OnInit {
 
   isLoading: boolean = false;
 
+  orders: any[] = [];
+
   ngOnInit(): void {
     if (this.isLoggedIn()) {
       this.userApiService.getUserOrders().subscribe((res: any) => {
-        console.log(res)
+        console.log(res);
+        this.orders = res['orders'];
         this.isLoading = false;
       }, err => {
-        this.toastMessageService.error('An unknown error occured!');
+        this.toastMessageService.info(err['error']['message']);
         this.isLoading = false;
         console.log(err)
       })

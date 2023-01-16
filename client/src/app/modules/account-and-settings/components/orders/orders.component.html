@@ -12,133 +12,115 @@
         </div>
     </div>
 </div>
+<!-- <div class="col-lg-6">
+    <div class="faq-accordion">
+        <ul class="accordion">
+            <app-accordion>
+                <app-accordion-item title="
+                    01. How Do You Maintain Your Diet
+                    Routine Regularly?">
 
-<div class="faq-area pt-100 pb-70">
+                        <p>
+                            Lorem ipsum dolor sit amet,
+                            consetetur sadipscing elitr, sed
+                            diam nonumy eirmod, orem ipsum dolor
+                            sit amet, consetetur sadipscing
+                            elitr, sed diam
+                            Lorem ipsum dolor sit amet,
+                            consetetur sadipscing elitr.
+                        </p>
+                </app-accordion-item>
+            </app-accordion>
+        </ul>
+    </div>
+</div> -->
+
+<section class="cart-wraps-area pt-100 pb-70">
     <div class="container">
         <div class="row">
-            <div class="col-lg-6">
-                <div class="faq-accordion">
-                    <ul class="accordion">
-                        <app-accordion>
-                            <app-accordion-item title="
-                                01. How Do You Maintain Your Diet
-                                Routine Regularly?">
-
-                                    <p>
-                                        Lorem ipsum dolor sit amet,
-                                        consetetur sadipscing elitr, sed
-                                        diam nonumy eirmod, orem ipsum dolor
-                                        sit amet, consetetur sadipscing
-                                        elitr, sed diam
-                                        Lorem ipsum dolor sit amet,
-                                        consetetur sadipscing elitr.
-                                    </p>
-                            </app-accordion-item>
-                            <app-accordion-item title="
-                                01. How Do You Maintain Your Diet
-                                Routine Regularly?">
-                                    <p>
-                                        Lorem ipsum dolor sit amet,
-                                        consetetur sadipscing elitr, sed
-                                        diam nonumy eirmod, orem ipsum dolor
-                                        sit amet, consetetur sadipscing
-                                        elitr, sed diam
-                                        Lorem ipsum dolor sit amet,
-                                        consetetur sadipscing elitr.
-                                    </p>
-                            </app-accordion-item>
-                            <app-accordion-item title="
-                                01. How Do You Maintain Your Diet
-                                Routine Regularly?">
-                                    <p>
-                                        Lorem ipsum dolor sit amet,
-                                        consetetur sadipscing elitr, sed
-                                        diam nonumy eirmod, orem ipsum dolor
-                                        sit amet, consetetur sadipscing
-                                        elitr, sed diam
-                                        Lorem ipsum dolor sit amet,
-                                        consetetur sadipscing elitr.
-                                    </p>
-                            </app-accordion-item>
-                            <app-accordion-item title="
-                                01. How Do You Maintain Your Diet
-                                Routine Regularly?">
-
-                                    <p>
-                                        Lorem ipsum dolor sit amet,
-                                        consetetur sadipscing elitr, sed
-                                        diam nonumy eirmod, orem ipsum dolor
-                                        sit amet, consetetur sadipscing
-                                        elitr, sed diam
-                                        Lorem ipsum dolor sit amet,
-                                        consetetur sadipscing elitr.
-                                    </p>
-                            </app-accordion-item>
-                        </app-accordion>
-                    </ul>
-                </div>
+            <div class="col-lg-8">
+                <form>
+                    <div class="cart-wraps">
+                        <div class="cart-table table-responsive">
+                            <h3  *ngIf="orders.length<1">No Orders found for your account</h3>
+                            <table class="table table-bordered" *ngIf="orders.length>=1">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Order</th>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col">Total</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngFor="let order of orders">
+                                    <tr>
+                                        <td class="product-thumbnail">
+                                            <a>
+                                                <img
+                                                    src="assets/images/product-img/product-img4.png"
+                                                    alt="Image">
+                                            </a>
+                                        </td>
+                                        <td class="product-name">
+                                            <a>{{ order.createdAt.slice(0,10) }}</a>
+                                        </td>
+                                        <td class="product-price">
+                                            <span class="unit-amount">{{ order['planDetails']['paymentStatus'] }}</span>
+                                        </td>
+                                        <td class="product-quantity">
+                                            <a>{{ order['planDetails']['payableTotal'] }}</a>
+                                        </td>
+                                        <td class="product-subtotal">
+                                            <a
+                                                class="subtotal-amount">View</a>
+                                            <a
+                                                class="remove">
+                                                <i class='bx
+                                                    bx-x-circle'></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- <div class="cart-buttons">
+                            <div class="row align-items-center">
+                                <div class="col-lg-7 col-sm-7 col-md-7">
+                                    <div class="continue-shopping-box">
+                                        <a href="shop.html"
+                                            class="default-btn">
+                                            Continue Shopping
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-5 col-sm-5 col-md-5
+                                    text-end">
+                                    <a class="
+                                        default-btn">
+                                        Update Cart
+                                    </a>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </form>
             </div>
-            <div class="col-lg-6">
-                <div class="faq-accordion">
-                    <ul class="accordion">
-                        <app-accordion>
-                            <app-accordion-item  title="
-                                01. How Do You Maintain Your Diet
-                                Routine Regularly?">
-                                    <p>
-                                        Lorem ipsum dolor sit amet,
-                                        consetetur sadipscing elitr, sed
-                                        diam nonumy eirmod, orem ipsum dolor
-                                        sit amet, consetetur sadipscing
-                                        elitr, sed diam
-                                        Lorem ipsum dolor sit amet,
-                                        consetetur sadipscing elitr.
-                                    </p>
-                            </app-accordion-item>
-                            <app-accordion-item title="
-                                01. How Do You Maintain Your Diet
-                                Routine Regularly?">
-                                    <p>
-                                        Lorem ipsum dolor sit amet,
-                                        consetetur sadipscing elitr, sed
-                                        diam nonumy eirmod, orem ipsum dolor
-                                        sit amet, consetetur sadipscing
-                                        elitr, sed diam
-                                        Lorem ipsum dolor sit amet,
-                                        consetetur sadipscing elitr.
-                                    </p>
-                            </app-accordion-item>
-                            <app-accordion-item title="
-                                01. How Do You Maintain Your Diet
-                                Routine Regularly?">
-                                    <p>
-                                        Lorem ipsum dolor sit amet,
-                                        consetetur sadipscing elitr, sed
-                                        diam nonumy eirmod, orem ipsum dolor
-                                        sit amet, consetetur sadipscing
-                                        elitr, sed diam
-                                        Lorem ipsum dolor sit amet,
-                                        consetetur sadipscing elitr.
-                                    </p>
-                            </app-accordion-item>
-                            <app-accordion-item title="
-                                01. How Do You Maintain Your Diet
-                                Routine Regularly?">
-
-                                    <p>
-                                        Lorem ipsum dolor sit amet,
-                                        consetetur sadipscing elitr, sed
-                                        diam nonumy eirmod, orem ipsum dolor
-                                        sit amet, consetetur sadipscing
-                                        elitr, sed diam
-                                        Lorem ipsum dolor sit amet,
-                                        consetetur sadipscing elitr.
-                                    </p>
-                            </app-accordion-item>
-                        </app-accordion>
+            <div class="col-lg-4" *ngIf="orders.length>=1">
+                <div class="cart-totals">
+                    <h3>Order Summary</h3>
+                    <ul>
+                        <li>Subtotal <span>$150.00</span></li>
+                        <li>Shipping <span>$30.00</span></li>
+                        <li>Coupon <span>$20.00</span></li>
+                        <li>Total <span><b>$160.00</b></span></li>
                     </ul>
+                    <a class="default-btn
+                        border-radius-5">
+                        Proceed to checkout
+                    </a>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</section>

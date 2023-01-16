@@ -19,11 +19,17 @@ const userRoutes = require('./routes/user.routes');
 
 const app = express();
 app.use(cors());
-app.use(compression())
+app.use(compression());
+
+
+
+
 
 // middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 app.use(passport.initialize());
 app.use('/api/user', userRoutes);
 // app.use('/api/admin', rtsAdmin);
@@ -35,17 +41,24 @@ app.use((err, req, res, next) => {
         Object.keys(err.errors).forEach(key => valErrors.push(err.errors[key].message));
         res.status(422).send(valErrors);
     }
-    else{
-        console.log(err);
+    if (err.statusCode === 401 && err.error.code === 'BAD_REQUEST_ERROR') {
+        res.status(401).send({
+            success: false,
+            message: err.error.description,
+        });
+    } else {
+        res.status(401).send(err);
     }
 });
 // app.use("/images", express.static(path.join(__dirname, "images")));
 
-// app.use(express.static(path.join(__dirname, 'www')));
+app.use(express.static(path.join(__dirname, 'www')));
 
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname, 'www/index.html'));
-// });
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'www/index.html'));
+});
+
+
 
 // start server
 app.listen(PORT, () => console.log(`Server started at port : ${PORT}`));
