@@ -15,6 +15,7 @@ export class DietPlansComponent {
   pricingPlanData: PricingPlan[] = [];
 
   ngOnInit(): void {
+    this.scrollTop();
     this.pricingPlanData = this.pricingPlanService.pricingPlanData;
   }
 

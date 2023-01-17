@@ -496,8 +496,14 @@
                                             onGetPayableTotal() |
                                             currency:"INR":"symbol":'2.0' }}</b></span></li>
                             </ul>
+                            <div class="col-12 success-div-outer" *ngIf="razorPayResMsg">
+                                <div class="form-group">
+                                    <div class="success-div-inner">
+                                        {{razorPayResMsg}}</div>
+                                </div>
+                            </div>
                             <button class="default-btn" type="submit">
-                               {{ !isLoading ? 'Place to Order' : 'Placing Order...' }}
+                               {{ !isLoading ? 'Place Order' : 'Placing Order...' }}
                             </button>
                         </div>
                        

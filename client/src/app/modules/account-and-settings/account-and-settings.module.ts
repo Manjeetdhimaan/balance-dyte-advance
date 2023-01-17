@@ -7,6 +7,8 @@ import { EditProfileComponent } from './components/settings/edit-profile/edit-pr
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { OrdersComponent } from './components/orders/orders.component';
+import { OrderComponent } from './components/orders/order/order.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -15,7 +17,8 @@ import { OrdersComponent } from './components/orders/orders.component';
     ProfileComponent,
     EditProfileComponent,
     ChangePasswordComponent,
-    OrdersComponent
+    OrdersComponent,
+    OrderComponent
   ],
   imports: [
     CommonModule,
@@ -23,6 +26,7 @@ import { OrdersComponent } from './components/orders/orders.component';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    RouterModule
   ]
 })
 export class AccountAndSettingsModule { }

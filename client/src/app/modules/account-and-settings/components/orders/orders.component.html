@@ -38,48 +38,57 @@
 <section class="cart-wraps-area pt-100 pb-70">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <form>
                     <div class="cart-wraps">
                         <div class="cart-table table-responsive">
-                            <h3  *ngIf="orders.length<1">No Orders found for your account</h3>
+                            <h3  *ngIf="orders.length<1">You havn't placed any order yet! <a routerLink="/diet-plans" style="margin-left: 4px;">  Place an order</a></h3>
                             <table class="table table-bordered" *ngIf="orders.length>=1">
                                 <thead>
                                     <tr>
-                                        <th scope="col">Order</th>
+                                        <th scope="col">Order Id</th>
                                         <th scope="col">Date</th>
                                         <th scope="col">Status</th>
+                                        <th scope="col">Plan Name</th>
+                                        <th scope="col">Plan Duration</th>
                                         <th scope="col">Total</th>
-                                        <th scope="col">Actions</th>
+                                        <!-- <th scope="col">Actions</th> -->
                                     </tr>
                                 </thead>
                                 <tbody *ngFor="let order of orders">
                                     <tr>
                                         <td class="product-thumbnail">
-                                            <a>
-                                                <img
+                                            <span class="unit-amount">
+                                                {{ order.razorPayOrderId }}
+                                                <!-- <img
                                                     src="assets/images/product-img/product-img4.png"
-                                                    alt="Image">
-                                            </a>
+                                                    alt="Image"> -->
+                                                </span>
                                         </td>
                                         <td class="product-name">
-                                            <a>{{ order.createdAt.slice(0,10) }}</a>
+                                            <span class="unit-amount">{{ order.createdAt.slice(0,10) }}</span>
                                         </td>
                                         <td class="product-price">
                                             <span class="unit-amount">{{ order['planDetails']['paymentStatus'] }}</span>
                                         </td>
-                                        <td class="product-quantity">
-                                            <a>{{ order['planDetails']['payableTotal'] }}</a>
+                                        <td class="product-price">
+                                            <span class="unit-amount">{{ order['planDetails']['planName'] }}</span>
                                         </td>
-                                        <td class="product-subtotal">
+                                        <td class="product-price">
+                                            <span class="unit-amount">{{ order['planDetails']['planDuration'] }}</span>
+                                        </td>
+                                        <td class="product-quantity">
+                                            <span class="unit-amount">{{ order['planDetails']['payableTotal'] | currency:"INR":"symbol":'2.0' }}</span>
+                                        </td>
+                                        <!-- <td class="product-subtotal">
                                             <a
-                                                class="subtotal-amount">View</a>
+                                                class="subtotal-amount" [routerLink]="['view-order', order['_id']]" (click)="onNavigate(order['_id'])">View Details</a>
                                             <a
                                                 class="remove">
                                                 <i class='bx
                                                     bx-x-circle'></i>
                                             </a>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 </tbody>
                             </table>
@@ -106,21 +115,21 @@
                     </div>
                 </form>
             </div>
-            <div class="col-lg-4" *ngIf="orders.length>=1">
+            <!-- <div class="col-lg-4" *ngIf="orders.length>=1">
                 <div class="cart-totals">
-                    <h3>Order Summary</h3>
+                    <h3>Orders Summary</h3>
                     <ul>
-                        <li>Subtotal <span>$150.00</span></li>
-                        <li>Shipping <span>$30.00</span></li>
-                        <li>Coupon <span>$20.00</span></li>
-                        <li>Total <span><b>$160.00</b></span></li>
+                        <li>Total Duration <span>{{ getTotalOfOrders().totalDuration }} Months</span></li>
+                        <li>Total Amount<span><b>{{ getTotalOfOrders().totalAmount | currency:"INR":"symbol":'2.0' }}</b></span></li>
                     </ul>
                     <a class="default-btn
                         border-radius-5">
                         Proceed to checkout
                     </a>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </section>
+
+<app-spinner *ngIf="isLoading"></app-spinner>

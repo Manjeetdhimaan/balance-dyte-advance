@@ -1,0 +1,27 @@
+.success-div-outer {
+    margin: auto;
+    text-align: center;
+}
+
+.success-div-inner {
+    margin: auto;
+    color: green;
+    background: rgb(13 255 21 / 20%);
+    border: 1px solid green;
+    text-align: center;
+    padding: 10px;
+}
+
+.error-div-outer {
+    margin: auto;
+    text-align: center;
+}
+
+.error-div-inner {
+    margin: auto;
+    color: #d32a2a;
+    background: rgba(255,64,64,.2);
+    border: 1px solid #FF4040;
+    text-align: center;
+    padding: 10px;
+}

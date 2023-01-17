@@ -1,33 +1,16 @@
-/* .theme-dark .radio-group .payment-box  {
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 0;
-    height: 50px;
-    color: var(--titleColor);
-    border: none;
-    background-color: var(--darkColor);
-    border-radius: 0;
-    padding: 10px 20px;
-    width: 100%;
+.success-div-outer {
+    margin: auto;
+    text-align: center;
 }
-.radio-group .payment-box  {
-    -webkit-box-shadow: none;
-    box-shadow: none;
-    margin-top: 0;
-    margin-bottom: 0;
-    padding: 0;
-    height: 50px;
-    color: var(--bodyColor);
-    border: none;
-    background-color: #f9f8f8;
-    border-radius: 0;
-    padding: 10px 20px;
-    width: 100%;
-} */
 
-
+.success-div-inner {
+    margin: auto;
+    color: green;
+    background: rgb(13 255 21 / 20%);
+    border: 1px solid green;
+    text-align: center;
+    padding: 10px;
+}
 
 .radio-group p [type=radio]:not(:checked) {
     display: none;

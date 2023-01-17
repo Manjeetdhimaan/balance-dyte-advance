@@ -4,6 +4,10 @@ const jwt = require('jsonwebtoken');
 const Schema = mongoose.Schema;
 
 const orderSchema = new mongoose.Schema({
+    razorPayOrderId: {
+        type: String,
+        required: true
+    },
     planDetails: {
         paymentStatus: {
             type: String,
@@ -22,32 +26,32 @@ const orderSchema = new mongoose.Schema({
         planName: {
             type: String,
             trim: true,
-            required: [true, 'Plan Name can\'t be empty' ]
+            required: [true, 'Plan Name can\'t be empty']
         },
         planDuration: {
             type: String,
             trim: true,
-            required: [true, 'Plan Duration can\'t be empty' ]
+            required: [true, 'Plan Duration can\'t be empty']
         },
         goals: {
             type: String,
             trim: true,
-            required: [true, 'Please mention your goals' ]
+            required: [true, 'Please mention your goals']
         },
         weight: {
             type: String,
             trim: true,
-            required: [true, 'Please mention your weight' ]
+            required: [true, 'Please mention your weight']
         },
         height: {
             type: String,
             trim: true,
-            required: [true, 'Please mention your height' ]
+            required: [true, 'Please mention your height']
         },
         loseOrGain: {
             type: String,
             trim: true,
-            required: [true, 'Please mention whether you want to lose or gain weight' ]
+            required: [true, 'Please mention whether you want to lose or gain weight']
         },
         foodType: {
             type: String,

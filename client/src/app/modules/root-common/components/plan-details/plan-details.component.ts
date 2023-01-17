@@ -26,8 +26,10 @@ export class PlanDetailsComponent implements OnInit {
   isLoading: boolean = false;
   isConflictErr: boolean = false;
   emailInputValue: string;
+  razorPayResMsg: string;
 
   ngOnInit(): void {
+    this.scrollTop();
     // user form
     this.userForm = this.fb.group({
       fullName: new FormControl('', [Validators.required]),
@@ -43,7 +45,7 @@ export class PlanDetailsComponent implements OnInit {
       loseOrGain: new FormControl('', [Validators.required]),
       goingGym: new FormControl('', [Validators.required]),
       foodType: new FormControl('', [Validators.required]),
-      planDuration: new FormControl('3', [Validators.required]),
+      planDuration: new FormControl('1', [Validators.required]),
       medicalIssue: new FormControl(''),
       foodAllergy: new FormControl(''),
 
@@ -121,19 +123,24 @@ export class PlanDetailsComponent implements OnInit {
 
   razorPayOptions = {
     "key": "YOUR_KEY_ID", // Enter the Key ID generated from the Dashboard
-    "amount": 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "amount": 0, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
     "currency": "INR",
     "name": "Acme Corp",
     "description": "Test Transaction",
-    "image": "https://example.com/your_logo",
+    "image": "https://www.balancedyte.dopedigital.in/assets/images/logo/7.png",
     "order_id": "order_IluGWxBm9U8zJ8", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
     "handler": (res: any) => {
-      console.log(res)
+      console.log(res);
     }
   }
 
   razorPayResponseHandler (res: any) {
-    console.log(res);
+    console.log('razorpayRes', res);
+    this.razorPayResMsg = 'Order Placed Successfully!'
+    if (res) {
+      this.toastMessageService.success('Order Placed Successfully');
+      this.router.navigate(['/account/profile/orders']);
+    }
   }
 
   submitForm() {
@@ -167,16 +174,28 @@ export class PlanDetailsComponent implements OnInit {
       }
       this.userApiService.postRegisterUser(formBody).subscribe((res: any) => {
         this.isLoading = false;
-        this.toastMessageService.success(res['message']);
-
+        // this.toastMessageService.success(res['message']);
+        console.log(res);
         this.razorPayOptions.key = res['key'];
         this.razorPayOptions.amount = res['value']['amount'];
         this.razorPayOptions.name = res['name'];
         this.razorPayOptions.order_id = res['value']['order_id'];
-        this.razorPayOptions.handler = this.razorPayResponseHandler;
+        this.razorPayOptions.handler = this.razorPayResponseHandler.bind(this);
         let rzp1 = new Razorpay(this.razorPayOptions);
         rzp1.open();
-        console.log('razorpay opened')
+        console.log('razorpay opened');
+        rzp1.on('payment.failed',  (response: any) =>{    
+          // Todo - store this information in the server
+          console.log(response);    
+          console.log(response.error.code);    
+          console.log(response.error.description);    
+          console.log(response.error.source);    
+          console.log(response.error.step);    
+          console.log(response.error.reason);    
+          console.log(response.error.metadata.order_id);    
+          console.log(response.error.metadata.payment_id);
+      }
+      );
 
       }, error => {
         this.isLoading = false
@@ -214,17 +233,16 @@ export class PlanDetailsComponent implements OnInit {
       }
 
       this.userApiService.postPlaceOrder(formBody).subscribe((res: any) => {
-        console.log(res)
+        console.log(res);
         this.isLoading = false;
-        this.toastMessageService.success(res['message']);
+        // this.toastMessageService.success(res['message']);
         this.razorPayOptions.key = res['key'];
         this.razorPayOptions.amount = res['value']['amount'];
         this.razorPayOptions.name = res['name'];
         this.razorPayOptions.order_id = res['value']['order_id'];
-        this.razorPayOptions.handler = this.razorPayResponseHandler;
+        this.razorPayOptions.handler = this.razorPayResponseHandler.bind(this);
         let rzp1 = new Razorpay(this.razorPayOptions);
         rzp1.open(this.razorPayOptions);
-        console.log('razorpay opened')
 
       }, error => {
         this.isLoading = false;
@@ -236,7 +254,19 @@ export class PlanDetailsComponent implements OnInit {
   }
 
   onGetPayableTotal() {
-    return +(this.selectedPricingPlan['planPrice']) * +(this.userForm.value.planDuration)
+    let totalPrice = 0;
+    switch (this.userForm.value.planDuration) {
+      case ("1"):
+        totalPrice = +(this.selectedPricingPlan['planPrice']) * +(this.userForm.value.planDuration);
+        break;
+      case ("3"):
+        totalPrice = +(this.selectedPricingPlan['planPrice']) * 2;
+        break;
+      case ("6"):
+        totalPrice = +(this.selectedPricingPlan['planPrice']) * +(this.userForm.value.planDuration/2);
+        break;
+    }
+    return totalPrice;
   }
 
   scrollTop() {

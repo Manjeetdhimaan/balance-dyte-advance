@@ -36,6 +36,26 @@ export class UserApiService {
     return this.http.get(environment.apiBaseUrl + '/user/getUserOrders');
   }
 
+  getUserOrder(orderId: string) {
+    return this.http.get(environment.apiBaseUrl + '/user/getUserOrder/' + orderId);
+  }
+
+  putChangePassword(passwordBody:any) {
+    return this.http.put(environment.apiBaseUrl + `/user/change-password`, passwordBody);
+  }
+
+  requestResetPassword(body:any) {
+    return this.http.post(`${environment.apiBaseUrl}/user/req-reset-password`, body);
+  }
+
+  newPassword(body:any){
+    return this.http.post(`${environment.apiBaseUrl}/user/new-password`, body);
+  }
+
+  validatePasswordToken(body:any) {
+    return this.http.post(`${environment.apiBaseUrl}/user/valid-password-token`, body);
+  }
+
   //Helper Methods
 
   setToken(token: string) {

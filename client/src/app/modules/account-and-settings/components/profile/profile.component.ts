@@ -20,6 +20,7 @@ export class ProfileComponent implements OnInit {
   emailInputValue: string;
   
   ngOnInit(): void {
+    this.scrollTop();
     this.isLoading = true;
     this.userForm = this.fb.group({
       fullName: new FormControl('', [Validators.required]),
@@ -89,7 +90,13 @@ export class ProfileComponent implements OnInit {
         },
           err => {
             console.log(err);
-            this.toastMessageService.success(err['message']);
+            if(err.error.message.code === 11000) {
+              this.toastMessageService.error('An account with this email address exists already!');
+            }
+            else {
+              this.toastMessageService.error(err['error']['message']);
+            }
+            
             this.isLoading = false;
           })
       }

@@ -20,13 +20,36 @@
                 <div class="user-all-form">
                     <div class="contact-form">
                         <h3 class="text-center">Forgot Password</h3>
-                        <form id="contactForm">
+                        <form id="contactForm" [formGroup]="RequestResetForm"
+                            (ngSubmit)="RequestResetUser()">
                             <div class="row">
                                 <div class="col-lg-12 ">
                                     <div class="form-group">
-                                        <input type="text" name="name"
+                                        <input type="text"
+                                            formControlName="email"
                                             id="name"
-                                            class="form-control"placeholder="Email Address">
+                                            class="form-control"
+                                            placeholder="Email Address">
+                                            <div class="col-12 error-div-outer" *ngIf="!RequestResetForm.controls['email'].valid
+                                            && !IsvalidForm">
+                                                <div class="form-group">
+                                                    <div class="error-div-inner">
+                                                        Please enter a
+                                                        valid email!</div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 success-div-outer" *ngIf="successMessage">
+                                    <div class="form-group">
+                                        <div class="success-div-inner">
+                                            {{successMessage}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-12 error-div-outer" *ngIf="errorMessage">
+                                    <div class="form-group">
+                                        <div class="error-div-inner">
+                                            {{errorMessage}}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-md-12
@@ -44,3 +67,5 @@
         </div>
     </div>
 </div>
+
+<app-spinner *ngIf="isLoading"></app-spinner>
