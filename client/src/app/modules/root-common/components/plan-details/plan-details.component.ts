@@ -7,6 +7,7 @@ import { PricingPlan } from 'src/app/shared/models/pricing-plan/pricing-plan.mod
 import { PricingPlanService } from 'src/app/shared/services/pricing-plan.service';
 import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
 import { UserApiService } from 'src/app/shared/services/user-api.service';
+import { environment } from 'src/environments/environment';
 
 declare let Razorpay: any;
 
@@ -27,6 +28,8 @@ export class PlanDetailsComponent implements OnInit {
   isConflictErr: boolean = false;
   emailInputValue: string;
   razorPayResMsg: string;
+  razorOrderId: string = '';
+  userId: string;
 
   ngOnInit(): void {
     this.scrollTop();
@@ -134,12 +137,56 @@ export class PlanDetailsComponent implements OnInit {
     }
   }
 
-  razorPayResponseHandler (res: any) {
-    console.log('razorpayRes', res);
-    this.razorPayResMsg = 'Order Placed Successfully!'
+  razorPayResponseHandler(res: any) {
+    // console.log('razorpayRes', res);
+
     if (res) {
-      this.toastMessageService.success('Order Placed Successfully');
-      this.router.navigate(['/account/profile/orders']);
+      this.submitted = true;
+      if (!this.userForm.valid) {
+        console.log('form not valid');
+        return;
+      }
+      this.isLoading = true;
+      const formBody = {
+        fullName: this.userForm.value.fullName,
+        phone: this.userForm.value.phone,
+        goals: this.userForm.value.goals,
+        email: this.userForm.value.email,
+        age: this.userForm.value.age,
+        gender: this.userForm.value.gender,
+        height: this.userForm.value.height,
+        weight: this.userForm.value.weight,
+        loseOrGain: this.userForm.value.loseOrGain,
+        goingGym: this.userForm.value.goingGym,
+        foodType: this.userForm.value.foodType,
+        medicalIssue: this.userForm.value.medicalIssue,
+        foodAllergy: this.userForm.value.foodAllergy,
+        payableTotal: this.onGetPayableTotal(),
+        planPrice: this.selectedPricingPlan.planPrice,
+        planName: this.selectedPricingPlan.planName,
+        planDuration: this.userForm.value.planDuration + ' months',
+      }
+
+      const formObj = Object.assign({}, formBody, { domain: environment.domain, order_id: this.razorOrderId, userId: this.userId });
+
+      console.log(formObj)
+      this.userApiService.postOrderResponse(formObj).subscribe((res: any) => {
+        console.log(res);
+        this.isLoading = false;
+        this.razorPayResMsg = res['message']
+        this.toastMessageService.success(res['message']);
+        if(this.isLoggedIn()) {
+
+          this.router.navigate(['/account/profile/orders']);
+        }
+        else {
+          this.router.navigate(['/diet-plans']);
+        }
+      }, error => {
+        this.isLoading = false;
+        this.toastMessageService.error('An error occured with payment, please try again');
+        console.log("error", error);
+      })
     }
   }
 
@@ -147,6 +194,7 @@ export class PlanDetailsComponent implements OnInit {
     this.submitted = true;
     if (!this.userForm.valid) {
       console.log('form not valid');
+      this.toastMessageService.info('Please fill all required fields with valid values!');
       return;
     }
     if (!this.isLoggedIn()) {
@@ -172,30 +220,33 @@ export class PlanDetailsComponent implements OnInit {
         planName: this.selectedPricingPlan.planName,
         planDuration: this.userForm.value.planDuration + ' months',
       }
-      this.userApiService.postRegisterUser(formBody).subscribe((res: any) => {
+      const formObj = Object.assign({}, formBody, { domain: environment.domain });
+      this.userApiService.postRegisterUserAndPlaceOrder(formObj).subscribe((res: any) => {
         this.isLoading = false;
         // this.toastMessageService.success(res['message']);
         console.log(res);
+        this.userId = res['userId'];
         this.razorPayOptions.key = res['key'];
         this.razorPayOptions.amount = res['value']['amount'];
         this.razorPayOptions.name = res['name'];
-        this.razorPayOptions.order_id = res['value']['order_id'];
+        this.razorPayOptions.order_id = res['orderId'];
+        this.razorOrderId = res['orderId'];
         this.razorPayOptions.handler = this.razorPayResponseHandler.bind(this);
         let rzp1 = new Razorpay(this.razorPayOptions);
         rzp1.open();
         console.log('razorpay opened');
-        rzp1.on('payment.failed',  (response: any) =>{    
+        rzp1.on('payment.failed', (response: any) => {
           // Todo - store this information in the server
-          console.log(response);    
-          console.log(response.error.code);    
-          console.log(response.error.description);    
-          console.log(response.error.source);    
-          console.log(response.error.step);    
-          console.log(response.error.reason);    
-          console.log(response.error.metadata.order_id);    
+          console.log(response);
+          console.log(response.error.code);
+          console.log(response.error.description);
+          console.log(response.error.source);
+          console.log(response.error.step);
+          console.log(response.error.reason);
+          console.log(response.error.metadata.order_id);
           console.log(response.error.metadata.payment_id);
-      }
-      );
+        }
+        );
 
       }, error => {
         this.isLoading = false
@@ -231,15 +282,17 @@ export class PlanDetailsComponent implements OnInit {
         planName: this.selectedPricingPlan.planName,
         planDuration: this.userForm.value.planDuration + ' months',
       }
-
-      this.userApiService.postPlaceOrder(formBody).subscribe((res: any) => {
+      const formObj = Object.assign({}, formBody, { domain: environment.domain });
+      this.userApiService.postPlaceOrder(formObj).subscribe((res: any) => {
         console.log(res);
         this.isLoading = false;
+        this.userId = res['userId'];
         // this.toastMessageService.success(res['message']);
         this.razorPayOptions.key = res['key'];
         this.razorPayOptions.amount = res['value']['amount'];
         this.razorPayOptions.name = res['name'];
-        this.razorPayOptions.order_id = res['value']['order_id'];
+        this.razorPayOptions.order_id = res['orderId'];
+        this.razorOrderId = res['orderId'];
         this.razorPayOptions.handler = this.razorPayResponseHandler.bind(this);
         let rzp1 = new Razorpay(this.razorPayOptions);
         rzp1.open(this.razorPayOptions);
@@ -263,7 +316,7 @@ export class PlanDetailsComponent implements OnInit {
         totalPrice = +(this.selectedPricingPlan['planPrice']) * 2;
         break;
       case ("6"):
-        totalPrice = +(this.selectedPricingPlan['planPrice']) * +(this.userForm.value.planDuration/2);
+        totalPrice = +(this.selectedPricingPlan['planPrice']) * +(this.userForm.value.planDuration / 2);
         break;
     }
     return totalPrice;

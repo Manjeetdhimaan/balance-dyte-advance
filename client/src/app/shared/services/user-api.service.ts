@@ -12,8 +12,11 @@ export class UserApiService {
   
   noAuthHeader = { headers: new HttpHeaders({ 'NoAuth': 'True' }) };
 
+  postRegisterUserAndPlaceOrder(user: any){
+    return this.http.post(environment.apiBaseUrl+'/user/register-and-create-order',user,this.noAuthHeader);
+  }
   postRegisterUser(user: any){
-    return this.http.post(environment.apiBaseUrl+'/user/register',user,this.noAuthHeader);
+    return this.http.post(environment.apiBaseUrl+'/user/register-user',user,this.noAuthHeader);
   }
 
   postLogin(authCredentials:any) {
@@ -25,7 +28,11 @@ export class UserApiService {
   }
 
   postPlaceOrder(order:any) {
-    return this.http.post(environment.apiBaseUrl + '/user/postPlaceOrder', order);
+    return this.http.post(environment.apiBaseUrl + '/user/postCreateOrder', order);
+  }
+
+  postOrderResponse(order:any) {
+    return this.http.post(environment.apiBaseUrl + '/user/postOrderResponse', order);
   }
 
   postUpdateUserProfile(userBody:any) {

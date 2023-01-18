@@ -21,13 +21,12 @@ const userSchema = new mongoose.Schema({
     },
     gender: {
         type: String,
-        required: [true, 'Please provide gender'],
-        trim: true,
-        default: 'Not Defined'
+        // required: [true, 'Please provide gender'],
+        trim: true
     },
     phone: {
         type: String,
-        required: [true, 'Please provide mobile number'],
+        // required: [true, 'Please provide mobile number'],
         trim: true
     },
     imagePath: {
@@ -37,37 +36,37 @@ const userSchema = new mongoose.Schema({
     age: {
         type: String,
         trim: true,
-        required: [true, 'Please mention your age']
+        // required: [true, 'Please mention your age']
     },
     weight: {
         type: String,
         trim: true,
-        required: [true, 'Please mention your weight']
+        // required: [true, 'Please mention your weight']
     },
     height: {
         type: String,
         trim: true,
-        required: [true, 'Please mention your height']
+        // required: [true, 'Please mention your height']
     },
     goals: {
         type: String,
         trim: true,
-        required: [true, 'Please mention your goals']
+        // required: [true, 'Please mention your goals']
     },
     loseOrGain: {
         type: String,
         trim: true,
-        required: [true, 'Please mention your whether you want to loose or gain weight']
+        // required: [true, 'Please mention your whether you want to loose or gain weight']
     },
     foodType: {
         type: String,
         trim: true,
-        required: [true, 'Please mention your whether you are vegetarian or non vegetarian']
+        // required: [true, 'Please mention your whether you are vegetarian or non vegetarian']
     },
     goingGym: {
         type: String,
         trim: true,
-        required: [true, 'Please mention your whether you go to gym or not']
+        // required: [true, 'Please mention your whether you go to gym or not']
     },
     medicalIssue: {
         type: String,
@@ -80,11 +79,15 @@ const userSchema = new mongoose.Schema({
     resettoken: {
         type: String
     },
+    role: {
+        type: String,
+        default: "user",
+        enum: ["user", "admin"]
+    },
     saltSecret: String
 }, {
     timestamps: true
 });
-
 
 // Custom validation for email
 userSchema.path('email').validate((val) => {

@@ -372,19 +372,19 @@
                             </a>
                         </li>
                         <li class="nav-item" *ngIf="isLoggedIn()">
-                            <a href="#" class="nav-link">
+                            <a class="nav-link" routerLinkActive="active">
                                 Account
                                 <i class='bx bx-chevron-down'></i>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" routerLink="/account/profile" (click)="scrollTop()">Profile</a>
+                                    <a class="nav-link" routerLink="/account/profile" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="scrollTop()">Profile</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" routerLink="/account/profile/orders" (click)="scrollTop()">My Orders</a>
+                                    <a class="nav-link" routerLink="/account/profile/orders" routerLinkActive="active" (click)="scrollTop()">My Orders</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" routerLink="/account/settings/change-password">Change Password</a>
+                                    <a class="nav-link" routerLinkActive="active" routerLink="/account/settings/change-password">Change Password</a>
                                 </li>
                                 
                                 <li class="nav-item" (click)="onLogOut()">

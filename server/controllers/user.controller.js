@@ -17,6 +17,78 @@ let instance = new Razorpay({
     key_secret: process.env.KEY_SECRET || localENV.LOCAL_key_secret,
 });
 
+const sendDietMail = (req, currentUser) => {
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.AUTH_USER || localENV.LOCAL_MAILER_AUTH_EMAIL,
+            pass: process.env.AUTH_PASS || localENV.LOCAL_MAILER_AUTH_PASS
+        }
+    });
+    const mailOptions = {
+        from: 'balancedyte@gmail.com',
+        to: process.env.AUTH_USER || localENV.LOCAL_MAILER_AUTH_EMAIL,
+        subject: 'Email for diet plan from ' + req.body.domain,
+        html: `<h2>Someone sent email for diet plan on ${req.body.domain}</h2> 
+        <h3> Name:  <strong><i>${currentUser ? currentUser.fullName : req.body.fullname}</i></strong></h3>
+        <h3> Email:  <strong><i>${currentUser ? currentUser.email : req.body.email}</i></strong></h3>
+        <h3> Contact No.:  <strong><i>${currentUser ? currentUser.phone : req.body.phone}</i></strong></h3>
+        <h3> Gender:  <strong><i>${currentUser ? currentUser.gender : req.body.gender}</i></strong></h3>
+        <h3> Age(in years):  <strong><i>${req.body.age}</i></strong></h3>
+        <h3> Duration of Plan(in months):  <strong><i>${req.body.planDuration}</i></strong></h3>
+        <h3> Goals:  <strong><i>${req.body.goals}</i></strong></h3>
+        <h3> Lose/Gain Weight:  <strong><i>${req.body.loseOrGain}</i></strong></h3>
+        <h3> Weight(in kg(s)):  <strong><i>${req.body.weight}</i></strong></h3>
+        <h3> Height(in feet inches):  <strong><i>${req.body.height}</i></strong></h3>
+        <h3> Medical Issue:  <strong><i>${req.body.medicalIssue ? req.body.medicalIssue : 'No Medical Issue'}</i></strong></h3>
+        <h3> Food Allergy:  <strong><i>${req.body.foodAllergy ? req.body.foodAllergy : 'No Allergy'}</i></strong></h3>
+        <h3> Food Type:  <strong><i>${req.body.foodType}</i></strong></h3>
+        <h3> Going to Gym?:  <strong><i>${req.body.goingGym}</i></strong></h3>
+        <h3> Plan Name:  <strong><i>${req.body.planName}</i></strong></h3>
+        `,
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error)
+            //   res.send({error: error})
+        } else {
+            console.log('succcess email sent')
+            // res.send({res: info.response, message: 'Details sent successfully'})
+        }
+    });
+}
+
+
+const sendResetPasswordMail = (req, user) => {
+    const transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        port: 465,
+        auth: {
+            user: process.env.AUTH_USER || localENV.LOCAL_MAILER_AUTH_EMAIL,
+            pass: process.env.AUTH_PASS || localENV.LOCAL_MAILER_AUTH_PASS
+        }
+    });
+    const mailOptions = {
+        to: user.email,
+        from: user.email,
+        subject: 'Employee Management Password Reset',
+        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+            'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+            req.body.domain + '/user/response-reset-password/' + user.resettoken + '\n\n' +
+            'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+    }
+    transporter.sendMail(mailOptions, (err, info) => {
+        if (err) {
+            console.log(err)
+            //   res.send({error: error})
+        } else {
+            console.log('Email sent')
+            // res.send({res: info.response, message: 'Details sent successfully'})
+        }
+    })
+}
+
+
 const userExists = async (email) => {
     const user = await User.findOne({
         email: email.toLowerCase().trim()
@@ -29,6 +101,49 @@ const userExists = async (email) => {
 }
 
 module.exports.postRegisterUser = async (req, res, next) => {
+    try {
+        let user = new User();
+        user.fullName = req.body.fullName;
+        user.email = req.body.email;
+        user.password = User.hashPassword(req.body.password);
+        user.confirmPassword = req.body.confirmPassword;
+        user.password = User.hashPassword(req.body.password);
+
+        if (req.body.password !== req.body.confirmPassword) {
+            return res.status(422).send({
+                success: false,
+                message: 'Passwords do not match'
+            });
+        }
+
+        if (await userExists(req.body.email)) {
+            return res.status(409).json({
+                success: false,
+                message: 'Account with this email address exists already!'
+            })
+        }
+        user.save().then(() => {
+            return res.status(200).send({
+                success: true,
+                message: 'User added succussfully!'
+            });
+        }).catch(err => {
+            console.log(err);
+            if (err.code == 11000)
+                return res.status(409).send({
+                    success: false,
+                    message: 'Account with this email address exists already!'
+                });
+            else
+                return next(err);
+        })
+
+    } catch (err) {
+        return next(err);
+    }
+}
+
+module.exports.postRegisterUserAndCreateOrder = async (req, res, next) => {
     try {
         let newUser = new User();
         newUser.fullName = req.body.fullName;
@@ -62,6 +177,8 @@ module.exports.postRegisterUser = async (req, res, next) => {
             })
         }
         newUser.save().then(() => {
+
+
             let options = {
                 amount: +req.body.payableTotal * 100, // amount in the smallest currency unit
                 currency: "INR",
@@ -74,43 +191,14 @@ module.exports.postRegisterUser = async (req, res, next) => {
                     return next(err);
                 }
                 if (order) {
-                    const postOrder = new Order({
-                        razorPayOrderId: "#"+order.id,
-                        user: {
-                            fullName: req.body.fullName,
-                            email: req.body.email,
-                            phone: req.body.phone,
-                            userId: newUser._id
-                        },
-                        planDetails: {
-                            paymentStatus: 'Success',
-                            payableTotal: req.body.payableTotal,
-                            planPrice: req.body.planPrice,
-                            planName: req.body.planName,
-                            planDuration: req.body.planDuration,
-                            goals: req.body.goals,
-                            age: req.body.age,
-                            height: req.body.height,
-                            weight: req.body.weight,
-                            loseOrGain: req.body.loseOrGain,
-                            goingGym: req.body.goingGym,
-                            foodType: req.body.foodType,
-                            medicalIssue: req.body.medicalIssue,
-                            foodAllergy: req.body.foodAllergy,
-                        },
+                    return res.status(200).send({
+                        success: true,
+                        message: 'Creating Order',
+                        orderId: order.id,
+                        value: order,
+                        userId: newUser._id,
+                        key: process.env.KEY_ID || localENV.LOCAL_key_id
                     });
-                    postOrder.save().then(() => {
-                        return res.status(200).send({
-                            success: true,
-                            message: 'Creating Order',
-                            orderId: order.id,
-                            value: order,
-                            key: process.env.KEY_ID || localENV.LOCAL_key_id
-                        });
-                    }).catch((err) => {
-                        return next(err);
-                    });
-
                 }
             });
         }).catch(err => {
@@ -129,12 +217,11 @@ module.exports.postRegisterUser = async (req, res, next) => {
     }
 }
 
-module.exports.postPlaceOrder = async (req, res, next) => {
+module.exports.postCreateOrder = async (req, res, next) => {
     try {
         const currentUser = await User.findById(req._id).then((user) => {
-            return user
+            return user;
         });
-
         let options = {
             amount: +req.body.payableTotal * 100, // amount in the smallest currency unit
             currency: "INR",
@@ -142,82 +229,18 @@ module.exports.postPlaceOrder = async (req, res, next) => {
         };
         instance.orders.create(options, (err, order) => {
             if (err) {
-                const postOrder = new Order({
-                    razorPayOrderId: "#"+order.id,
-                    user: {
-                        fullName: currentUser.fullName,
-                        email: currentUser.email,
-                        phone: currentUser.phone,
-                        userId: req._id
-                    },
-                    planDetails: {
-                        paymentStatus: 'Failed',
-                        payableTotal: req.body.payableTotal,
-                        planPrice: req.body.planPrice,
-                        planName: req.body.planName,
-                        planDuration: req.body.planDuration,
-                        goals: req.body.goals,
-                        age: req.body.age,
-                        height: req.body.height,
-                        weight: req.body.weight,
-                        loseOrGain: req.body.loseOrGain,
-                        goingGym: req.body.goingGym,
-                        foodType: req.body.foodType,
-                        medicalIssue: req.body.medicalIssue,
-                        foodAllergy: req.body.foodAllergy,
-                    },
-                });
-                postOrder.save().then(() => {
-                    return res.status(200).send({
-                        success: true,
-                        message: 'Error while placing order',
-                        orderId: order.id,
-                        value: order,
-                        key: process.env.KEY_ID || localENV.LOCAL_key_id
-                    });
-                }).catch((err) => {
-                    return next(err);
-                });
+                
                 return next(err);
             }
             if (order) {
-                const postOrder = new Order({
-                    razorPayOrderId: "#"+order.id,
-                    user: {
-                        fullName: currentUser.fullName,
-                        email: currentUser.email,
-                        phone: currentUser.phone,
-                        userId: req._id
-                    },
-                    planDetails: {
-                        paymentStatus: 'Success',
-                        payableTotal: req.body.payableTotal,
-                        planPrice: req.body.planPrice,
-                        planName: req.body.planName,
-                        planDuration: req.body.planDuration,
-                        goals: req.body.goals,
-                        age: req.body.age,
-                        height: req.body.height,
-                        weight: req.body.weight,
-                        loseOrGain: req.body.loseOrGain,
-                        goingGym: req.body.goingGym,
-                        foodType: req.body.foodType,
-                        medicalIssue: req.body.medicalIssue,
-                        foodAllergy: req.body.foodAllergy,
-                    },
+                return res.status(200).send({
+                    success: true,
+                    message: 'Creating order',
+                    orderId: order.id,
+                    value: order,
+                    userId: req._id,
+                    key: process.env.KEY_ID || localENV.LOCAL_key_id
                 });
-                postOrder.save().then(() => {
-                    return res.status(200).send({
-                        success: true,
-                        message: 'Creating order',
-                        orderId: order.id,
-                        value: order,
-                        key: process.env.KEY_ID || localENV.LOCAL_key_id
-                    });
-                }).catch((err) => {
-                    return next(err);
-                });
-
             }
         });
     } catch (err) {
@@ -473,11 +496,7 @@ module.exports.resetPassword = async (req, res) => {
             message: 'Email does not exist'
         });
     }
- 
-    // let resettoken = new passwordResetToken({
-    //     _userId: user._id,
-    //     resettoken: crypto.randomBytes(16).toString('hex')
-    // });
+
     user.resettoken = crypto.randomBytes(16).toString('hex')
     user.save(function (err) {
         if (err) {
@@ -495,24 +514,7 @@ module.exports.resetPassword = async (req, res) => {
         res.status(200).json({
             message: 'Reset Password successfully.'
         });
-        let transporter = nodemailer.createTransport({
-            service: 'Gmail',
-            port: 465,
-            auth: {
-                user: 'manjeetdhimaan60@gmail.com',
-                pass: 'lpaqbtmffjmepylc'
-            }
-        });
-        let mailOptions = {
-            to: user.email,
-            from: user.email,
-            subject: 'Employee Management Password Reset',
-            text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
-                'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-                req.body.domain + '/user/response-reset-password/' + user.resettoken + '\n\n' +
-                'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-        }
-        transporter.sendMail(mailOptions, (err, info) => {})
+        sendResetPasswordMail(req, user);
     })
 }
 
@@ -559,8 +561,7 @@ module.exports.newPassword = async (req, res) => {
                 .json({
                     message: 'User does not exist'
                 });
-        }
-        else if (!user.resettoken) {
+        } else if (!user.resettoken) {
             return res
                 .status(409)
                 .json({
@@ -594,4 +595,51 @@ module.exports.newPassword = async (req, res) => {
             }
         });
     })
+}
+
+module.exports.postOrderResponse = async (req, res, next) => {
+    try {
+        const currentUser = await User.findById(req._id || req.body.userId).then((user) => {
+            return user;
+        });
+        const postOrder = new Order({
+            razorPayOrderId: "#" + req.body.order_id,
+            user: {
+                fullName: req.body.fullName ? req.body.fullName : currentUser.fullName,
+                email: req.body.email ? req.body.email : currentUser.email,
+                phone: req.body.phone ? req.body.phone : currentUser.phone,
+                userId: req._id ? req._id : req.body.userId
+            },
+            planDetails: {
+                paymentStatus: 'Success',
+                payableTotal: String(req.body.payableTotal),
+                planPrice: req.body.planPrice,
+                planName: req.body.planName,
+                planDuration: req.body.planDuration,
+                goals: req.body.goals,
+                age: req.body.age,
+                height: req.body.height,
+                weight: req.body.weight,
+                loseOrGain: req.body.loseOrGain,
+                goingGym: req.body.goingGym,
+                foodType: req.body.foodType,
+                medicalIssue: req.body.medicalIssue,
+                foodAllergy: req.body.foodAllergy,
+            },
+        });
+        postOrder.save().then(() => {
+            sendDietMail(req, currentUser);
+            return res.status(200).send({
+                success: true,
+                message: 'Order Placed Successfully',
+            });
+        }).catch((err) => {
+            console.log("then catch err", err)
+            return next(err);
+        });
+    } catch (err) {
+        console.log("try catch err", err)
+        return next(err);
+    }
+
 }

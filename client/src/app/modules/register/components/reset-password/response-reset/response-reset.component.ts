@@ -58,9 +58,6 @@ export class ResponseResetComponent implements OnInit {
         confirmPassword: ['', [Validators.required, Validators.minLength(4)]]
       }, 
       // { asvalidator: this.matchingInputsValidator('newPassword', 'confirmNewPassword') }
-      {
-        validator: this.Validate(this.ResponseResetForm),
-      }
     );
   }
 
@@ -100,8 +97,9 @@ export class ResponseResetComponent implements OnInit {
     };
   }
 
-
   ResetPassword(form: FormGroup) {
+    this.errorMessage = '';
+    this.successMessage = '';
     if (form.valid) {
       this.isLoading = true;
       this.IsResetFormValid = true;
@@ -122,6 +120,6 @@ export class ResponseResetComponent implements OnInit {
           }
         }
       );
-    } else { this.IsResetFormValid = false; }
+    } else { this.IsResetFormValid = false;  }
   }
 }

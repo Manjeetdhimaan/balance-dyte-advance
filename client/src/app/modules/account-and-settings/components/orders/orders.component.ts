@@ -22,7 +22,7 @@ export class OrdersComponent implements OnInit {
     if (this.isLoggedIn()) {
       this.isLoading = true;
       this.userApiService.getUserOrders().subscribe((res: any) => {
-        this.orders = res['orders'];
+        this.orders = res['orders'].slice().reverse();
         this.getTotalOfOrders()
         this.isLoading = false;
       }, err => {
