@@ -13,11 +13,6 @@
                     </div>
                     <ul >
                         <li *ngFor="let inclusion of plan.inclusions"><i class='bx bx-check'></i> {{ inclusion }}</li>
-                        <!-- <li><i class='bx bx-check'></i> Meal Plans & Analysis</li>
-                        <li><i class='bx bx-check'></i> Weight Assessment</li>
-                        <li><i class='bx bx-check'></i> Physical Activities</li>
-                        <li><i class='bx bx-check'></i> Client Monitoring</li>
-                        <li><i class='bx bx-check'></i> 24/7 Support</li> -->
                     </ul>
                     <div class="price-btn-area text-center">
                         <a [routerLink]="plan['planUrlLink']" (click)="scrollTop()" class="default-btn">{{ plan['selectPlanBtnName'] }}</a>

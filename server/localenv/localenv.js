@@ -3,7 +3,7 @@
  module.exports.LOCAL_JWT_SECRET =  "secret123@123#123";
  module.exports.LOCAL_JWT_EXP =  "112m";
  module.exports.LOCAL_NODE_ENV =  "development";
- module.exports.LOCAL_key_id =  "rzp_test_wXa2Z3zlloChOf";
- module.exports.LOCAL_key_secret =  "4ctvv46LOU1NVQhIRF1kAN0l";
+ module.exports.LOCAL_key_id =  "rzp_live_O9DAoCvmp5KtL1";
+ module.exports.LOCAL_key_secret =  "3DwNFRAZqt6PRBTq0Is5f61c";
  module.exports.LOCAL_MAILER_AUTH_EMAIL =  "manjeetdhimaan60@gmail.com";
  module.exports.LOCAL_MAILER_AUTH_PASS =  "lpaqbtmffjmepylc";

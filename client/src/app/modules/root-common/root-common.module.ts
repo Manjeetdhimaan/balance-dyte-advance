@@ -11,6 +11,7 @@ import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-poli
 import { ContactComponent } from './components/contact/contact.component';
 import { PlanDetailsComponent } from './components/plan-details/plan-details.component';
 import { DietPlansComponent } from './components/diet-plans/diet-plans.component';
+import { TermsConditionsComponent } from './components/terms-conditions/terms-conditions.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { DietPlansComponent } from './components/diet-plans/diet-plans.component
     PrivacyPolicyComponent,
     ContactComponent,
     PlanDetailsComponent,
-    DietPlansComponent
+    DietPlansComponent,
+    TermsConditionsComponent
   ],
   imports: [
     CommonModule,

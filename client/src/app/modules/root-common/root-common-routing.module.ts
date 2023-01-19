@@ -6,6 +6,7 @@ import { DietPlansComponent } from './components/diet-plans/diet-plans.component
 import { HomeComponent } from './components/home/home.component';
 import { PlanDetailsComponent } from './components/plan-details/plan-details.component';
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
+import { TermsConditionsComponent } from './components/terms-conditions/terms-conditions.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,9 @@ const routes: Routes = [
     },
     {
         path: 'privacy-policy', component: PrivacyPolicyComponent, data: {title: 'Privacy Policy'}
+    },
+    {
+        path: 'terms-conditions', component: TermsConditionsComponent, data: {title: 'Terms and Conditions'}
     },
     {
         path: 'contact', component: ContactComponent, data: {title: 'Contact Us'}

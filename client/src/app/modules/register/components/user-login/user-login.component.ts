@@ -1,13 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { fade } from 'src/app/shared/common/animations';
 import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
 import { UserApiService } from 'src/app/shared/services/user-api.service';
 
 @Component({
   selector: 'app-user-login',
   templateUrl: './user-login.component.html',
-  styleUrls: ['./user-login.component.css']
+  styleUrls: ['./user-login.component.css'],
+  animations: [
+    fade
+  ]
 })
 export class UserLoginComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private userApiService: UserApiService, private router: Router, private toastMessageService: ToasTMessageService) { }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { fade } from 'src/app/shared/common/animations';
 import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
 import { UserApiService } from 'src/app/shared/services/user-api.service';
 import { environment } from 'src/environments/environment';
@@ -8,7 +9,10 @@ import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-request-reset',
   templateUrl: './request-reset.component.html',
-  styleUrls: ['./request-reset.component.css']
+  styleUrls: ['./request-reset.component.css'],
+  animations: [
+    fade
+  ]
 })
 export class RequestResetComponent implements OnInit {
   RequestResetForm: FormGroup;

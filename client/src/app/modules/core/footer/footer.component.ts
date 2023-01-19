@@ -7,6 +7,8 @@ import { Component } from '@angular/core';
 })
 export class FooterComponent {
 
+  currentYear = new Date().getFullYear()
+
   scrollTop() {
     window.scrollTo({
       top: 0,

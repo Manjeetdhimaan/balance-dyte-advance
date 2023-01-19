@@ -71,7 +71,7 @@ const sendResetPasswordMail = (req, user) => {
     const mailOptions = {
         to: user.email,
         from: user.email,
-        subject: 'Employee Management Password Reset',
+        subject: 'Password Reset from ' + req.body.domain,
         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
             'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
             req.body.domain + '/user/response-reset-password/' + user.resettoken + '\n\n' +
@@ -128,7 +128,6 @@ module.exports.postRegisterUser = async (req, res, next) => {
                 message: 'User added succussfully!'
             });
         }).catch(err => {
-            console.log(err);
             if (err.code == 11000)
                 return res.status(409).send({
                     success: false,
@@ -150,7 +149,6 @@ module.exports.postRegisterUserAndCreateOrder = async (req, res, next) => {
         newUser.email = req.body.email;
         newUser.password = User.hashPassword(req.body.password);
         newUser.confirmPassword = req.body.confirmPassword;
-        // user.password = User.hashPassword(req.body.password);
         newUser.phone = req.body.phone;
         newUser.gender = req.body.gender;
         newUser.goals = req.body.goals;
@@ -183,11 +181,10 @@ module.exports.postRegisterUserAndCreateOrder = async (req, res, next) => {
                 amount: +req.body.payableTotal * 100, // amount in the smallest currency unit
                 currency: "INR",
                 receipt: "order_rcptid_11",
-                payment_capture: 1.00
+                payment_capture: +req.body.payableTotal * 100
             };
             instance.orders.create(options, (err, order) => {
                 if (err) {
-                    console.log('orderEr', err);
                     return next(err);
                 }
                 if (order) {
@@ -219,13 +216,13 @@ module.exports.postRegisterUserAndCreateOrder = async (req, res, next) => {
 
 module.exports.postCreateOrder = async (req, res, next) => {
     try {
-        const currentUser = await User.findById(req._id).then((user) => {
-            return user;
-        });
+        // const currentUser = await User.findById(req._id).then((user) => {
+        //     return user;
+        // });
         let options = {
             amount: +req.body.payableTotal * 100, // amount in the smallest currency unit
             currency: "INR",
-            payment_capture: 1.00
+            payment_capture: +req.body.payableTotal * 100
         };
         instance.orders.create(options, (err, order) => {
             if (err) {
@@ -278,12 +275,12 @@ module.exports.getUserProfile = (req, res, next) => {
         }).then(user => {
             if (!user) {
                 return res.status(404).json({
-                    status: false,
+                    success: false,
                     message: 'User record not found.'
                 });
             } else {
                 return res.status(200).json({
-                    status: true,
+                    success: true,
                     user: user
                 });
             }
@@ -381,12 +378,12 @@ module.exports.getUserOrders = (req, res, next) => {
         }).then(orders => {
             if (!orders || orders.length < 1) {
                 return res.status(404).json({
-                    status: false,
+                    success: false,
                     message: 'No Orders found.'
                 });
             } else {
                 return res.status(200).json({
-                    status: true,
+                    success: true,
                     orders: orders
                 });
             }
@@ -410,18 +407,18 @@ module.exports.getUserOrder = (req, res, next) => {
 
                 if (!order[0]['user']['userId'].equals(req._id)) {
                     return res.status(401).send({
-                        status: false,
+                        success: false,
                         message: 'Not Authenticated.'
                     });
                 } else {
                     return res.status(200).json({
-                        status: true,
+                        success: true,
                         order: order
                     });
                 }
             } else {
                 return res.status(401).send({
-                    status: false,
+                    success: false,
                     message: 'No order found with this id.'
                 });
             }
@@ -555,6 +552,9 @@ module.exports.newPassword = async (req, res) => {
     User.findOne({
         resettoken: req.body.resettoken
     }, function (err, user, next) {
+        if (err) {
+            return next(err);
+        }
         if (!user) {
             return res
                 .status(409)
@@ -634,12 +634,9 @@ module.exports.postOrderResponse = async (req, res, next) => {
                 message: 'Order Placed Successfully',
             });
         }).catch((err) => {
-            console.log("then catch err", err)
             return next(err);
         });
     } catch (err) {
-        console.log("try catch err", err)
         return next(err);
     }
-
 }

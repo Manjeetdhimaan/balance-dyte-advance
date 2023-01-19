@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SpinnerComponent } from './components/ui-components/spinner/spinner.component';
 import { AccordionComponent } from './components/ui-components/accordion/accordion.component';
 import { AccordionItemComponent } from './components/ui-components/accordion/accordion-item/accordion-item.component';
+import { NutritiousFoodsComponent } from './components/resusable-components/nutritious-foods/nutritious-foods.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { AccordionItemComponent } from './components/ui-components/accordion/acc
     ModelComponent,
     SpinnerComponent,
     AccordionComponent,
-    AccordionItemComponent
+    AccordionItemComponent,
+    NutritiousFoodsComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,8 @@ import { AccordionItemComponent } from './components/ui-components/accordion/acc
     ModelComponent,
     SpinnerComponent,
     AccordionComponent,
-    AccordionItemComponent
+    AccordionItemComponent,
+    NutritiousFoodsComponent
   ]
 })
 export class SharedModule { }

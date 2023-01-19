@@ -12,9 +12,9 @@ const path = require('path');
 const compression = require('compression')
 
 const localENV = require('./localenv/localenv');
+const userRoutes = require('./routes/user.routes');
 
 const PORT = process.env.PORT || localENV.LOCAL_PORT;
-const userRoutes = require('./routes/user.routes');
 // const rtsAdmin = require('./routes/admin.router');
 
 const app = express();
@@ -53,8 +53,6 @@ app.use(express.static(path.join(__dirname, 'www')));
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'www/index.html'));
 });
-
-
 
 // start server
 app.listen(PORT, () => console.log(`Server started at port : ${PORT}`));

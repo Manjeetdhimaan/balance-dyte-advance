@@ -1,14 +1,12 @@
-<div class="banner-area">
+<div class="banner-area" [@fade]="'active'">
     <div class="container">
         <div class="banner-content wow animate__animated animate__fadeInUp" data-wow-delay="00ms"
             data-wow-duration="1000ms">
             <h1 class="wow animate__animated animate__fadeInLeft" data-wow-delay="100ms" data-wow-duration="1000ms">
-                Nourishing with Healthy Food <b>Choices</b></h1>
-            <p class="wow animate__animated animate__fadeInLeft" data-wow-delay="200ms" data-wow-duration="1000ms">Lorem
-                ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                magna aliqua. Quis ipsum </p>
-            <a routerLink="about" (click)="scrollTop()" class="default-btn  wow animate__animated animate__fadeInLeft" data-wow-delay="300ms"
-                data-wow-duration="1200ms">Learn More</a>
+                Are you struggling with your <b>weight?</b></h1>
+            <p class="wow animate__animated animate__fadeInLeft" data-wow-delay="200ms" data-wow-duration="1000ms">Balance Dyte is a cutting edge lifestyle and nutrition program that offers you exactly what you need to achieve optimum health and weight loss. </p>
+            <a routerLink="/diet-plans" (click)="scrollTop()" class="default-btn  wow animate__animated animate__fadeInLeft" data-wow-delay="300ms"
+                data-wow-duration="1200ms">Get Plans</a>
             <div class="banner-shape">
                 <img src="assets/images/shape/shape1.png" alt="Banner Images">
                 <img src="assets/images/shape/shape2.png" alt="Banner Images">
@@ -26,27 +24,24 @@
                 <div class="banner-bottom-card">
                     <i class="flaticon-calendar-1"></i>
                     <h3>Daily Exercise</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna </p>
-                    <a routerLink="about" (click)="scrollTop()" class="learn-btn">Learn More</a>
+                    <p>A daily exercise is important for both mental and physical health. But, some people lack the motivation to perform a daily exercise routine. Balance Dyte can help you in this matter. </p>
+                    <a routerLink="/about" (click)="scrollTop()" class="learn-btn">Learn More</a>
                 </div>
             </div>
             <div class="col-lg-4 col-sm-6">
                 <div class="banner-bottom-card">
                     <i class="flaticon-diet"></i>
                     <h3>Natural Foods</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna </p>
-                    <a routerLink="about" (click)="scrollTop()" class="learn-btn">Learn More</a>
+                    <p>The balance of the nutrients in natural foods is very important for a healthy living. Here we describe the major benefits of natural food, how to include them in your diet and how they can help you maintain healthy weight, joints, heart and digestion. </p>
+                    <a routerLink="/about" (click)="scrollTop()" class="learn-btn">Learn More</a>
                 </div>
             </div>
             <div class="col-lg-4 col-sm-6">
                 <div class="banner-bottom-card">
                     <i class="flaticon-plan"></i>
                     <h3>Nutrition Plans</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna </p>
-                    <a routerLink="about" (click)="scrollTop()" class="learn-btn">Learn More</a>
+                    <p>To maintain good health and sound body you must follow a balanced diet plan. A balance diet is the proper mixture of all nutrients in our daily meals to keep us healthy. </p>
+                    <a routerLink="/about" (click)="scrollTop()" class="learn-btn">Learn More</a>
                 </div>
             </div>
         </div>
@@ -61,12 +56,9 @@
                 <div class="about-content">
                     <div class="section-title">
                         <span>About Us</span>
-                        <h2>Change Your Life in the next 90 Days of <b>Practice</b></h2>
+                        <h2>Get your customized diet plan from our team of experienced <b>Dieticians and Nutritionists.</b></h2>
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore et dolore magna aliqua.
-                            Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel
-                            facilisis.
+                            You’ve come to the right place! We’re dietitians with years of experience, who have worked with many clients and have received positive results. We're ready to help you achieve your goals.
                         </p>
                     </div>
                     <h3>Nutrition Special Features</h3>
@@ -92,13 +84,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <!-- <div class="col-lg-6">
                 <div class="about-play-btn">
                     <a href="https://www.youtube.com/watch?v=Zd00oIDAt60" class="play-btn">
                         <i class='bx bxs-right-arrow'></i>
                     </a>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
     <div class="about-shape">
@@ -109,440 +101,7 @@
     </div>
 </div>
 
-
-<div class="diet-plan-area pt-100 pb-70">
-    <div class="container">
-        <div class="section-title text-center">
-            <span>Diet Plan</span>
-            <h2>Our Weekly Diet Plan</h2>
-        </div>
-        <div class="tab diet-tab pt-45">
-            <div class="row">
-                <div class="col-lg-12">
-                    <ul class="tabs">
-                        <li>
-                            Saturday
-                        </li>
-                        <li>
-                            Sunday
-                        </li>
-                        <li>
-                            Monday
-                        </li>
-                        <li>
-                            Tuesday
-                        </li>
-                        <li>
-                            Wednesday
-                        </li>
-                        <li>
-                            Thursday
-                        </li>
-                        <li>
-                            Friday
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-lg-12 col-md-12">
-                    <div class="tab_content current active pt-45">
-                        <div class="tabs_item current">
-                            <div class="row align-items-center">
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan1.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Breakfast</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Quick and Easy Healthy Breakfast Ideas</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan2.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Dinner</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Delicious Spicy Thai Crab Recipe</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan3.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Breakfast</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Avocado Toast with Spinach and Poach Egg</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan4.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Lunch</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Avocado with Lemonade Fresh Salad Dish</a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tabs_item">
-                            <div class="row align-items-center">
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan3.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Breakfast</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Avocado Toast with Spinach and Poach Egg</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan4.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Lunch</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Avocado with Lemonade Fresh Salad Dish</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan1.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Breakfast</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Quick and Easy Healthy Breakfast Ideas</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan2.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Dinner</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Delicious Spicy Thai Crab Recipe</a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tabs_item">
-                            <div class="row align-items-center">
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan1.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Breakfast</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Quick and Easy Healthy Breakfast Ideas</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan2.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Dinner</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Delicious Spicy Thai Crab Recipe</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan3.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Breakfast</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Avocado Toast with Spinach and Poach Egg</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan4.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Lunch</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Avocado with Lemonade Fresh Salad Dish</a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tabs_item">
-                            <div class="row align-items-center">
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan3.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Breakfast</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Avocado Toast with Spinach and Poach Egg</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan4.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Lunch</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Avocado with Lemonade Fresh Salad Dish</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan1.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Breakfast</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Quick and Easy Healthy Breakfast Ideas</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan2.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Dinner</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Delicious Spicy Thai Crab Recipe</a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tabs_item">
-                            <div class="row align-items-center">
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan1.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Breakfast</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Quick and Easy Healthy Breakfast Ideas</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan2.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Dinner</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Delicious Spicy Thai Crab Recipe</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan3.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Breakfast</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Avocado Toast with Spinach and Poach Egg</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan4.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Lunch</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Avocado with Lemonade Fresh Salad Dish</a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tabs_item">
-                            <div class="row align-items-center">
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan3.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Breakfast</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Avocado Toast with Spinach and Poach Egg</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan4.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Lunch</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Avocado with Lemonade Fresh Salad Dish</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan1.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Breakfast</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Quick and Easy Healthy Breakfast Ideas</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan2.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Dinner</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Delicious Spicy Thai Crab Recipe</a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tabs_item">
-                            <div class="row align-items-center">
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan3.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Breakfast</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Avocado Toast with Spinach and Poach Egg</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan4.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Lunch</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Avocado with Lemonade Fresh Salad Dish</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan1.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Breakfast</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Quick and Easy Healthy Breakfast Ideas</a></h3>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6">
-                                    <div class="diet-plan-card">
-                                        <div class="diet-plan-img">
-                                            <a >
-                                                <img src="assets/images/diet-plan/diet-plan2.jpg" alt="Images">
-                                            </a>
-                                            <div class="tag">
-                                                <a >Dinner</a>
-                                            </div>
-                                        </div>
-                                        <h3><a >Delicious Spicy Thai Crab Recipe</a></h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<app-nutritious-foods></app-nutritious-foods>
 
 
 <div class="appointment-area pt-100 pb-70">
@@ -604,70 +163,6 @@
     </div>
 </div>
 
-
-<div class="event-area pt-100 pb-70">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="event-content">
-                    <div class="section-title">
-                        <span>Healthy Living Events</span>
-                        <h2>Health Seminar <b>Schedule</b></h2>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="content">
-                                <div class="event-date">
-                                    <h2>22 <br>May</h2>
-                                    <img src="assets/images/event/event-bg.png" alt="Images">
-                                </div>
-                                <h3><a routerLink="contact" (click)="scrollTop()">Meal Planning Made Easy </a></h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna</p>
-                                <a routerLink="contact" (click)="scrollTop()"><i class='bx bx-map'></i> 123 state road orland, Fl 78965423</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="content">
-                                <div class="event-date">
-                                    <h2>24 <br>May</h2>
-                                    <img src="assets/images/event/event-bg.png" alt="Images">
-                                </div>
-                                <h3><a routerLink="contact" (click)="scrollTop()">Physical Activity Presentation</a></h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna</p>
-                                <a routerLink="contact" (click)="scrollTop()"><i class='bx bx-map'></i> 20 bellies road west world Berlin</a>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="content">
-                                <div class="event-date">
-                                    <h2>10 <br>June</h2>
-                                    <img src="assets/images/event/event-bg.png" alt="Images">
-                                </div>
-                                <h3><a routerLink="contact" (click)="scrollTop()">Building Healthy Communities</a></h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                    incididunt ut labore et dolore magna</p>
-                                <a routerLink="contact" (click)="scrollTop()"><i class='bx bx-map'></i> 25 st fedriz road, Nortambia North
-                                    South</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6">
-                <div class="event-img">
-                    <img src="assets/images/event/event-img.jpg" alt="Images">
-                    <div class="sub-img">
-                        <img src="assets/images/event/event-sub-img.png" alt="Images">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 <div class="testimonials-area ptb-100">
     <div class="container">
         <div class="testimonials-slider owl-carousel owl-theme">
@@ -725,8 +220,6 @@
         </div>
     </div>
 </div>
-
-
 <app-pricing-plan [pricingPlanData]="pricingPlanData"></app-pricing-plan>
 
 

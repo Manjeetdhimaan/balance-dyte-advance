@@ -1,4 +1,4 @@
-<div class="inner-banner inner-bg2">
+<div class="inner-banner inner-bg2" [@fade]="'active'">
     <div class="container">
         <div class="inner-title text-center">
             <h3>Contact Us</h3>
@@ -19,8 +19,7 @@
                 <div class="contact-info">
                     <span>Contact Info</span>
                     <h2>Let's Connect With Us</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam imperdiet varius mi, ut
-                        hendrerit magna mollis ac. </p>
+                    <p>Balance Dyte is the place for everything health related.</p>
                     <ul>
                         <li>
                             <div class="content">
@@ -31,9 +30,11 @@
                         </li>
                         <li>
                             <div class="content">
-                                <i class='bx bxs-map'></i>
-                                <h3>Address</h3>
-                                <span>5ut, Stamford South, Newzeland</span>
+                                <i class='bx bxl-instagram'></i>
+                                <h3>Instagram</h3>
+                                <span><a href="https://www.instagram.com/balancedyte/" target="_blank">
+                                    Balance Dyte Instagram profile 
+                                </a></span>
                             </div>
                         </li>
                         <li>
@@ -41,9 +42,7 @@
                                 <i class='bx bx-message'></i>
                                 <h3>Contact Info</h3>
                                 <a
-                                    href="https://templates.hibootstrap.com/cdn-cgi/l/email-protection#eb838e878784ab8a999984878ac5888486"><span
-                                        class="__cf_email__"
-                                        data-cfemail="c3aba6afafac83a2b1b1acafa2eda0acae">[email&#160;protected]</span></a>
+                                    href="mailto:balancedyte@gmail.com">balancedyte@gmail.com</a>
                             </div>
                         </li>
                     </ul>
@@ -95,8 +94,8 @@
                                 <div class="agree-label">
                                     <input type="checkbox" id="chb1">
                                     <label for="chb1">
-                                        Accept <a href="terms-condition.html">Terms & Conditions</a> And <a
-                                            href="privacy-policy.html">Privacy Policy.</a>
+                                        Accept <a routerLink="/terms-conditions" (click)="scrollTop()">Terms & Conditions</a> And <a
+                                        routerLink="/privacy-policy" (click)="scrollTop()">Privacy Policy.</a>
                                     </label>
                                 </div>
                             </div>
@@ -112,13 +111,5 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-
-<div class="map-area">
-    <div class="container-fluid m-0 p-0">
-        <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5928042.1940770075!2d165.88090651337563!3d-43.49082204427353!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa82a57f80ab40ad3%3A0x31fd410f8a3e86eb!2sTe%20Waipounamu%20%2F%20South%20Island!5e0!3m2!1sen!2sbd!4v1623698279996!5m2!1sen!2sbd"></iframe>
     </div>
 </div>

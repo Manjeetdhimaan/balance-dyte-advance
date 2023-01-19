@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { fade } from 'src/app/shared/common/animations';
 import { RegexEnum } from 'src/app/shared/common/constants/regex';
 import { PricingPlan } from 'src/app/shared/models/pricing-plan/pricing-plan.model';
 
@@ -14,7 +15,10 @@ declare let Razorpay: any;
 @Component({
   selector: 'app-plan-details',
   templateUrl: './plan-details.component.html',
-  styleUrls: ['./plan-details.component.css']
+  styleUrls: ['./plan-details.component.css'],
+  animations: [
+    fade
+  ]
 })
 export class PlanDetailsComponent implements OnInit {
   constructor(private pricingPlanService: PricingPlanService, private router: Router, private fb: FormBuilder, private userApiService: UserApiService, private toastMessageService: ToasTMessageService) { }
@@ -32,7 +36,6 @@ export class PlanDetailsComponent implements OnInit {
   userId: string;
 
   ngOnInit(): void {
-    this.scrollTop();
     // user form
     this.userForm = this.fb.group({
       fullName: new FormControl('', [Validators.required]),
@@ -74,6 +77,7 @@ export class PlanDetailsComponent implements OnInit {
 
 
     if (this.isLoggedIn()) {
+      this.isLoading = true;
       this.userForm.controls['fullName'].setErrors(null);
       this.userForm.controls['fullName'].clearValidators();
       this.userForm.controls['email'].setErrors(null);
@@ -98,6 +102,10 @@ export class PlanDetailsComponent implements OnInit {
           medicalIssue: res['user']['medicalIssue'],
           foodAllergy: res['user']['foodAllergy']
         })
+        this.isLoading = false;
+      }, err => {
+        this.isLoading = false;
+        this.toastMessageService.error(err.error.message);
       })
     }
   }
@@ -130,7 +138,7 @@ export class PlanDetailsComponent implements OnInit {
     "currency": "INR",
     "name": "Acme Corp",
     "description": "Test Transaction",
-    "image": "https://www.balancedyte.dopedigital.in/assets/images/logo/7.png",
+    "image": "/assets/images/logo/balancedyte-logo.png",
     "order_id": "order_IluGWxBm9U8zJ8", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
     "handler": (res: any) => {
       console.log(res);
@@ -169,9 +177,7 @@ export class PlanDetailsComponent implements OnInit {
 
       const formObj = Object.assign({}, formBody, { domain: environment.domain, order_id: this.razorOrderId, userId: this.userId });
 
-      console.log(formObj)
       this.userApiService.postOrderResponse(formObj).subscribe((res: any) => {
-        console.log(res);
         this.isLoading = false;
         this.razorPayResMsg = res['message']
         this.toastMessageService.success(res['message']);
@@ -224,7 +230,6 @@ export class PlanDetailsComponent implements OnInit {
       this.userApiService.postRegisterUserAndPlaceOrder(formObj).subscribe((res: any) => {
         this.isLoading = false;
         // this.toastMessageService.success(res['message']);
-        console.log(res);
         this.userId = res['userId'];
         this.razorPayOptions.key = res['key'];
         this.razorPayOptions.amount = res['value']['amount'];
@@ -234,7 +239,6 @@ export class PlanDetailsComponent implements OnInit {
         this.razorPayOptions.handler = this.razorPayResponseHandler.bind(this);
         let rzp1 = new Razorpay(this.razorPayOptions);
         rzp1.open();
-        console.log('razorpay opened');
         rzp1.on('payment.failed', (response: any) => {
           // Todo - store this information in the server
           console.log(response);
@@ -284,7 +288,6 @@ export class PlanDetailsComponent implements OnInit {
       }
       const formObj = Object.assign({}, formBody, { domain: environment.domain });
       this.userApiService.postPlaceOrder(formObj).subscribe((res: any) => {
-        console.log(res);
         this.isLoading = false;
         this.userId = res['userId'];
         // this.toastMessageService.success(res['message']);
@@ -346,7 +349,6 @@ export class PlanDetailsComponent implements OnInit {
   //   backdrop.style.opacity = '0';
   //   const model = document.getElementById('custom-modal') as HTMLElement;
   //   model.style.transform = 'translateY(100vh)';
-  //   console.log('clicked')
   // }
 
 }
