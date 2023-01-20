@@ -17,6 +17,8 @@ router.get('/getUserOrders',jwtHelper.verifyJwtToken, ctrlUser.getUserOrders);
 router.get('/getUserOrder/:orderId',jwtHelper.verifyJwtToken, ctrlUser.getUserOrder);
 router.put('/change-password', jwtHelper.verifyJwtToken, ctrlUser.putChangePassword);
 
+router.post('/post-contact-form', ctrlUser.postContactForm);
+
 // password reset
 router.post('/req-reset-password', ctrlUser.resetPassword);
 router.post('/new-password', ctrlUser.newPassword);

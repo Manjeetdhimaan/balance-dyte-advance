@@ -32,9 +32,11 @@
                             <div class="content">
                                 <i class='bx bxl-instagram'></i>
                                 <h3>Instagram</h3>
-                                <span><a href="https://www.instagram.com/balancedyte/" target="_blank">
-                                    Balance Dyte Instagram profile 
-                                </a></span>
+                                <span><a
+                                        href="https://www.instagram.com/balancedyte/"
+                                        target="_blank">
+                                        Balance Dyte Instagram profile
+                                    </a></span>
                             </div>
                         </li>
                         <li>
@@ -51,51 +53,164 @@
             <div class="col-lg-8">
                 <div class="contact-form">
                     <h3>Contact With Us!</h3>
-                    <form id="contactForm">
+                    <form id="contactForm" [formGroup]="contactForm"
+                        (ngSubmit)="submitContactForm(contactForm)">
                         <div class="row">
                             <div class="col-lg-6">
-                                <div class="form-group">
-                                    <input type="text" name="name" id="name" class="form-control" required
-                                        data-error="Please Enter Your Name" placeholder="Name*">
-                                    <div class="help-block with-errors"></div>
+                                <div class="form-group"
+                                    [ngClass]="(f['fullName'].invalid &&
+                                    ((f['fullName'].dirty ||
+                                    f['fullName'].touched))) ||
+                                    (f['fullName'].hasError('required') &&
+                                    submitted) ? 'has-error':''">
+                                    <input type="text"
+                                        formControlName="fullName" id="name"
+                                        class="form-control" required
+                                        data-error="Please Enter Your Name"
+                                        placeholder="Name*">
+                                    <div class="error-msg"
+                                        *ngIf="(f['fullName'].hasError('required')
+                                        && f['fullName'].touched) ||
+                                        (f['fullName'].hasError('required') &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Please
+                                        enter your name.
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="form-group">
-                                    <input type="email" name="email" id="email" class="form-control" required
-                                        data-error="Please Enter Your Email" placeholder="Email*">
-                                    <div class="help-block with-errors"></div>
+                                <div class="form-group"
+                                    [ngClass]="(f['email'].invalid &&
+                                    ((f['email'].dirty ||
+                                    f['email'].touched))) ||
+                                    (f['email'].hasError('required') &&
+                                    submitted) ? 'has-error':''">
+                                    <input type="email" formControlName="email"
+                                        id="email"
+                                        class="form-control" required
+                                        data-error="Please Enter Your Email"
+                                        placeholder="Email*">
+                                    <div class="error-msg"
+                                        *ngIf="(f['email'].hasError('required')
+                                        && f['email'].touched) ||
+                                        (f['email'].hasError('required') &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Please
+                                        enter email address.
+                                    </div>
+                                    <div class="error-msg"
+                                        *ngIf="(f['email'].hasError('pattern')
+                                        && f['email'].touched) ||
+                                        (f['email'].hasError('pattern') &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Please
+                                        enter a valid email address.
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="form-group">
-                                    <input type="text" name="phone_number" id="phone_number" required
-                                        data-error="Please Enter Your number" class="form-control"
+                                <div class="form-group"
+                                    [ngClass]="(f['phone'].invalid &&
+                                    ((f['phone'].dirty ||
+                                    f['phone'].touched))) ||
+                                    (f['phone'].hasError('required') &&
+                                    submitted) ? 'has-error':''">
+                                    <input type="text" formControlName="phone"
+                                        id="phone_number" required
+                                        data-error="Please Enter Your number"
+                                        class="form-control"
                                         placeholder="Phone Number*">
-                                    <div class="help-block with-errors"></div>
+                                    <div class="error-msg"
+                                        *ngIf="(f['phone'].hasError('required')
+                                        && f['phone'].touched) ||
+                                        (f['phone'].hasError('required') &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Please
+                                        enter your phone number.
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <div class="form-group">
-                                    <input type="text" name="msg_subject" id="msg_subject" class="form-control"
-                                        required data-error="Please Enter Your Subject" placeholder="Your Subject*">
-                                    <div class="help-block with-errors"></div>
+                                <div class="form-group"
+                                [ngClass]="(f['subject'].hasError('required') &&
+                                    ((f['subject'].dirty ||
+                                    f['subject'].touched))) ||
+                                    ((f['subject'].hasError('minlength') &&
+                                    ((f['subject'].dirty &&
+                                    f['subject'].touched)))) ||
+                                    ((f['subject'].invalid &&
+                                    submitted)) ? 'has-error':''">
+                                    <input type="text" formControlName="subject"
+                                        id="msg_subject" class="form-control"
+                                        required data-error="Please Enter Your
+                                        Subject" placeholder="Your Subject*">
+                                        <div class="error-msg"
+                                        *ngIf="(f['subject'].hasError('required')
+                                        && f['subject'].touched) ||
+                                        (f['subject'].hasError('required') &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Please
+                                        enter subject of your message.
+                                    </div>
+                                        <div class="error-msg"
+                                        *ngIf="(f['subject'].hasError('minlength')
+                                        && f['subject'].touched) ||
+                                        (f['subject'].hasError('minlength') &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Minimum 4 characters required.
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12">
-                                <div class="form-group">
-                                    <textarea name="message" class="form-control" id="message" cols="30" rows="5"
-                                        required data-error="Write your message"
+                                <div class="form-group"
+                                [ngClass]="(f['message'].hasError('required') &&
+                                    ((f['message'].dirty ||
+                                    f['message'].touched))) ||
+                                    ((f['message'].hasError('minlength') &&
+                                    ((f['message'].dirty &&
+                                    f['message'].touched)))) ||
+                                    ((f['message'].invalid &&
+                                    submitted)) ? 'has-error':''">
+                                    <textarea formControlName="message"
+                                        class="form-control" id="message"
+                                        cols="30" rows="5"
+                                        data-error="Write your message"
                                         placeholder="Your Message*"></textarea>
-                                    <div class="help-block with-errors"></div>
+                                        <div class="error-msg"
+                                        *ngIf="(f['message'].hasError('required')
+                                        && f['message'].touched) ||
+                                        (f['message'].hasError('required') &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Please
+                                        enter your message.
+                                    </div>
+                                        <div class="error-msg"
+                                        *ngIf="(f['message'].hasError('minlength')
+                                        && f['message'].touched) ||
+                                        (f['message'].hasError('minlength') &&
+                                        submitted)">
+                                        <i aria-hidden="true" class="fa
+                                            fa-exclamation-triangle"></i> Minimum 6 characters required.
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-12 col-md-12">
                                 <div class="agree-label">
                                     <input type="checkbox" id="chb1">
                                     <label for="chb1">
-                                        Accept <a routerLink="/terms-conditions" (click)="scrollTop()">Terms & Conditions</a> And <a
-                                        routerLink="/privacy-policy" (click)="scrollTop()">Privacy Policy.</a>
+                                        Accept <a routerLink="/terms-conditions"
+                                            (click)="scrollTop()">Terms &
+                                            Conditions</a> And <a
+                                            routerLink="/privacy-policy"
+                                            (click)="scrollTop()">Privacy
+                                            Policy.</a>
                                     </label>
                                 </div>
                             </div>
@@ -103,7 +218,8 @@
                                 <button type="submit" class="default-btn">
                                     Send Message
                                 </button>
-                                <div id="msgSubmit" class="h3 text-center hidden"></div>
+                                <div id="msgSubmit" class="h3 text-center
+                                    hidden"></div>
                                 <div class="clearfix"></div>
                             </div>
                         </div>
@@ -113,3 +229,5 @@
         </div>
     </div>
 </div>
+
+<app-spinner *ngIf="isLoading"></app-spinner>

@@ -87,7 +87,7 @@ export class ProfileComponent implements OnInit {
         this.userApiService.postUpdateUserProfile(formData).subscribe((res: any) => {
           // this.showSucessMessage = true;
           this.toastMessageService.success(res['message']);
-          Object.keys( this.userForm.controls).forEach(key => {
+          Object.keys(this.userForm.controls).forEach(key => {
             this.userForm.controls[key].markAsPristine();
            });
           this.isLoading = false;

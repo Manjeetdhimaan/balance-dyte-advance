@@ -18,7 +18,6 @@ export class OrdersComponent implements OnInit {
 
   ngOnInit(): void {
     this.scrollTop();
-
     if (this.isLoggedIn()) {
       this.isLoading = true;
       this.userApiService.getUserOrders().subscribe((res: any) => {
@@ -26,12 +25,11 @@ export class OrdersComponent implements OnInit {
         this.getTotalOfOrders()
         this.isLoading = false;
       }, err => {
-        this.toastMessageService.info(err['error']['message']);
+        // this.toastMessageService.info(err['error']['message']);
         this.isLoading = false;
-        console.log(err)
+        console.log(err);
       })
     }
-
   }
 
   isLoggedIn() {
@@ -42,7 +40,7 @@ export class OrdersComponent implements OnInit {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
-    })
+    });
   }
 
   onNavigate(orderId: string) {
@@ -55,7 +53,6 @@ export class OrdersComponent implements OnInit {
     this.orders.map((el: any) => {
       totalAmount += Number(el['planDetails']['payableTotal']);
       totalDuration += Number(el['planDetails']['planDuration'].slice(0, 1));
-
     });
     return {totalAmount:totalAmount, totalDuration: totalDuration};
   }

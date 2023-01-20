@@ -329,6 +329,9 @@ module.exports.patchUpdateUserProfile = (req, res, next) => {
                     if (req.body.age) {
                         foundedObject.age = req.body.age;
                     }
+                    if (req.body.gender) {
+                        foundedObject.gender = req.body.gender;
+                    }
                     if (req.body.height) {
                         foundedObject.height = req.body.height;
                     }
@@ -482,7 +485,7 @@ module.exports.putChangePassword = (req, res, next) => {
 module.exports.resetPassword = async (req, res) => {
     if (!req.body.email) {
         return res.status(500).json({
-            message: 'Email is required'
+            message: 'Email is required.'
         });
     }
     const user = await User.findOne({
@@ -490,7 +493,7 @@ module.exports.resetPassword = async (req, res) => {
     });
     if (!user) {
         return res.status(409).json({
-            message: 'Email does not exist'
+            message: 'Account with this email address does not exist on this website.'
         });
     }
 
@@ -635,6 +638,40 @@ module.exports.postOrderResponse = async (req, res, next) => {
             });
         }).catch((err) => {
             return next(err);
+        });
+    } catch (err) {
+        return next(err);
+    }
+}
+
+module.exports.postContactForm = async (req, res, next) => {
+    try {
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.AUTH_USER || localENV.LOCAL_MAILER_AUTH_EMAIL,
+                pass: process.env.AUTH_PASS || localENV.LOCAL_MAILER_AUTH_PASS
+            }
+        });
+        const mailOptions = {
+            from: process.env.AUTH_USER,
+            to: process.env.AUTH_USER || localENV.LOCAL_MAILER_AUTH_EMAIL,
+            subject: req.body.subject + ' (Someone submitted contact form on ' + req.body.domain+')',
+            html: `<h2>Someone submitted contact form on ${req.body.domain}</h2> 
+            <h3> Name:  <strong><i>${req.body.fullName}</i></strong></h3>
+            <h3> Email:  <strong><i>${req.body.email}</i></strong></h3>
+            <h3> Contact No:  <strong><i>${req.body.phone}</i></strong></h3>
+            <h3> Message.:  <strong><i>${req.body.message}</i></strong></h3>
+            `,
+        };
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log(error);
+                return next(err);
+                //   res.send({error: error})
+            } else {
+                return res.send({res: info.response, message: 'Form submitted successfully!'});
+            }
         });
     } catch (err) {
         return next(err);

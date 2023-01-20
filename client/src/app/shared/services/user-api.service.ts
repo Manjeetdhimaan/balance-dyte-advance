@@ -31,6 +31,10 @@ export class UserApiService {
     return this.http.post(environment.apiBaseUrl + '/user/postCreateOrder', order);
   }
 
+  postContactForm(form:any) {
+    return this.http.post(environment.apiBaseUrl + '/user/post-contact-form', form);
+  }
+
   postOrderResponse(order:any) {
     return this.http.post(environment.apiBaseUrl + '/user/postOrderResponse', order);
   }

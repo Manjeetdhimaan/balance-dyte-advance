@@ -1,11 +1,23 @@
-<li class="accordion-item" (click)="toggle()">
-    <a class="accordion-title" [ngClass]="!showBody?'':'active'">
+
+<li class="nav-item" *ngIf="!mobileNav" (click)="toggle()">
+    <!-- <a  [ngClass]="!showBody?'':'active'">
         {{ title }}
-        <i [ngClass]="!showBody?'bx bx-plus':'bx bx-minus'"></i>
-    </a>    
+    </a> -->
+    <a class="nav-link" >
+        {{ title}}
+        <a class="mean-expand" [ngClass]="!showBody?'mean-expand':'mean-expand mean-clicked'"
+        style="font-size: 18px"><i style="display: inline-block;" [@rotate]="!showBody?'default':'rotated'" [ngClass]="!showBody?'bx bx-chevron-down':'bx bx-chevron-up'"></i></a>
+    </a>
 </li>
-<div [@smoothCollapse]="!showBody?'initial':'final'">
-    <div class="accordion-content show">
-        <ng-content ></ng-content>
-    </div>
+<a *ngIf="mobileNav" class="meanmenu-reveal meanclose" style="right: 0px; left: auto;
+    text-align: center; text-indent: 0px; font-size: 18px;" (click)="toggle()">
+    <span><span><span></span></span></span>
+</a>
+
+
+<li [@smoothCollapse]="!showBody?'initial':'final'"
+    class="content">
+    <ng-content></ng-content>
+</li>
+<div *ngIf="showBody" (click)="close()" class="custom-backdrop">
 </div>
