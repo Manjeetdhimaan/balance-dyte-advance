@@ -5,14 +5,14 @@ import { PricingPlan } from '../models/pricing-plan/pricing-plan.model';
   providedIn: 'root'
 })
 export class PricingPlanService {
+  pricingPlanData: PricingPlan[];
 
-  constructor() { }
-
-  pricingPlanData: PricingPlan[] = [
+  backUppricingPlanData: PricingPlan[] = [
     {
-      id:'p1',
-      planPrice: '2500',
+      _id: 'p1',
+      planPrice: '1500',
       planName: 'Starter',
+      planDuration: '15 days',
       inclusions: [
         '20 Workouts',
         'Meal Plans & Analysis',
@@ -26,9 +26,10 @@ export class PricingPlanService {
     },
 
     {
-      id:'p2',
-      planPrice: '4500',
+      _id: 'p2',
+      planPrice: '800',
       planName: 'Advance',
+      planDuration: '30 days',
       inclusions: [
         '24 Workouts',
         'Meal Plans & Analysis',
@@ -42,9 +43,10 @@ export class PricingPlanService {
     },
 
     {
-      id:'p3',
-      planPrice: '6500',
+      _id: 'p3',
+      planPrice: '2400',
       planName: 'Premium',
+      planDuration: '90 days',
       inclusions: [
         '30 Workouts',
         'Meal Plans & Analysis',
@@ -56,9 +58,23 @@ export class PricingPlanService {
       selectPlanBtnName: 'Purchase',
       planUrlLink: '/diet-plans/premium-plan'
     }
-  ]
+  ];
+
+  constructor() {
+
+  }
+
+  // getPricingPlansFromServer() {
+  //   let pricingPlanData: any = [];
+  //   this.pricingPlanApiService.getPricingPlans().subscribe(async (res: any) => {
+  //     pricingPlanData = await res['plans'];
+  //   }, err => {
+  //     console.log(err);
+  //   })
+  //   return pricingPlanData;
+  // }
 
   getPricingPlans() {
-    return this.pricingPlanData.slice();
+    return this.pricingPlanData ? this.pricingPlanData.slice() : this.backUppricingPlanData.slice();
   }
 }

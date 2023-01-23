@@ -457,16 +457,16 @@
 
                 <div class="col-lg-4">
                     <div class="billing-sildbar pl-20">
-                        <div class="payment-box">
+                         <div class="payment-box">
                             <div class="payment-method">
-                                <h3>Select Plan Duration</h3>
+                                <h3>Plan Duration</h3>
                                 <p>
                                     <input type="radio"
-                                        id="1" value="1"
+                                        id="1" [value]="selectedPricingPlan['planDuration']"
                                         formControlName="planDuration">
-                                    <label for="1">1 months</label>
+                                    <label for="1">{{ selectedPricingPlan['planDuration'] }}</label>
                                 </p>
-                                <p>
+                                <!-- <p>
                                     <input type="radio"
                                         id="3" value="3"
                                         formControlName="planDuration">
@@ -477,7 +477,7 @@
                                         id="6" value="6"
                                         formControlName="planDuration">
                                     <label for="6">6 months</label>
-                                </p>
+                                </p> -->
                             </div>
 
 

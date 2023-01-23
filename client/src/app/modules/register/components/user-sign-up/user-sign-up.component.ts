@@ -26,7 +26,6 @@ export class UserSignUpComponent implements OnInit {
   serverErrMsg: string = '';
 
   ngOnInit(): void {
-    this.scrollTop();
     // user form
     this.userForm = this.fb.group({
       fullName: new FormControl('', [Validators.required]),

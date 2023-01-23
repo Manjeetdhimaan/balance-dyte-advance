@@ -1,0 +1,4 @@
+.form-group.has-error input, .form-group.has-error textarea, .form-group.has-error select {
+    background: rgba(255,64,64,.2);
+    border: 1px solid #FF4040;
+}

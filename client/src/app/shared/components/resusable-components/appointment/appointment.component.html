@@ -1,0 +1,174 @@
+<div class="appointment-area pt-100 pb-70">
+    <div class="container">
+        <div class="appointment-form">
+            <h2>Make an Appointment</h2>
+            <form [formGroup]="appointMentForm"
+                (ngSubmit)="submitAppointMentForm(appointMentForm)">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-group"
+                            [ngClass]="(f['fullName'].invalid &&
+                            ((f['fullName'].dirty ||
+                            f['fullName'].touched))) ||
+                            (f['fullName'].hasError('required') &&
+                            submitted) ? 'has-error':''">
+                            <input type="text" formControlName="fullName"
+                                class="form-control"
+                                required
+                                placeholder="Name*">
+                            <div class="error-msg"
+                                *ngIf="(f['fullName'].hasError('required')
+                                && f['fullName'].touched) ||
+                                (f['fullName'].hasError('required') &&
+                                submitted)">
+                                <i aria-hidden="true" class="fa
+                                    fa-exclamation-triangle"></i> Please
+                                enter your name.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group"
+                            [ngClass]="(f['email'].invalid &&
+                            ((f['email'].dirty ||
+                            f['email'].touched))) ||
+                            (f['email'].hasError('required') &&
+                            submitted) ? 'has-error':''">
+                            <input type="email" formControlName="email"
+                                class="form-control" required
+                                data-error="Please Enter Your Email"
+                                placeholder="Email*">
+                            <div class="error-msg"
+                                *ngIf="(f['email'].hasError('required')
+                                && f['email'].touched) ||
+                                (f['email'].hasError('required') &&
+                                submitted)">
+                                <i aria-hidden="true" class="fa
+                                    fa-exclamation-triangle"></i> Please
+                                enter email address.
+                            </div>
+                            <div class="error-msg"
+                                *ngIf="(f['email'].hasError('pattern')
+                                && f['email'].touched) ||
+                                (f['email'].hasError('pattern') &&
+                                submitted)">
+                                <i aria-hidden="true" class="fa
+                                    fa-exclamation-triangle"></i> Please
+                                enter a valid email address.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group"
+                            [ngClass]="(f['phone'].invalid &&
+                            ((f['phone'].dirty ||
+                            f['phone'].touched))) ||
+                            (f['phone'].hasError('required') &&
+                            submitted) ? 'has-error':''">
+                            <input type="text" formControlName="phone"
+                                class="form-control"
+                                required
+                                data-error="Please Enter Your Phone Number"
+                                placeholder="Phone*">
+                            <div class="error-msg"
+                                *ngIf="(f['phone'].hasError('required')
+                                && f['phone'].touched) ||
+                                (f['phone'].hasError('required') &&
+                                submitted)">
+                                <i aria-hidden="true" class="fa
+                                    fa-exclamation-triangle"></i> Please
+                                enter your phone number.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group"
+                        [ngClass]="(f['date'].invalid &&
+                            ((f['date'].dirty ||
+                            f['date'].touched))) ||
+                            (f['date'].hasError('required') &&
+                            submitted) ? 'has-error':''">
+                            <i class="flaticon-weekly-calendar-page-symbol"></i>
+                            <input type="date" formControlName="date" id="datetimepicker"
+                                class="form-control date" (change)="checkDate()"
+                                data-date-format="DD MMMM YYYY"
+                                placeholder="Date">
+                                <div class="error-msg"
+                                *ngIf="(f['date'].hasError('required')
+                                && f['date'].touched) ||
+                                (f['date'].hasError('required') &&
+                                submitted)">
+                                <i aria-hidden="true" class="fa
+                                    fa-exclamation-triangle"></i> Please
+                                enter date of appointment.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group"
+                        [ngClass]="(f['service'].invalid &&
+                            ((f['service'].dirty ||
+                            f['service'].touched))) ||
+                            (f['service'].hasError('required') &&
+                            submitted) ? 'has-error':''">
+                            <select class="form-select form-control" formControlName="service">
+                                <option selected [ngValue]="null">Type of Service*</option>
+                                <option value="Consultation">Consultation</option>
+                                <option value="Customized Diet Plan">Customized Diet Plan</option>
+                                <option value="Weight Management">Weight Management</option>
+                            </select>
+                            <div class="error-msg"
+                                *ngIf="(f['service'].hasError('required')
+                                && f['service'].touched) ||
+                                (f['service'].hasError('required') &&
+                                submitted)">
+                                <i aria-hidden="true" class="fa
+                                    fa-exclamation-triangle"></i> Please
+                                select a service.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <div class="form-group"
+                        [ngClass]="(f['message'].hasError('required') &&
+                                    ((f['message'].dirty ||
+                                    f['message'].touched))) ||
+                                    ((f['message'].hasError('minlength') &&
+                                    ((f['message'].dirty &&
+                                    f['message'].touched)))) ||
+                                    ((f['message'].invalid &&
+                                    submitted)) ? 'has-error':''">
+                            <textarea formControlName="message" class="form-control"
+                                id="message" cols="30" rows="5" 
+                                placeholder="Your Message"></textarea>
+                                <div class="error-msg"
+                                *ngIf="(f['message'].hasError('required')
+                                && f['message'].touched) ||
+                                (f['message'].hasError('required') &&
+                                submitted)">
+                                <i aria-hidden="true" class="fa
+                                    fa-exclamation-triangle"></i> Please
+                                enter your message.
+                            </div>
+                                <div class="error-msg"
+                                *ngIf="(f['message'].hasError('minlength')
+                                && f['message'].touched) ||
+                                (f['message'].hasError('minlength') &&
+                                submitted)">
+                                <i aria-hidden="true" class="fa
+                                    fa-exclamation-triangle"></i> Minimum 4 characters required.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-12">
+                        <button type="submit" class="default-btn">
+                            Submit Now
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<app-spinner *ngIf="isLoading"></app-spinner>

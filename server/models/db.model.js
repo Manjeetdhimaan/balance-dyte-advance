@@ -11,3 +11,4 @@ mongoose.connect(process.env.MONGODB_URI || localENV.LOCAL_MONGODB_URI, { useUni
 
 require('./user.model');
 require('./orders.model');
+require('./pricing-plans.model');

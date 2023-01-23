@@ -88,7 +88,6 @@ const sendResetPasswordMail = (req, user) => {
     })
 }
 
-
 const userExists = async (email) => {
     const user = await User.findOne({
         email: email.toLowerCase().trim()
@@ -107,7 +106,6 @@ module.exports.postRegisterUser = async (req, res, next) => {
         user.email = req.body.email;
         user.password = User.hashPassword(req.body.password);
         user.confirmPassword = req.body.confirmPassword;
-        user.password = User.hashPassword(req.body.password);
 
         if (req.body.password !== req.body.confirmPassword) {
             return res.status(422).send({
@@ -661,6 +659,42 @@ module.exports.postContactForm = async (req, res, next) => {
             <h3> Name:  <strong><i>${req.body.fullName}</i></strong></h3>
             <h3> Email:  <strong><i>${req.body.email}</i></strong></h3>
             <h3> Contact No:  <strong><i>${req.body.phone}</i></strong></h3>
+            <h3> Message.:  <strong><i>${req.body.message}</i></strong></h3>
+            `,
+        };
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.log(error);
+                return next(err);
+                //   res.send({error: error})
+            } else {
+                return res.send({res: info.response, message: 'Form submitted successfully!'});
+            }
+        });
+    } catch (err) {
+        return next(err);
+    }
+}
+
+module.exports.postAppointMentForm = async (req, res, next) => {
+    try {
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.AUTH_USER || localENV.LOCAL_MAILER_AUTH_EMAIL,
+                pass: process.env.AUTH_PASS || localENV.LOCAL_MAILER_AUTH_PASS
+            }
+        });
+        const mailOptions = {
+            from: process.env.AUTH_USER,
+            to: process.env.AUTH_USER || localENV.LOCAL_MAILER_AUTH_EMAIL,
+            subject: 'Appointment form (Someone submitted contact form on ' + req.body.domain+')',
+            html: `<h2>Someone submitted Appointment form on ${req.body.domain}</h2> 
+            <h3> Name:  <strong><i>${req.body.fullName}</i></strong></h3>
+            <h3> Email:  <strong><i>${req.body.email}</i></strong></h3>
+            <h3> Contact No:  <strong><i>${req.body.phone}</i></strong></h3>
+            <h3> Date:  <strong><i>${req.body.date}</i></strong></h3>
+            <h3> Service:  <strong><i>${req.body.service}</i></strong></h3>
             <h3> Message.:  <strong><i>${req.body.message}</i></strong></h3>
             `,
         };

@@ -9,6 +9,7 @@ import { SpinnerComponent } from './components/ui-components/spinner/spinner.com
 import { AccordionComponent } from './components/ui-components/accordion/accordion.component';
 import { AccordionItemComponent } from './components/ui-components/accordion/accordion-item/accordion-item.component';
 import { NutritiousFoodsComponent } from './components/resusable-components/nutritious-foods/nutritious-foods.component';
+import { AppointmentComponent } from './components/resusable-components/appointment/appointment.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { NutritiousFoodsComponent } from './components/resusable-components/nutr
     SpinnerComponent,
     AccordionComponent,
     AccordionItemComponent,
-    NutritiousFoodsComponent
+    NutritiousFoodsComponent,
+    AppointmentComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { NutritiousFoodsComponent } from './components/resusable-components/nutr
     SpinnerComponent,
     AccordionComponent,
     AccordionItemComponent,
-    NutritiousFoodsComponent
+    NutritiousFoodsComponent,
+    AppointmentComponent
   ]
 })
 export class SharedModule { }

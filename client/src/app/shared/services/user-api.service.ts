@@ -35,6 +35,10 @@ export class UserApiService {
     return this.http.post(environment.apiBaseUrl + '/user/post-contact-form', form);
   }
 
+  postAppointMentForm(form:any) {
+    return this.http.post(environment.apiBaseUrl + '/user/postAppointMentForm', form);
+  }
+
   postOrderResponse(order:any) {
     return this.http.post(environment.apiBaseUrl + '/user/postOrderResponse', order);
   }

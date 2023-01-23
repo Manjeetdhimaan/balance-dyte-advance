@@ -1,7 +1,8 @@
 export interface PricingPlan {
-    id: string | number;
+    _id: string | number;
     planPrice: string;
     planName: string;
+    planDuration: string;
     inclusions: any[];
     selectPlanBtnName: string;
     planUrlLink: string;

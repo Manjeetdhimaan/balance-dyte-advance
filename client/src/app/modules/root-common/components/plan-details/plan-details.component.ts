@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { fade } from 'src/app/shared/common/animations';
 import { RegexEnum } from 'src/app/shared/common/constants/regex';
 import { PricingPlan } from 'src/app/shared/models/pricing-plan/pricing-plan.model';
+import { PricingPlanApiService } from 'src/app/shared/services/pricing-plan-api.service';
 
 import { PricingPlanService } from 'src/app/shared/services/pricing-plan.service';
 import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
@@ -21,10 +22,10 @@ declare let Razorpay: any;
   ]
 })
 export class PlanDetailsComponent implements OnInit {
-  constructor(private pricingPlanService: PricingPlanService, private router: Router, private fb: FormBuilder, private userApiService: UserApiService, private toastMessageService: ToasTMessageService) { }
+  constructor(private pricingPlanService: PricingPlanService, private router: Router, private fb: FormBuilder, private userApiService: UserApiService, private toastMessageService: ToasTMessageService, private pricingPlanApiService: PricingPlanApiService) { }
 
 
-  pricingPlans: PricingPlan[] = [];
+  pricingPlanData: PricingPlan[] = [];
   selectedPricingPlan: PricingPlan;
   userForm: FormGroup;
   submitted: boolean;
@@ -54,19 +55,20 @@ export class PlanDetailsComponent implements OnInit {
       planDuration: new FormControl('1', [Validators.required]),
       medicalIssue: new FormControl(''),
       foodAllergy: new FormControl(''),
-
       // image: new FormControl('', {asyncValidators: mimeType})
     },
       {
         validator: this.ConfirmedValidator('password', 'confirmPassword'),
       });
 
-    // getting pricing plans
-    this.pricingPlans = this.pricingPlanService.getPricingPlans();
-    if (this.pricingPlans.length > 0) {
-      this.pricingPlans.map((plan: PricingPlan) => {
+    this.pricingPlanData = this.pricingPlanService.getPricingPlans();
+    if (this.pricingPlanData.length > 0) {
+      this.pricingPlanData.map((plan: PricingPlan) => {
         if (this.router.url.toLowerCase() === plan['planUrlLink'].toLowerCase()) {
           this.selectedPricingPlan = plan;
+          this.userForm.patchValue({
+            planDuration: this.selectedPricingPlan['planDuration'],
+          })
         }
       })
 
@@ -75,6 +77,45 @@ export class PlanDetailsComponent implements OnInit {
       }
     }
 
+    // getting pricing plans
+    this.isLoading = true;
+    this.pricingPlanApiService.getPricingPlans().subscribe(async (res: any) => {
+      this.pricingPlanData = await res['plans'];
+      this.isLoading = false;
+      if (this.pricingPlanData.length > 0) {
+        this.pricingPlanData.map((plan: PricingPlan) => {
+          if (this.router.url.toLowerCase() === plan['planUrlLink'].toLowerCase()) {
+            this.selectedPricingPlan = plan;
+            this.userForm.patchValue({
+              planDuration: this.selectedPricingPlan['planDuration'],
+            })
+          }
+        })
+
+        if (this.router.url.toLowerCase() !== this.selectedPricingPlan?.['planUrlLink'].toLowerCase()) {
+          this.router.navigate(['/not-found'])
+        }
+      }
+    }, err => {
+      console.log(err);
+      this.isLoading = false;
+      this.pricingPlanData = this.pricingPlanService.getPricingPlans();
+
+      if (this.pricingPlanData.length > 0) {
+        this.pricingPlanData.map((plan: PricingPlan) => {
+          if (this.router.url.toLowerCase() === plan['planUrlLink'].toLowerCase()) {
+            this.selectedPricingPlan = plan;
+            this.userForm.patchValue({
+              planDuration: this.selectedPricingPlan['planDuration'],
+            })
+          }
+        })
+
+        if (this.router.url.toLowerCase() !== this.selectedPricingPlan?.['planUrlLink'].toLowerCase()) {
+          this.router.navigate(['/not-found'])
+        }
+      }
+    })
 
     if (this.isLoggedIn()) {
       this.isLoading = true;
@@ -181,7 +222,7 @@ export class PlanDetailsComponent implements OnInit {
         this.isLoading = false;
         this.razorPayResMsg = res['message']
         this.toastMessageService.success(res['message']);
-        if(this.isLoggedIn()) {
+        if (this.isLoggedIn()) {
 
           this.router.navigate(['/account/profile/orders']);
         }
@@ -310,16 +351,29 @@ export class PlanDetailsComponent implements OnInit {
   }
 
   onGetPayableTotal() {
+    // let totalPrice = 0;
+    // switch (this.userForm.value.planDuration) {
+    //   case ("1"):
+    //     totalPrice = +(this.selectedPricingPlan['planPrice']) * +(this.userForm.value.planDuration);
+    //     break;
+    //   case ("3"):
+    //     totalPrice = +(this.selectedPricingPlan['planPrice']) * 2;
+    //     break;
+    //   case ("6"):
+    //     totalPrice = +(this.selectedPricingPlan['planPrice']) * +(this.userForm.value.planDuration / 2);
+    //     break;
+    // }
+    // return totalPrice;
     let totalPrice = 0;
     switch (this.userForm.value.planDuration) {
-      case ("1"):
-        totalPrice = +(this.selectedPricingPlan['planPrice']) * +(this.userForm.value.planDuration);
+      case ("15 days"):
+        totalPrice = +(this.selectedPricingPlan['planPrice']);
         break;
-      case ("3"):
-        totalPrice = +(this.selectedPricingPlan['planPrice']) * 2;
+      case ("30 days"):
+        totalPrice = +(this.selectedPricingPlan['planPrice']);
         break;
-      case ("6"):
-        totalPrice = +(this.selectedPricingPlan['planPrice']) * +(this.userForm.value.planDuration / 2);
+      case ("90 days"):
+        totalPrice = +(this.selectedPricingPlan['planPrice']);
         break;
     }
     return totalPrice;
@@ -343,12 +397,5 @@ export class PlanDetailsComponent implements OnInit {
     const model = document.getElementById('custom-modal') as HTMLElement;
     model.style.transform = 'translateY(0)'
   }
-  // closeModel() {
-  //   const backdrop = document.getElementById('custom-backdrop') as HTMLElement;
-  //   backdrop.style.visibility = 'hidden';
-  //   backdrop.style.opacity = '0';
-  //   const model = document.getElementById('custom-modal') as HTMLElement;
-  //   model.style.transform = 'translateY(100vh)';
-  // }
 
 }

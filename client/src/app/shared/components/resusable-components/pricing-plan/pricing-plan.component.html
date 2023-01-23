@@ -9,7 +9,8 @@
                 <div class="pricing-card">
                     <div class="pricing-title">
                         <h3>{{ plan['planPrice'] | currency:"INR":"symbol":'2.0' }}</h3>
-                        <span>{{ plan['planName'] }}</span>
+                        <!-- <span>{{ plan['planName'] }}</span> -->
+                        <span>{{ plan['planDuration'] }}</span>
                     </div>
                     <ul >
                         <li *ngFor="let inclusion of plan.inclusions"><i class='bx bx-check'></i> {{ inclusion }}</li>
