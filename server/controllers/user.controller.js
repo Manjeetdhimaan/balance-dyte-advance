@@ -688,7 +688,7 @@ module.exports.postAppointMentForm = async (req, res, next) => {
         const mailOptions = {
             from: process.env.AUTH_USER,
             to: process.env.AUTH_USER || localENV.LOCAL_MAILER_AUTH_EMAIL,
-            subject: 'Appointment form (Someone submitted contact form on ' + req.body.domain+')',
+            subject: 'Appointment form (Someone submitted Appointment form on ' + req.body.domain+')',
             html: `<h2>Someone submitted Appointment form on ${req.body.domain}</h2> 
             <h3> Name:  <strong><i>${req.body.fullName}</i></strong></h3>
             <h3> Email:  <strong><i>${req.body.email}</i></strong></h3>

@@ -17,8 +17,7 @@ export class HeaderComponent {
   scrollTop() {
     this.accordionService.showAccordionBody.next(false);
     window.scrollTo({
-      top: 0,
-      behavior: 'auto'
+      top: 0
     });
     // this.router.navigate([route])
   }

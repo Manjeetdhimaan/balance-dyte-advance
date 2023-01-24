@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { fade } from 'src/app/shared/common/animations';
+import { fade, fallIn } from 'src/app/shared/common/animations';
 import { RegexEnum } from 'src/app/shared/common/constants/regex';
 import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
 import { UserApiService } from 'src/app/shared/services/user-api.service';
@@ -10,9 +10,8 @@ import { environment } from 'src/environments/environment';
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrls: ['./contact.component.css'],
-  animations: [
-    fade
-  ]
+  animations: [fallIn()],
+  host: { '[@fallIn]': '' }
 })
 export class ContactComponent implements OnInit {
 

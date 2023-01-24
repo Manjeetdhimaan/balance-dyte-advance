@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { fade } from 'src/app/shared/common/animations';
+import { fade, fallIn } from 'src/app/shared/common/animations';
 import { RegexEnum } from 'src/app/shared/common/constants/regex';
 import { PricingPlan } from 'src/app/shared/models/pricing-plan/pricing-plan.model';
 import { PricingPlanApiService } from 'src/app/shared/services/pricing-plan-api.service';
@@ -17,9 +17,8 @@ declare let Razorpay: any;
   selector: 'app-plan-details',
   templateUrl: './plan-details.component.html',
   styleUrls: ['./plan-details.component.css'],
-  animations: [
-    fade
-  ]
+  animations: [fallIn()],
+  host: { '[@fallIn]': '' }
 })
 export class PlanDetailsComponent implements OnInit {
   constructor(private pricingPlanService: PricingPlanService, private router: Router, private fb: FormBuilder, private userApiService: UserApiService, private toastMessageService: ToasTMessageService, private pricingPlanApiService: PricingPlanApiService) { }
@@ -33,6 +32,7 @@ export class PlanDetailsComponent implements OnInit {
   isConflictErr: boolean = false;
   emailInputValue: string;
   razorPayResMsg: string;
+  serverErrMsg: string;
   razorOrderId: string = '';
   userId: string;
 
@@ -61,61 +61,72 @@ export class PlanDetailsComponent implements OnInit {
         validator: this.ConfirmedValidator('password', 'confirmPassword'),
       });
 
-    this.pricingPlanData = this.pricingPlanService.getPricingPlans();
-    if (this.pricingPlanData.length > 0) {
-      this.pricingPlanData.map((plan: PricingPlan) => {
-        if (this.router.url.toLowerCase() === plan['planUrlLink'].toLowerCase()) {
-          this.selectedPricingPlan = plan;
-          this.userForm.patchValue({
-            planDuration: this.selectedPricingPlan['planDuration'],
+      this.isLoading = true;
+      this.pricingPlanApiService.getPricingPlans().subscribe(async (res: any) => {
+        this.pricingPlanData = await res['plans'];
+        if (this.pricingPlanData.length > 0) {
+          this.isLoading = false;
+          this.pricingPlanData.map((plan: PricingPlan) => {
+            if (this.router.url.toLowerCase() === plan['planUrlLink'].toLowerCase()) {
+              this.selectedPricingPlan = plan;
+              this.isLoading = false;
+              this.userForm.patchValue({
+                planDuration: this.selectedPricingPlan['planDuration'],
+              })
+            }
           })
+    
+          if (this.router.url.toLowerCase() !== this.selectedPricingPlan?.['planUrlLink'].toLowerCase()) {
+            this.router.navigate(['/not-found']);
+            this.isLoading = false;
+          }
         }
+          this.isLoading = false;
+      }, err => {
+        console.log(err);
+        this.serverErrMsg = "Error while fetching plans! Please try again."
+        // this.pricingPlanData = this.pricingPlanService.getPricingPlans();
+        this.isLoading = false;
       })
-
-      if (this.router.url.toLowerCase() !== this.selectedPricingPlan?.['planUrlLink'].toLowerCase()) {
-        this.router.navigate(['/not-found'])
-      }
-    }
-
     // getting pricing plans
     this.isLoading = true;
-    this.pricingPlanApiService.getPricingPlans().subscribe(async (res: any) => {
-      this.pricingPlanData = await res['plans'];
-      this.isLoading = false;
-      if (this.pricingPlanData.length > 0) {
-        this.pricingPlanData.map((plan: PricingPlan) => {
-          if (this.router.url.toLowerCase() === plan['planUrlLink'].toLowerCase()) {
-            this.selectedPricingPlan = plan;
-            this.userForm.patchValue({
-              planDuration: this.selectedPricingPlan['planDuration'],
-            })
-          }
-        })
+    // this.pricingPlanApiService.getPricingPlans().subscribe(async (res: any) => {
+    //   this.pricingPlanData = await res['plans'];
+    //   this.isLoading = false;
+    //   if (this.pricingPlanData.length > 0) {
+    //     this.pricingPlanData.map((plan: PricingPlan) => {
+    //       if (this.router.url.toLowerCase() === plan['planUrlLink'].toLowerCase()) {
+    //         this.selectedPricingPlan = plan;
+    //         this.userForm.patchValue({
+    //           planDuration: this.selectedPricingPlan['planDuration'],
+    //         })
+    //       }
+    //     })
 
-        if (this.router.url.toLowerCase() !== this.selectedPricingPlan?.['planUrlLink'].toLowerCase()) {
-          this.router.navigate(['/not-found'])
-        }
-      }
-    }, err => {
-      console.log(err);
-      this.isLoading = false;
-      this.pricingPlanData = this.pricingPlanService.getPricingPlans();
+    //     if (this.router.url.toLowerCase() !== this.selectedPricingPlan?.['planUrlLink'].toLowerCase()) {
+    //       this.router.navigate(['/not-found'])
+    //     }
+    //   }
+    // }, err => {
+    //   console.log(err);
+    //   this.isLoading = false;
+    //   this.pricingPlanData = this.pricingPlanService.getPricingPlans();
 
-      if (this.pricingPlanData.length > 0) {
-        this.pricingPlanData.map((plan: PricingPlan) => {
-          if (this.router.url.toLowerCase() === plan['planUrlLink'].toLowerCase()) {
-            this.selectedPricingPlan = plan;
-            this.userForm.patchValue({
-              planDuration: this.selectedPricingPlan['planDuration'],
-            })
-          }
-        })
+    //   if (this.pricingPlanData.length > 0) {
+    //     this.pricingPlanData.map((plan: PricingPlan) => {
+    //       if (this.router.url.toLowerCase() === plan['planUrlLink'].toLowerCase()) {
+    //         this.selectedPricingPlan = plan;
+    //         this.userForm.patchValue({
+    //           planDuration: this.selectedPricingPlan['planDuration'],
+    //         })
+    //       }
+    //     })
 
-        if (this.router.url.toLowerCase() !== this.selectedPricingPlan?.['planUrlLink'].toLowerCase()) {
-          this.router.navigate(['/not-found'])
-        }
-      }
-    })
+    //     if (this.router.url.toLowerCase() !== this.selectedPricingPlan?.['planUrlLink'].toLowerCase()) {
+    //       this.router.navigate(['/not-found'])
+    //     }
+    //   }
+    // })
 
     if (this.isLoggedIn()) {
       this.isLoading = true;

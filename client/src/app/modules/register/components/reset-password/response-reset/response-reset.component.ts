@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { fade } from 'src/app/shared/common/animations';
+import { fade, fallIn } from 'src/app/shared/common/animations';
 import { UserApiService } from 'src/app/shared/services/user-api.service';
 
 @Component({
   selector: 'app-response-reset',
   templateUrl: './response-reset.component.html',
   styleUrls: ['./response-reset.component.css'],
-  animations: [
-    fade
-  ]
+  animations: [fallIn()],
+  host: { '[@fallIn]': '' }
 })
 export class ResponseResetComponent implements OnInit {
 

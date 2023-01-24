@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { fade } from 'src/app/shared/common/animations';
+import { fade, fallIn } from 'src/app/shared/common/animations';
 
 @Component({
   selector: 'app-privacy-policy',
   templateUrl: './privacy-policy.component.html',
   styleUrls: ['./privacy-policy.component.css'],
-  animations: [
-    fade
-  ]
+  animations: [fallIn()],
+  host: { '[@fallIn]': '' }
 })
 export class PrivacyPolicyComponent implements OnInit {
 

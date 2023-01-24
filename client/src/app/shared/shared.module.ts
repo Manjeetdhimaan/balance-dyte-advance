@@ -10,6 +10,8 @@ import { AccordionComponent } from './components/ui-components/accordion/accordi
 import { AccordionItemComponent } from './components/ui-components/accordion/accordion-item/accordion-item.component';
 import { NutritiousFoodsComponent } from './components/resusable-components/nutritious-foods/nutritious-foods.component';
 import { AppointmentComponent } from './components/resusable-components/appointment/appointment.component';
+import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
+import { SkeletonComponent } from './components/ui-components/skeleton/skeleton.component';
 
 @NgModule({
   declarations: [
@@ -19,13 +21,15 @@ import { AppointmentComponent } from './components/resusable-components/appointm
     AccordionComponent,
     AccordionItemComponent,
     NutritiousFoodsComponent,
-    AppointmentComponent
+    AppointmentComponent,
+    SkeletonComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxSkeletonLoaderModule.forRoot({ animation: 'pulse', loadingText: 'This item is actually loading...' })
   ],
   exports: [
     PricingPlanComponent,
@@ -34,7 +38,8 @@ import { AppointmentComponent } from './components/resusable-components/appointm
     AccordionComponent,
     AccordionItemComponent,
     NutritiousFoodsComponent,
-    AppointmentComponent
+    AppointmentComponent,
+    SkeletonComponent
   ]
 })
 export class SharedModule { }

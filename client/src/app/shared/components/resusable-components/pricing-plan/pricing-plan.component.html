@@ -4,7 +4,19 @@
             <span>Pricing Plan</span>
             <h2>Choose Your Best Plan</h2>
         </div>
-        <div class="row justify-content-center pt-45">
+        <div class="row justify-content-center pt-45" *ngIf="isLoading">
+            <div class="col-lg-4 col-md-6" *ngFor="let count of ['', '', '']">
+                <app-skeleton></app-skeleton>
+            </div>
+        </div>
+        <div class="row justify-content-center pt-45" *ngIf="!isLoading && serverErrMsg">
+            <div class="col-lg-4 col-md-6">
+                <h3 style="color:red"> {{ serverErrMsg }}</h3>
+                <a class="default-btn" (click)="ngOnInit()">Click here to Reload</a>
+            </div>
+        </div>
+        
+        <div class="row justify-content-center pt-45" *ngIf="!isLoading && !serverErrMsg">
             <div class="col-lg-4 col-md-6" *ngFor="let plan of pricingPlanData">
                 <div class="pricing-card">
                     <div class="pricing-title">
@@ -16,7 +28,8 @@
                         <li *ngFor="let inclusion of plan.inclusions"><i class='bx bx-check'></i> {{ inclusion }}</li>
                     </ul>
                     <div class="price-btn-area text-center">
-                        <a [routerLink]="plan['planUrlLink']" (click)="scrollTop()" class="default-btn">{{ plan['selectPlanBtnName'] }}</a>
+                        <!-- [routerLink]="plan['planUrlLink']" -->
+                        <a [href]="'https://api.whatsapp.com/send?phone=7696492843&text=I have selected diet plan for '+plan['planDuration']" target="_blank" class="default-btn">{{ plan['selectPlanBtnName'] }}</a>
                     </div>
                 </div>
             </div>

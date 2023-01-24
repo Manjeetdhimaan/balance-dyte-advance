@@ -10,7 +10,7 @@ export class PricingPlanService {
   backUppricingPlanData: PricingPlan[] = [
     {
       _id: 'p1',
-      planPrice: '1500',
+      planPrice: '1000',
       planName: 'Starter',
       planDuration: '15 days',
       inclusions: [
@@ -27,7 +27,7 @@ export class PricingPlanService {
 
     {
       _id: 'p2',
-      planPrice: '800',
+      planPrice: '1400',
       planName: 'Advance',
       planDuration: '30 days',
       inclusions: [
@@ -44,7 +44,7 @@ export class PricingPlanService {
 
     {
       _id: 'p3',
-      planPrice: '2400',
+      planPrice: '2000',
       planName: 'Premium',
       planDuration: '90 days',
       inclusions: [

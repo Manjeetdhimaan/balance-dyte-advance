@@ -1,4 +1,4 @@
-<div class="banner-area" [@fade]="'active'">
+<div class="banner-area">
     <div class="container">
         <div class="banner-content wow animate__animated animate__fadeInUp" data-wow-delay="00ms"
             data-wow-duration="1000ms">
@@ -163,7 +163,23 @@
         </div>
     </div>
 </div>
-<app-pricing-plan [pricingPlanData]="pricingPlanData"></app-pricing-plan>
+
+<div *ngIf="isLoading">
+    <div class="pricing-area pt-100 pb-70">
+        <div class="container">
+            <div class="section-title text-center">
+                <span>Pricing Plan</span>
+                <h2>Choose Your Best Plan</h2>
+            </div>
+            <div class="row justify-content-center pt-45">
+                <div class="col-lg-4 col-md-6" *ngFor="let count of ['', '', '']">
+                    <app-skeleton></app-skeleton>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-pricing-plan *ngIf="!isLoading" [pricingPlanData]="pricingPlanData"></app-pricing-plan>
 
 
 <div class="blog-area pt-100 pb-70">
@@ -239,5 +255,3 @@
         </div>
     </div>
 </div>
-
-<app-spinner *ngIf="isLoading"></app-spinner>
