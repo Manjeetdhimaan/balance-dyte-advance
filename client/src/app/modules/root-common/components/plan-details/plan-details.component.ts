@@ -188,7 +188,7 @@ export class PlanDetailsComponent implements OnInit {
     "key": "YOUR_KEY_ID", // Enter the Key ID generated from the Dashboard
     "amount": 0, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
     "currency": "INR",
-    "name": "Acme Corp",
+    "name": "Younedia",
     "description": "Test Transaction",
     "image": "/assets/images/logo/balancedyte-logo.png",
     "order_id": "order_IluGWxBm9U8zJ8", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
@@ -224,7 +224,7 @@ export class PlanDetailsComponent implements OnInit {
         payableTotal: this.onGetPayableTotal(),
         planPrice: this.selectedPricingPlan.planPrice,
         planName: this.selectedPricingPlan.planName,
-        planDuration: this.userForm.value.planDuration + ' months',
+        planDuration: this.userForm.value.planDuration,
       }
 
       const formObj = Object.assign({}, formBody, { domain: environment.domain, order_id: this.razorOrderId, userId: this.userId });
@@ -276,7 +276,7 @@ export class PlanDetailsComponent implements OnInit {
         planPrice: this.selectedPricingPlan.planPrice,
         payableTotal: this.onGetPayableTotal(),
         planName: this.selectedPricingPlan.planName,
-        planDuration: this.userForm.value.planDuration + ' months',
+        planDuration: this.userForm.value.planDuration,
       }
       const formObj = Object.assign({}, formBody, { domain: environment.domain });
       this.userApiService.postRegisterUserAndPlaceOrder(formObj).subscribe((res: any) => {
@@ -336,9 +336,10 @@ export class PlanDetailsComponent implements OnInit {
         payableTotal: this.onGetPayableTotal(),
         planPrice: this.selectedPricingPlan.planPrice,
         planName: this.selectedPricingPlan.planName,
-        planDuration: this.userForm.value.planDuration + ' months',
+        planDuration: this.userForm.value.planDuration,
       }
       const formObj = Object.assign({}, formBody, { domain: environment.domain });
+      console.log(formObj)
       this.userApiService.postPlaceOrder(formObj).subscribe((res: any) => {
         this.isLoading = false;
         this.userId = res['userId'];

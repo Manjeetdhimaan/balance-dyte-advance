@@ -9,6 +9,8 @@ import { RequestResetComponent } from './components/reset-password/request-reset
 import { ResponseResetComponent } from './components/reset-password/response-reset/response-reset.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { NgProgressModule } from 'ngx-progressbar';
+import { NgProgressHttpModule } from "ngx-progressbar/http";
 
 @NgModule({
   declarations: [
@@ -22,7 +24,11 @@ import { SharedModule } from 'src/app/shared/shared.module';
     RegisterRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    NgProgressModule.withConfig({
+      color: "green"
+    }),
+    NgProgressHttpModule
   ]
 })
 export class RegisterModule { }

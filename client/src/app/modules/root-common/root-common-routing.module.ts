@@ -17,7 +17,7 @@ const routes: Routes = [
         path: 'about', component: AboutComponent, data: {title: 'About'}
     },
     {
-        path: 'privacy-policy', component: PrivacyPolicyComponent, data: {title: 'Privacy Policy'}
+        path: 'privacy-and-refund-policies', component: PrivacyPolicyComponent, data: {title: 'Privacy and Refund Policy'}
     },
     {
         path: 'terms-conditions', component: TermsConditionsComponent, data: {title: 'Terms and Conditions'}

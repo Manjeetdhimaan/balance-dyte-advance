@@ -10,7 +10,8 @@ import { OrdersComponent } from './components/orders/orders.component';
 import { OrderComponent } from './components/orders/order/order.component';
 import { RouterModule } from '@angular/router';
 
-
+import { NgProgressModule } from 'ngx-progressbar';
+import { NgProgressHttpModule } from "ngx-progressbar/http";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,11 @@ import { RouterModule } from '@angular/router';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
-    RouterModule
+    RouterModule,
+    NgProgressModule.withConfig({
+      color: "green"
+    }),
+    NgProgressHttpModule
   ]
 })
 export class AccountAndSettingsModule { }

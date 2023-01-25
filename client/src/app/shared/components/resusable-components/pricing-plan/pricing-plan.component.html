@@ -28,8 +28,8 @@
                         <li *ngFor="let inclusion of plan.inclusions"><i class='bx bx-check'></i> {{ inclusion }}</li>
                     </ul>
                     <div class="price-btn-area text-center">
-                        <!-- [routerLink]="plan['planUrlLink']" -->
-                        <a [href]="'https://api.whatsapp.com/send?phone=7696492843&text=I have selected diet plan for '+plan['planDuration']" target="_blank" class="default-btn">{{ plan['selectPlanBtnName'] }}</a>
+                        <!--  [href]="'https://api.whatsapp.com/send?phone=7696492843&text=I have selected diet plan for '+plan['planDuration']"  -->
+                        <a [routerLink]="plan['planUrlLink']" class="default-btn">{{ plan['selectPlanBtnName'] }}</a>
                     </div>
                 </div>
             </div>
