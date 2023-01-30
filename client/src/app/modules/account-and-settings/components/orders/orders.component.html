@@ -78,7 +78,7 @@
                                             <span class="unit-amount">{{ order['planDetails']['planDuration'] }}</span>
                                         </td>
                                         <td class="product-quantity">
-                                            <span class="unit-amount">{{ order['planDetails']['payableTotal'] | currency:"INR":"symbol":'2.0' }}</span>
+                                            <span class="unit-amount">{{ order['planDetails']['payableTotal'] | currency:order['planDetails']['currency']:"symbol":'2.0' }}</span>
                                         </td>
                                         <!-- <td class="product-subtotal">
                                             <a

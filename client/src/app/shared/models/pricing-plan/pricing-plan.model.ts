@@ -2,6 +2,7 @@ export interface PricingPlan {
     _id: string | number;
     planPrice: string;
     planName: string;
+    currency: string;
     planDuration: string;
     inclusions: any[];
     selectPlanBtnName: string;

@@ -488,13 +488,13 @@
                             <ul>
                                 <li>Plan Price <span>{{
                                         selectedPricingPlan['planPrice'] |
-                                        currency:"INR":"symbol":'2.0' }}</span></li>
+                                        currency:selectedPricingPlan['currency']:"symbol":'2.0' }}</span></li>
                                 <!-- <li>Shipping <span>$30.00</span></li>
                             <li>Coupon <span>$20.00</span></li>
                             <li>Total <span><b>$160.00</b></span></li> -->
                                 <li>Payable Total <span><b>{{
                                             onGetPayableTotal() |
-                                            currency:"INR":"symbol":'2.0' }}</b></span></li>
+                                            currency:selectedPricingPlan['currency']:"symbol":'2.0' }}</b></span></li>
                             </ul>
                             <div class="col-12 success-div-outer" *ngIf="razorPayResMsg">
                                 <div class="form-group">

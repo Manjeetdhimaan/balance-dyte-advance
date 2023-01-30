@@ -26,6 +26,11 @@ const prcingPlanSchema = new mongoose.Schema({
         trim: true,
         required: [true, 'Plan Button Name can\'t be empty']
     },
+    currency: {
+        type:String,
+        required: [true, 'Please enter currency type'],
+        default: "INR"
+    },
     planUrlLink: {
         type: String,
         trim: true,

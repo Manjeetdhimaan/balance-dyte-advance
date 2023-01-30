@@ -179,7 +179,7 @@ module.exports.postRegisterUserAndCreateOrder = async (req, res, next) => {
         newUser.save().then(() => {
             let options = {
                 amount: +selectedPlan['planPrice'] * 100, // amount in the smallest currency unit
-                currency: "INR",
+                currency: selectedPlan['currency'],
                 receipt: "order_rcptid_11",
                 payment_capture: +selectedPlan['planPrice'] * 100
             };
@@ -225,7 +225,7 @@ module.exports.postCreateOrder = async (req, res, next) => {
 
         let options = {
             amount: +selectedPlan['planPrice'] * 100, // amount in the smallest currency unit
-            currency: "INR",
+            currency: selectedPlan['currency'],
             payment_capture: +selectedPlan['planPrice'] * 100
         };
         instance.orders.create(options, (err, order) => {
@@ -269,6 +269,7 @@ module.exports.postOrderResponse = async (req, res, next) => {
                 paymentStatus: 'Success',
                 payableTotal: String(selectedPlan['planPrice']),
                 planPrice: req.body.planPrice,
+                currency: selectedPlan['currency'],
                 planName: req.body.planName,
                 planDuration: req.body.planDuration,
                 goals: req.body.goals,

@@ -247,6 +247,7 @@ export class PlanDetailsComponent implements OnInit {
         this.razorPayOptions.key = res['key'];
         this.razorPayOptions.amount = res['value']['amount'];
         this.razorPayOptions.name = res['name'];
+        this.razorPayOptions.currency = res['currency'];
         this.razorPayOptions.order_id = res['orderId'];
         this.razorOrderId = res['orderId'];
         this.razorPayOptions.handler = this.razorPayResponseHandler.bind(this);
@@ -309,6 +310,7 @@ export class PlanDetailsComponent implements OnInit {
         this.razorPayOptions.amount = res['value']['amount'];
         this.razorPayOptions.name = res['name'];
         this.razorPayOptions.order_id = res['orderId'];
+        this.razorPayOptions.currency = res['currency'];
         this.razorOrderId = res['orderId'];
         this.razorPayOptions.handler = this.razorPayResponseHandler.bind(this);
         let rzp1 = new Razorpay(this.razorPayOptions);

@@ -12,14 +12,13 @@ export class PricingPlanService {
       _id: 'p1',
       planPrice: '1000',
       planName: 'Starter',
+      currency: 'INR',
       planDuration: '15 days',
       inclusions: [
-        '20 Workouts',
+        'Routine Workouts',
         'Meal Plans & Analysis',
         'Weight Assessment',
-        'Physical Activities',
-        'Client Monitoring',
-        '24/7 Support'
+        'Physical Activities'
       ],
       selectPlanBtnName: 'Purchase',
       planUrlLink: '/diet-plans/starter-plan'
@@ -29,14 +28,13 @@ export class PricingPlanService {
       _id: 'p2',
       planPrice: '1400',
       planName: 'Advance',
+      currency: 'INR',
       planDuration: '30 days',
       inclusions: [
-        '24 Workouts',
+        'Routine Workouts',
         'Meal Plans & Analysis',
         'Weight Assessment',
-        'Physical Activities',
-        'Client Monitoring',
-        '24/7 Support'
+        'Physical Activities'
       ],
       selectPlanBtnName: 'Purchase',
       planUrlLink: '/diet-plans/advance-plan'
@@ -46,14 +44,13 @@ export class PricingPlanService {
       _id: 'p3',
       planPrice: '2000',
       planName: 'Premium',
+      currency: 'INR',
       planDuration: '90 days',
       inclusions: [
-        '30 Workouts',
+        'Routine Workouts',
         'Meal Plans & Analysis',
         'Weight Assessment',
         'Physical Activities',
-        'Client Monitoring',
-        '24/7 Support'
       ],
       selectPlanBtnName: 'Purchase',
       planUrlLink: '/diet-plans/premium-plan'

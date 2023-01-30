@@ -23,6 +23,11 @@ const orderSchema = new mongoose.Schema({
             type: String,
             trim: true
         },
+        currency: {
+            type:String,
+            required: [true, 'Please enter currency type'],
+            default: "INR"
+        },
         planName: {
             type: String,
             trim: true,
