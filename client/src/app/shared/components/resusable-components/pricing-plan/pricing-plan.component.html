@@ -29,7 +29,7 @@
                     </ul>
                     <div class="price-btn-area text-center">
                         <!--  [href]="'https://api.whatsapp.com/send?phone=7696492843&text=I have selected diet plan for '+plan['planDuration']"  -->
-                        <a [routerLink]="plan['planUrlLink']" class="default-btn">{{ plan['selectPlanBtnName'] }}</a>
+                        <a [routerLink]="plan['planUrlLink']" (click)="scrollTop()" class="default-btn">{{ plan['selectPlanBtnName'] }}</a>
                     </div>
                 </div>
             </div>

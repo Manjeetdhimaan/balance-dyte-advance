@@ -4,6 +4,7 @@ const passport = require('passport');
 
 const User = mongoose.model('User');
 const Order = mongoose.model('Order');
+const PricingPlan = mongoose.model('PricingPlan');
 
 const Razorpay = require('razorpay');
 const localENV = require('../localenv/localenv');
@@ -28,14 +29,14 @@ const sendDietMail = (req, currentUser) => {
     const mailOptions = {
         from: 'balancedyte@gmail.com',
         to: process.env.AUTH_USER || localENV.LOCAL_MAILER_AUTH_EMAIL,
-        subject: 'Email for diet plan from ' + req.body.domain,
-        html: `<h2>Someone sent email for diet plan on ${req.body.domain}</h2> 
+        subject: 'Order for diet plan from ' + req.body.domain,
+        html: `<h2>${currentUser ? currentUser.fullName.toUpperCase() : req.body.fullname.toUpperCase()} ordered for diet plan on ${req.body.domain}</h2> 
         <h3> Name:  <strong><i>${currentUser ? currentUser.fullName : req.body.fullname}</i></strong></h3>
         <h3> Email:  <strong><i>${currentUser ? currentUser.email : req.body.email}</i></strong></h3>
         <h3> Contact No.:  <strong><i>${currentUser ? currentUser.phone : req.body.phone}</i></strong></h3>
         <h3> Gender:  <strong><i>${currentUser ? currentUser.gender : req.body.gender}</i></strong></h3>
         <h3> Age(in years):  <strong><i>${req.body.age}</i></strong></h3>
-        <h3> Duration of Plan(in months):  <strong><i>${req.body.planDuration}</i></strong></h3>
+        <h3> Duration of Plan:  <strong><i>${req.body.planDuration}</i></strong></h3>
         <h3> Goals:  <strong><i>${req.body.goals}</i></strong></h3>
         <h3> Lose/Gain Weight:  <strong><i>${req.body.loseOrGain}</i></strong></h3>
         <h3> Weight(in kg(s)):  <strong><i>${req.body.weight}</i></strong></h3>
@@ -52,8 +53,7 @@ const sendDietMail = (req, currentUser) => {
             console.log(error)
             //   res.send({error: error})
         } else {
-            console.log('succcess email sent')
-            // res.send({res: info.response, message: 'Details sent successfully'})
+            res.send({res: info.response, message: 'Details sent successfully'})
         }
     });
 }
@@ -172,14 +172,16 @@ module.exports.postRegisterUserAndCreateOrder = async (req, res, next) => {
                 message: 'Account with this email address exists already!'
             })
         }
+        const selectedPlan = await PricingPlan.find({planUrlLink: req.body.planUrl}).then(plan => {
+            return plan[0];
+        });
+
         newUser.save().then(() => {
-
-
             let options = {
-                amount: +req.body.payableTotal * 100, // amount in the smallest currency unit
+                amount: +selectedPlan['planPrice'] * 100, // amount in the smallest currency unit
                 currency: "INR",
                 receipt: "order_rcptid_11",
-                payment_capture: +req.body.payableTotal * 100
+                payment_capture: +selectedPlan['planPrice'] * 100
             };
             instance.orders.create(options, (err, order) => {
                 if (err) {
@@ -217,14 +219,17 @@ module.exports.postCreateOrder = async (req, res, next) => {
         // const currentUser = await User.findById(req._id).then((user) => {
         //     return user;
         // });
+        const selectedPlan = await PricingPlan.find({planUrlLink: req.body.planUrl}).then(plan => {
+            return plan[0];
+        });
+
         let options = {
-            amount: +req.body.payableTotal * 100, // amount in the smallest currency unit
+            amount: +selectedPlan['planPrice'] * 100, // amount in the smallest currency unit
             currency: "INR",
-            payment_capture: +req.body.payableTotal * 100
+            payment_capture: +selectedPlan['planPrice'] * 100
         };
         instance.orders.create(options, (err, order) => {
             if (err) {
-                
                 return next(err);
             }
             if (order) {
@@ -237,6 +242,54 @@ module.exports.postCreateOrder = async (req, res, next) => {
                     key: process.env.KEY_ID || localENV.LOCAL_key_id
                 });
             }
+        });
+    } catch (err) {
+        return next(err);
+    }
+}
+
+module.exports.postOrderResponse = async (req, res, next) => {
+    try {
+        const currentUser = await User.findById(req._id || req.body.userId).then((user) => {
+            return user;
+        });
+
+        const selectedPlan = await PricingPlan.find({planUrlLink: req.body.planUrl}).then(plan => {
+            return plan[0];
+        });
+        const postOrder = new Order({
+            razorPayOrderId: "#" + req.body.order_id,
+            user: {
+                fullName: req.body.fullName ? req.body.fullName : currentUser.fullName,
+                email: req.body.email ? req.body.email : currentUser.email,
+                phone: req.body.phone ? req.body.phone : currentUser.phone,
+                userId: req._id ? req._id : req.body.userId
+            },
+            planDetails: {
+                paymentStatus: 'Success',
+                payableTotal: String(selectedPlan['planPrice']),
+                planPrice: req.body.planPrice,
+                planName: req.body.planName,
+                planDuration: req.body.planDuration,
+                goals: req.body.goals,
+                age: req.body.age,
+                height: req.body.height,
+                weight: req.body.weight,
+                loseOrGain: req.body.loseOrGain,
+                goingGym: req.body.goingGym,
+                foodType: req.body.foodType,
+                medicalIssue: req.body.medicalIssue,
+                foodAllergy: req.body.foodAllergy,
+            },
+        });
+        postOrder.save().then(() => {
+            sendDietMail(req, currentUser);
+            return res.status(200).send({
+                success: true,
+                message: 'Order Placed Successfully',
+            });
+        }).catch((err) => {
+            return next(err);
         });
     } catch (err) {
         return next(err);
@@ -598,49 +651,7 @@ module.exports.newPassword = async (req, res) => {
     })
 }
 
-module.exports.postOrderResponse = async (req, res, next) => {
-    try {
-        const currentUser = await User.findById(req._id || req.body.userId).then((user) => {
-            return user;
-        });
-        const postOrder = new Order({
-            razorPayOrderId: "#" + req.body.order_id,
-            user: {
-                fullName: req.body.fullName ? req.body.fullName : currentUser.fullName,
-                email: req.body.email ? req.body.email : currentUser.email,
-                phone: req.body.phone ? req.body.phone : currentUser.phone,
-                userId: req._id ? req._id : req.body.userId
-            },
-            planDetails: {
-                paymentStatus: 'Success',
-                payableTotal: String(req.body.payableTotal),
-                planPrice: req.body.planPrice,
-                planName: req.body.planName,
-                planDuration: req.body.planDuration,
-                goals: req.body.goals,
-                age: req.body.age,
-                height: req.body.height,
-                weight: req.body.weight,
-                loseOrGain: req.body.loseOrGain,
-                goingGym: req.body.goingGym,
-                foodType: req.body.foodType,
-                medicalIssue: req.body.medicalIssue,
-                foodAllergy: req.body.foodAllergy,
-            },
-        });
-        postOrder.save().then(() => {
-            sendDietMail(req, currentUser);
-            return res.status(200).send({
-                success: true,
-                message: 'Order Placed Successfully',
-            });
-        }).catch((err) => {
-            return next(err);
-        });
-    } catch (err) {
-        return next(err);
-    }
-}
+
 
 module.exports.postContactForm = async (req, res, next) => {
     try {

@@ -16,6 +16,9 @@ MIT
 @angular/router
 MIT
 
+ngx-progressbar
+MIT
+
 ngx-skeleton-loader
 MIT
 

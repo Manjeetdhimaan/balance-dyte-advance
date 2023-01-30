@@ -21,7 +21,7 @@ declare let Razorpay: any;
   host: { '[@fallIn]': '' }
 })
 export class PlanDetailsComponent implements OnInit {
-  constructor(private pricingPlanService: PricingPlanService, private router: Router, private fb: FormBuilder, private userApiService: UserApiService, private toastMessageService: ToasTMessageService, private pricingPlanApiService: PricingPlanApiService) { }
+  constructor(private router: Router, private fb: FormBuilder, private userApiService: UserApiService, private toastMessageService: ToasTMessageService, private pricingPlanApiService: PricingPlanApiService) { }
 
 
   pricingPlanData: PricingPlan[] = [];
@@ -38,6 +38,7 @@ export class PlanDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     // user form
+    console.log(this.router.url)
     this.userForm = this.fb.group({
       fullName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.email)]),
@@ -90,43 +91,6 @@ export class PlanDetailsComponent implements OnInit {
       })
     // getting pricing plans
     this.isLoading = true;
-    // this.pricingPlanApiService.getPricingPlans().subscribe(async (res: any) => {
-    //   this.pricingPlanData = await res['plans'];
-    //   this.isLoading = false;
-    //   if (this.pricingPlanData.length > 0) {
-    //     this.pricingPlanData.map((plan: PricingPlan) => {
-    //       if (this.router.url.toLowerCase() === plan['planUrlLink'].toLowerCase()) {
-    //         this.selectedPricingPlan = plan;
-    //         this.userForm.patchValue({
-    //           planDuration: this.selectedPricingPlan['planDuration'],
-    //         })
-    //       }
-    //     })
-
-    //     if (this.router.url.toLowerCase() !== this.selectedPricingPlan?.['planUrlLink'].toLowerCase()) {
-    //       this.router.navigate(['/not-found'])
-    //     }
-    //   }
-    // }, err => {
-    //   console.log(err);
-    //   this.isLoading = false;
-    //   this.pricingPlanData = this.pricingPlanService.getPricingPlans();
-
-    //   if (this.pricingPlanData.length > 0) {
-    //     this.pricingPlanData.map((plan: PricingPlan) => {
-    //       if (this.router.url.toLowerCase() === plan['planUrlLink'].toLowerCase()) {
-    //         this.selectedPricingPlan = plan;
-    //         this.userForm.patchValue({
-    //           planDuration: this.selectedPricingPlan['planDuration'],
-    //         })
-    //       }
-    //     })
-
-    //     if (this.router.url.toLowerCase() !== this.selectedPricingPlan?.['planUrlLink'].toLowerCase()) {
-    //       this.router.navigate(['/not-found'])
-    //     }
-    //   }
-    // })
 
     if (this.isLoggedIn()) {
       this.isLoading = true;
@@ -198,8 +162,6 @@ export class PlanDetailsComponent implements OnInit {
   }
 
   razorPayResponseHandler(res: any) {
-    // console.log('razorpayRes', res);
-
     if (res) {
       this.submitted = true;
       if (!this.userForm.valid) {
@@ -227,14 +189,13 @@ export class PlanDetailsComponent implements OnInit {
         planDuration: this.userForm.value.planDuration,
       }
 
-      const formObj = Object.assign({}, formBody, { domain: environment.domain, order_id: this.razorOrderId, userId: this.userId });
+      const formObj = Object.assign({}, formBody, { domain: environment.domain, order_id: this.razorOrderId, userId: this.userId, planUrl: this.router.url  });
 
       this.userApiService.postOrderResponse(formObj).subscribe((res: any) => {
         this.isLoading = false;
         this.razorPayResMsg = res['message']
         this.toastMessageService.success(res['message']);
         if (this.isLoggedIn()) {
-
           this.router.navigate(['/account/profile/orders']);
         }
         else {
@@ -278,7 +239,7 @@ export class PlanDetailsComponent implements OnInit {
         planName: this.selectedPricingPlan.planName,
         planDuration: this.userForm.value.planDuration,
       }
-      const formObj = Object.assign({}, formBody, { domain: environment.domain });
+      const formObj = Object.assign({}, formBody, { domain: environment.domain, planUrl: this.router.url });
       this.userApiService.postRegisterUserAndPlaceOrder(formObj).subscribe((res: any) => {
         this.isLoading = false;
         // this.toastMessageService.success(res['message']);
@@ -338,7 +299,7 @@ export class PlanDetailsComponent implements OnInit {
         planName: this.selectedPricingPlan.planName,
         planDuration: this.userForm.value.planDuration,
       }
-      const formObj = Object.assign({}, formBody, { domain: environment.domain });
+      const formObj = Object.assign({}, formBody, { domain: environment.domain, planUrl: this.router.url });
       console.log(formObj)
       this.userApiService.postPlaceOrder(formObj).subscribe((res: any) => {
         this.isLoading = false;

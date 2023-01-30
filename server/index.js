@@ -1,4 +1,3 @@
-// require('./config/config');
 // require('dotenv').config();
 
 require('./models/db.model');
