@@ -118,7 +118,7 @@ module.exports.postRegisterUser = async (req, res, next) => {
         if (await userExists(req.body.email)) {
             return res.status(409).json({
                 success: false,
-                message: 'Account with this email address exists already!'
+                message: 'Account with this email address exists already! Please try with different one'
             })
         }
         user.save().then(() => {
@@ -308,7 +308,7 @@ module.exports.authenticate = (req, res, next) => {
             if (err) return res.status(400).json(err);
             // registered user
             else if (user) return res.status(200).json({
-                "token": user.generateJwt(),
+                "token": user.generateJwt(req.body.remeberMe),
                 "_id": user['_id'],
                 "name": user['fullName']
             });

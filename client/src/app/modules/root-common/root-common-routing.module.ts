@@ -11,7 +11,7 @@ import { TermsConditionsComponent } from './components/terms-conditions/terms-co
 
 const routes: Routes = [
     {
-        path: '', component: HomeComponent, pathMatch: 'full', data: {title: 'Balance Your Diet'}
+        path: '', component: HomeComponent, pathMatch: 'full', data: {title: 'We help you manage your weight with help of diet plan'}
     },
     {
         path: 'about', component: AboutComponent, data: {title: 'About'}

@@ -13,6 +13,8 @@ import { AppointmentComponent } from './components/resusable-components/appointm
 import { NgxSkeletonLoaderModule } from 'ngx-skeleton-loader';
 import { SkeletonComponent } from './components/ui-components/skeleton/skeleton.component';
 import { InlineSpinnerComponent } from './components/ui-components/inline-spinner/inline-spinner.component';
+import { BlogComponent } from './components/resusable-components/blog/blog.component';
+import { LatestBlogsComponent } from './components/resusable-components/latest-blogs/latest-blogs.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { InlineSpinnerComponent } from './components/ui-components/inline-spinne
     NutritiousFoodsComponent,
     AppointmentComponent,
     SkeletonComponent,
-    InlineSpinnerComponent
+    InlineSpinnerComponent,
+    BlogComponent,
+    LatestBlogsComponent
   ],
   imports: [
     CommonModule,
@@ -42,7 +46,8 @@ import { InlineSpinnerComponent } from './components/ui-components/inline-spinne
     NutritiousFoodsComponent,
     AppointmentComponent,
     SkeletonComponent,
-    InlineSpinnerComponent
+    InlineSpinnerComponent,
+    LatestBlogsComponent
   ]
 })
 export class SharedModule { }

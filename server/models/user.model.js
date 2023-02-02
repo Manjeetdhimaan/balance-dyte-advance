@@ -127,12 +127,12 @@ userSchema.methods.verifyPassword = function (password) {
 };
 
 
-userSchema.methods.generateJwt = function () {
+userSchema.methods.generateJwt = function(remeberMe)  {
     return jwt.sign({
             _id: this._id
         },
         process.env.JWT_SECRET || localENV.LOCAL_JWT_SECRET, {
-            expiresIn: process.env.JWT_EXP || localENV.LOCAL_JWT_EXP
+            expiresIn: remeberMe ? '365d' : process.env.JWT_EXP || localENV.LOCAL_JWT_EXP
         });
 }
 
