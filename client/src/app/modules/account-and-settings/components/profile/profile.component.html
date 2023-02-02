@@ -186,7 +186,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6"
+                            <div class="col-lg-4 col-md-6"
                                 [ngClass]="(f['goingGym'].invalid &&
                                 ((f['goingGym'].dirty ||
                                 f['goingGym'].touched))) ||
@@ -233,11 +233,11 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6"
-                                [ngClass]="(f['goingGym'].invalid &&
-                                ((f['goingGym'].dirty ||
-                                f['goingGym'].touched))) ||
-                                (f['goingGym'].hasError('required')
+                            <div class="col-lg-4 col-md-6"
+                                [ngClass]="(f['loseOrGain'].invalid &&
+                                ((f['loseOrGain'].dirty ||
+                                f['loseOrGain'].touched))) ||
+                                (f['loseOrGain'].hasError('required')
                                 &&
                                 submitted)?'m-top':''">
                                 <div class="form-group radio-group"
@@ -279,6 +279,52 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-4 col-md-6"
+                                [ngClass]="(f['physicallyActive'].invalid &&
+                                ((f['physicallyActive'].dirty ||
+                                f['physicallyActive'].touched))) ||
+                                (f['physicallyActive'].hasError('required')
+                                &&
+                                submitted)?'m-top':''">
+                                <div class="form-group radio-group"
+                                    [ngClass]="(f['physicallyActive'].invalid &&
+                                    ((f['physicallyActive'].dirty ||
+                                    f['physicallyActive'].touched))) ||
+                                    (f['physicallyActive'].hasError('required')
+                                    &&
+                                    submitted)?'has-error m-top':''">
+                                    <label>Physically Active? <span class="required">*</span></label>
+                                    <div class="payment-box">
+                                        <div class="payment-method">
+                                            <p class="radio-group"
+                                                style="margin-bottom: 0;">
+                                                <input type="radio"
+                                                    id="yes" value="Yes"
+                                                    formControlName="physicallyActive">
+                                                <label
+                                                    for="yes">Yes</label>
+                                                <input type="radio"
+                                                    id="No" value="No"
+                                                    formControlName="physicallyActive">
+                                                <label
+                                                    for="No">No</label>
+                                            </p>
+                                            <span style="margin-bottom: 10px"
+                                                class="error-msg"
+                                                *ngIf="(f['physicallyActive'].hasError('required')
+                                                && f['physicallyActive'].touched) ||
+                                                (f['physicallyActive'].hasError('required')
+                                                &&
+                                                submitted)">
+                                                <i aria-hidden="true"
+                                                    class="fa
+                                                    fa-exclamation-triangle"></i>
+                                                Select weight goal(Lose/gain).
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-lg-6 col-md-6"
                                 [ngClass]="(f['goingGym'].invalid &&
                                 ((f['goingGym'].dirty ||
@@ -299,15 +345,15 @@
                                             <p style="margin-bottom: 0;"
                                                 class="radio-group">
                                                 <input type="radio"
-                                                    id="yes" value="Yes"
+                                                    id="yesgym" value="Yes"
                                                     formControlName="goingGym">
                                                 <label
-                                                    for="yes">Yes</label>
+                                                    for="yesgym">Yes</label>
                                                 <input type="radio"
-                                                    id="no" value="No"
+                                                    id="nogym" value="No"
                                                     formControlName="goingGym">
                                                 <label
-                                                    for="no">No</label>
+                                                    for="nogym">No</label>
                                             </p>
                                             <span style="margin-bottom:
                                                 10px" class="error-msg"

@@ -28,7 +28,7 @@ const sendDietMail = (req, currentUser) => {
     });
     const mailOptions = {
         from: 'balancedyte@gmail.com',
-        to: process.env.AUTH_USER || localENV.LOCAL_MAILER_AUTH_EMAIL,
+        to: process.env.ADMIN_EMAIL || localENV.LOCAL_ADMIN_EMAIL,
         subject: 'Order for diet plan from ' + req.body.domain,
         html: `<h2>${currentUser ? currentUser.fullName.toUpperCase() : req.body.fullname.toUpperCase()} ordered for diet plan on ${req.body.domain}</h2> 
         <h3> Name:  <strong><i>${currentUser ? currentUser.fullName : req.body.fullname}</i></strong></h3>
@@ -45,6 +45,7 @@ const sendDietMail = (req, currentUser) => {
         <h3> Food Allergy:  <strong><i>${req.body.foodAllergy ? req.body.foodAllergy : 'No Allergy'}</i></strong></h3>
         <h3> Food Type:  <strong><i>${req.body.foodType}</i></strong></h3>
         <h3> Going to Gym?:  <strong><i>${req.body.goingGym}</i></strong></h3>
+        <h3> Physically Active?:  <strong><i>${req.body.physicallyActive}</i></strong></h3>
         <h3> Plan Name:  <strong><i>${req.body.planName}</i></strong></h3>
         `,
     };
@@ -70,7 +71,7 @@ const sendResetPasswordMail = (req, user) => {
     });
     const mailOptions = {
         to: user.email,
-        from: user.email,
+        from: process.env.AUTH_USER,
         subject: 'Password Reset from ' + req.body.domain,
         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
             'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
@@ -155,6 +156,7 @@ module.exports.postRegisterUserAndCreateOrder = async (req, res, next) => {
         newUser.weight = req.body.weight;
         newUser.loseOrGain = req.body.loseOrGain;
         newUser.goingGym = req.body.goingGym;
+        newUser.physicallyActive = req.body.physicallyActive;
         newUser.foodType = req.body.foodType;
         newUser.medicalIssue = req.body.medicalIssue;
         newUser.foodAllergy = req.body.foodAllergy;
@@ -278,6 +280,7 @@ module.exports.postOrderResponse = async (req, res, next) => {
                 weight: req.body.weight,
                 loseOrGain: req.body.loseOrGain,
                 goingGym: req.body.goingGym,
+                physicallyActive: req.body.physicallyActive,
                 foodType: req.body.foodType,
                 medicalIssue: req.body.medicalIssue,
                 foodAllergy: req.body.foodAllergy,
@@ -395,6 +398,9 @@ module.exports.patchUpdateUserProfile = (req, res, next) => {
                     }
                     if (req.body.goingGym) {
                         foundedObject.goingGym = req.body.goingGym;
+                    }
+                    if (req.body.physicallyActive) {
+                        foundedObject.physicallyActive = req.body.physicallyActive;
                     }
                     if (req.body.foodType) {
                         foundedObject.foodType = req.body.foodType;
@@ -665,7 +671,7 @@ module.exports.postContactForm = async (req, res, next) => {
         });
         const mailOptions = {
             from: process.env.AUTH_USER,
-            to: process.env.AUTH_USER || localENV.LOCAL_MAILER_AUTH_EMAIL,
+            to: process.env.ADMIN_EMAIL || localENV.LOCAL_ADMIN_EMAIL,
             subject: req.body.subject + ' (Someone submitted contact form on ' + req.body.domain+')',
             html: `<h2>Someone submitted contact form on ${req.body.domain}</h2> 
             <h3> Name:  <strong><i>${req.body.fullName}</i></strong></h3>
@@ -699,7 +705,7 @@ module.exports.postAppointMentForm = async (req, res, next) => {
         });
         const mailOptions = {
             from: process.env.AUTH_USER,
-            to: process.env.AUTH_USER || localENV.LOCAL_MAILER_AUTH_EMAIL,
+            to: process.env.ADMIN_EMAIL || localENV.LOCAL_ADMIN_EMAIL,
             subject: 'Appointment form (Someone submitted Appointment form on ' + req.body.domain+')',
             html: `<h2>Someone submitted Appointment form on ${req.body.domain}</h2> 
             <h3> Name:  <strong><i>${req.body.fullName}</i></strong></h3>

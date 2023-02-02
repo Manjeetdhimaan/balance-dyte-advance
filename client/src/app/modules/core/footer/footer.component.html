@@ -15,18 +15,18 @@
                         </p>
                         <ul class="social-link">
                             <li>
-                                <a href="https://www.facebook.com/Balance-Dyte-102017015755323" target="_blank">
+                                <a [href]="socialMediaLinks?.facebook" target="_blank">
                                     <i class='bx bxl-facebook'></i>
                                 </a>
                             </li>
                            
                             <li>
-                                <a href="https://twitter.com/BalanceDyte" target="_blank">
+                                <a [href]="socialMediaLinks?.twitter" target="_blank">
                                     <i class='bx bxl-twitter'></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://www.instagram.com/balancedyte/" target="_blank">
+                                <a [href]="socialMediaLinks?.instagram" target="_blank">
                                     <i class='bx bxl-instagram'></i>
                                 </a>
                             </li>
@@ -71,20 +71,23 @@
                         <ul class="footer-contact">
                             <li>
                                 Phone:
-                                <span>
-                                    <a href="tel:+8245678924">+8245678924</a><br>
-                                    <a href="tel:+8245668964">+8245668964</a>
+                                <span >
+                                    <div *ngFor="let phone of phones">
+                                        <a [href]="'tel:' + phone">{{ phone }}</a><br>
+                                    </div>
                                 </span>
                             </li>
                             <li>
                                 Email:
                                 <span>
-                                    <a href="mailto:balancedyte@gmail.com">balancedyte@gmail.com</a>
+                                    <div *ngFor="let email of emails">
+                                        <a [href]="'mailto:' + email">{{ email }}</a>
+                                    </div>
                                 </span>
                             </li>
                             <li>
-                                Follow on <a href="https://www.instagram.com/balancedyte/" target="_blank">
-                                    instagram
+                                Follow on <a [href]="socialMediaLinks?.instagram" target="_blank">
+                                    Instagram
                                 </a> for more!
                             </li>
                         </ul>

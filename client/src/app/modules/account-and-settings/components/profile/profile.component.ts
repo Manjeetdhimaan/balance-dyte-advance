@@ -36,6 +36,7 @@ export class ProfileComponent implements OnInit {
       gender: new FormControl('', [Validators.required]),
       loseOrGain: new FormControl('', [Validators.required]),
       goingGym: new FormControl('', [Validators.required]),
+      physicallyActive: new FormControl('', [Validators.required]),
       foodType: new FormControl('', [Validators.required]),
       planDuration: new FormControl('3', [Validators.required]),
       medicalIssue: new FormControl(''),
@@ -56,6 +57,7 @@ export class ProfileComponent implements OnInit {
           weight: res['user']['weight'],
           loseOrGain: res['user']['loseOrGain'],
           goingGym: res['user']['goingGym'],
+          physicallyActive: res['user']['physicallyActive'],
           foodType: res['user']['foodType'],
           medicalIssue: res['user']['medicalIssue'],
           foodAllergy: res['user']['foodAllergy']

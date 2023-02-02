@@ -56,7 +56,7 @@
                                     </tr>
                                 </thead>
                                 <tbody *ngFor="let order of orders">
-                                    <tr>
+                                    <tr class="order-row">
                                         <td class="product-thumbnail">
                                             <span class="unit-amount">
                                                 {{ order.razorPayOrderId }}
@@ -82,7 +82,7 @@
                                         </td>
                                         <!-- <td class="product-subtotal">
                                             <a
-                                                class="subtotal-amount" [routerLink]="['view-order', order['_id']]" (click)="onNavigate(order['_id'])">View Details</a>
+                                                class="subtotal-amount view-details" [routerLink]="['view-order', order['_id']]" (click)="onNavigate(order['_id'])">View Details</a>
                                             <a
                                                 class="remove">
                                                 <i class='bx
@@ -134,3 +134,5 @@
 
 <app-spinner *ngIf="isLoading"></app-spinner>
 <ng-progress></ng-progress>
+
+<router-outlet></router-outlet>

@@ -14,21 +14,20 @@
                                 <li class="title">Follow us :</li>
                                 <li>
                                     <a
-                                        href="https://www.facebook.com/Balance-Dyte-102017015755323"
+                                        [href]="socialMediaLinks?.facebook"
                                         target="_blank">
                                         <i class='bx bxl-facebook'></i>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a href="https://twitter.com/BalanceDyte"
+                                    <a [href]="socialMediaLinks?.twitter"
                                         target="_blank">
                                         <i class='bx bxl-twitter'></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a
-                                        href="https://www.instagram.com/balancedyte/"
+                                    <a [href]="socialMediaLinks?.instagram"
                                         target="_blank">
                                         <i class='bx bxl-instagram'></i>
                                     </a>
@@ -207,6 +206,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link"
                                             routerLinkActive="active"
+                                            (click)="scrollTop()" 
                                             routerLink="/account/settings/change-password">Change
                                             Password</a>
                                     </li>

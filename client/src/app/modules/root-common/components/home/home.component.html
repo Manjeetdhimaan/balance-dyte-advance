@@ -4,7 +4,7 @@
             data-wow-duration="1000ms">
             <h1 class="wow animate__animated animate__fadeInLeft" data-wow-delay="100ms" data-wow-duration="1000ms">
                 Are you struggling with your <b>weight?</b></h1>
-            <p class="wow animate__animated animate__fadeInLeft" data-wow-delay="200ms" data-wow-duration="1000ms">Balance Dyte is a cutting edge lifestyle and nutrition program that offers you exactly what you need to achieve optimum health and weight loss. </p>
+            <p class="wow animate__animated animate__fadeInLeft" data-wow-delay="200ms" data-wow-duration="1000ms">Balance Dyte provides cutting edge lifestyle and nutrition program that offers you exactly what you need to achieve optimum health and weight loss. </p>
             <a routerLink="/diet-plans" (click)="scrollTop()" class="default-btn  wow animate__animated animate__fadeInLeft" data-wow-delay="300ms"
                 data-wow-duration="1200ms">Get Plans</a>
             <div class="banner-shape">
@@ -16,6 +16,7 @@
     </div>
 </div>
 
+<app-pricing-plan></app-pricing-plan>
 
 <div class="banner-bottom-area pt-100 pb-70">
     <div class="container">
@@ -24,7 +25,7 @@
                 <div class="banner-bottom-card">
                     <i class="flaticon-calendar-1"></i>
                     <h3>Daily Exercise</h3>
-                    <p>A daily exercise is important for both mental and physical health. But, some people lack the motivation to perform a daily exercise routine. Balance Dyte can help you in this matter. </p>
+                    <p>A daily exercise is important for both mental and physical health. But, some people lack the motivation to perform daily exercise routine. Balance Dyte gives you an exercise routine to follow and maintain your health.</p>
                     <a routerLink="/about" (click)="scrollTop()" class="learn-btn">Learn More</a>
                 </div>
             </div>
@@ -40,7 +41,7 @@
                 <div class="banner-bottom-card">
                     <i class="flaticon-plan"></i>
                     <h3>Nutrition Plans</h3>
-                    <p>To maintain good health and sound body you must follow a balanced diet plan. A balance diet is the proper mixture of all nutrients in our daily meals to keep us healthy. </p>
+                    <p>To maintain good health and sound body you must follow a balanced diet plan. A balance diet is the proper mixture of all nutrients in our daily meals to keep us healthy and charged up. </p>
                     <a routerLink="/about" (click)="scrollTop()" class="learn-btn">Learn More</a>
                 </div>
             </div>
@@ -55,8 +56,8 @@
             <div class="col-lg-6">
                 <div class="about-content">
                     <div class="section-title">
-                        <span>About Us</span>
-                        <h2>Get your customized diet plan from our team of experienced <b>Dieticians and Nutritionists.</b></h2>
+                        <h4><span style="font-size: larger;">About Us</span></h4>
+                        <h2>Get a customized diet plan from a team of experienced <b>Dieticians and Nutritionists.</b></h2>
                         <p>
                             You’ve come to the right place! We’re dietitians with years of experience, who have worked with many clients and have received positive results. We're ready to help you achieve your goals.
                         </p>
@@ -164,25 +165,10 @@
     </div>
 </div>
 
-<div *ngIf="isLoading">
-    <div class="pricing-area pt-100 pb-70">
-        <div class="container">
-            <div class="section-title text-center">
-                <span>Pricing Plan</span>
-                <h2>Choose Your Best Plan</h2>
-            </div>
-            <div class="row justify-content-center pt-45">
-                <div class="col-lg-4 col-md-6" *ngFor="let count of ['', '', '']">
-                    <app-skeleton></app-skeleton>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<app-pricing-plan *ngIf="!isLoading" [pricingPlanData]="pricingPlanData"></app-pricing-plan>
 
 
-<div class="blog-area pt-100 pb-70">
+
+<!-- <div class="blog-area pt-100 pb-70">
     <div class="container">
         <div class="section-title text-center">
             <span>Latest News</span>
@@ -254,4 +240,4 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->

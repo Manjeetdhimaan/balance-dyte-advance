@@ -2,11 +2,9 @@ import { Injectable } from '@angular/core';
 import {
     HttpRequest,
     HttpHandler,
-    HttpEvent,
     HttpInterceptor
 } from '@angular/common/http';
 
-import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 // import { UserService } from 'src/app/modules/employe/services/user.service';
 import { Router } from '@angular/router';

@@ -68,6 +68,11 @@ const userSchema = new mongoose.Schema({
         trim: true,
         // required: [true, 'Please mention your whether you go to gym or not']
     },
+    physicallyActive: {
+        type: String,
+        trim: true,
+        // required: [true, 'Please mention your whether you go to gym or not']
+    },
     medicalIssue: {
         type: String,
         trim: true

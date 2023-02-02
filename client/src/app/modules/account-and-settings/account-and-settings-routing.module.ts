@@ -14,10 +14,11 @@ const routes: Routes = [
         path: '', component: ProfileComponent, canActivate: [UserAuthGuard], data: {title: 'User Profile'}
       },
       {
-        path: 'orders', component: OrdersComponent, canActivate: [UserAuthGuard], data: {title: 'My orders'}
-      },
-      {
-        path: 'orders/view-order/:orderId', component: OrderComponent, canActivate: [UserAuthGuard], data: {title: 'View order details'}
+        path: 'orders', component: OrdersComponent, canActivate: [UserAuthGuard], data: {title: 'My orders'}, children: [
+          {
+            path: 'view-order/:orderId', component: OrderComponent, canActivate: [UserAuthGuard], data: {title: 'View order details'}
+          }
+        ]
       },
     ]
   },

@@ -60,7 +60,6 @@ export class ModelComponent {
   }
 
   closeModal() {
-    console.log('closeModelinmodel')
     const backdrop = document.getElementById('custom-backdrop') as HTMLElement;
     backdrop.style.visibility = 'hidden';
     backdrop.style.opacity = '0';

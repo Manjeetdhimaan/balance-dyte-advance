@@ -13,6 +13,7 @@ const compression = require('compression')
 const localENV = require('./localenv/localenv');
 const userRoutes = require('./routes/user.routes');
 const pricingPlanRoutes = require('./routes/pricing-plans.routes');
+const contactDetailRoutes = require('./routes/contact-details.router');
 
 const PORT = process.env.PORT || localENV.LOCAL_PORT;
 // const rtsAdmin = require('./routes/admin.router');
@@ -29,6 +30,7 @@ app.use(bodyParser.urlencoded({
 app.use(passport.initialize());
 app.use('/api/user', userRoutes);
 app.use('/api/plans', pricingPlanRoutes);
+app.use('/api/contact', contactDetailRoutes);
 // app.use('/api/admin', rtsAdmin);
 
 // error handler
