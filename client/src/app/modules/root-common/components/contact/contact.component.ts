@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { fade, fallIn } from 'src/app/shared/common/animations';
 import { RegexEnum } from 'src/app/shared/common/constants/regex';
+import { ContactDetailsApiService } from 'src/app/shared/services/contact-details.api.service';
 import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
 import { UserApiService } from 'src/app/shared/services/user-api.service';
 import { environment } from 'src/environments/environment';
@@ -19,7 +20,11 @@ export class ContactComponent implements OnInit {
   submitted: boolean = false;
   isLoading: boolean = false;
 
-  constructor(private userApiService: UserApiService, private toasTMessageService: ToasTMessageService) {}
+  phones: string[];
+  emails: string[];
+  socialMediaLinks: any;
+
+  constructor(private userApiService: UserApiService, private toasTMessageService: ToasTMessageService, private contactDetailsApiService: ContactDetailsApiService) {}
 
   ngOnInit(): void {
     this.contactForm = new FormGroup({
@@ -29,6 +34,12 @@ export class ContactComponent implements OnInit {
       subject: new FormControl('', [Validators.required, Validators.minLength(4)]),
       message: new FormControl('', [Validators.required, Validators.minLength(6)]),
     });
+
+    this.contactDetailsApiService.getContactDetails().subscribe((res: any) => {
+      this.phones = res['details'][0]['phone'];
+      this.emails = res['details'][0]['email'];
+      this.socialMediaLinks = res['details'][0]['socialMediaLinks'];
+    })
   }
 
   scrollTop() {
