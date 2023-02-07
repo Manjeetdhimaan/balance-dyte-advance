@@ -1,6 +1,7 @@
 export interface PricingPlan {
     _id: string | number;
     planPrice: string;
+    mrpPrice: string;
     planName: string;
     currency: string;
     planDuration: string;

@@ -15,6 +15,7 @@ export class PricingPlanComponent implements OnInit {
     {
       _id: 'p1',
       planPrice: '1000',
+      mrpPrice: '2000',
       planName: 'Starter',
       currency: 'INR',
       planDuration: '15 days',
@@ -33,6 +34,7 @@ export class PricingPlanComponent implements OnInit {
     {
       _id: 'p2',
       planPrice: '1400',
+      mrpPrice: '2400',
       currency: 'INR',
       planName: 'Advance',
       planDuration: '30 days',
@@ -51,6 +53,7 @@ export class PricingPlanComponent implements OnInit {
     {
       _id: 'p3',
       planPrice: '2000',
+      mrpPrice: '4000',
       currency: 'INR',
       planName: 'Premium',
       planDuration: '90 days',

@@ -11,3 +11,8 @@ a {
     background: rgba(255,64,64,.2);
     border: 1px solid #FF4040;
 }
+
+
+.go-top.active {
+    display: none!important;
+}

@@ -3,8 +3,12 @@ const mongoose = require('mongoose');
 const prcingPlanSchema = new mongoose.Schema({
     planPrice: {
         type: String,
-        required: true,
+        trim: true,
         required: [true, 'Plan Price can\'t be empty']
+    },
+    mrpPrice: {
+        type: String,
+        trim: true
     },
     planName: {
         type: String,

@@ -1,0 +1,38 @@
+#myBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    max-width:90px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    /* background-color: #FFA500; */
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 18px;
+    transition: all 0.3s ease-in-out;
+}
+
+#myBtn:hover {
+    background-color: #555;
+}
+
+#myBtn:focus {
+    background-color: #D88408;
+}
+button[title]{
+    color:red;
+    background-color: #D88408;
+    border: 3px solid green;
+    
+}
+
+@media screen and (max-width: 480px) {
+    #myBtn {
+        max-width: 80px;
+        right: 15px;
+        bottom: 10px;
+    }
+  }

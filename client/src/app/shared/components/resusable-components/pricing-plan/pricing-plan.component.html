@@ -20,6 +20,7 @@
             <div class="col-lg-4 col-md-6" *ngFor="let plan of pricingPlanData">
                 <div class="pricing-card">
                     <div class="pricing-title">
+                        <del><h6 *ngIf="plan['mrpPrice']">{{ plan['mrpPrice'] | currency:plan['currency']:"symbol":'2.0' }}</h6></del>
                         <h3>{{ plan['planPrice'] | currency:plan['currency']:"symbol":'2.0' }}</h3>
                         <!-- <span>{{ plan['planName'] }}</span> -->
                         <span>{{ plan['planDuration'] }}</span>

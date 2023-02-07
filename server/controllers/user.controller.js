@@ -22,8 +22,8 @@ const sendDietMail = (req, currentUser) => {
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: process.env.AUTH_USER || localENV.LOCAL_MAILER_AUTH_EMAIL,
-            pass: process.env.AUTH_PASS || localENV.LOCAL_MAILER_AUTH_PASS
+            user: process.env.MAILER_AUTH_EMAIL || localENV.LOCAL_MAILER_AUTH_EMAIL,
+            pass: process.env.MAILER_AUTH_PASS || localENV.LOCAL_MAILER_AUTH_PASS
         }
     });
     const mailOptions = {
@@ -65,13 +65,13 @@ const sendResetPasswordMail = (req, user) => {
         service: 'Gmail',
         port: 465,
         auth: {
-            user: process.env.AUTH_USER || localENV.LOCAL_MAILER_AUTH_EMAIL,
-            pass: process.env.AUTH_PASS || localENV.LOCAL_MAILER_AUTH_PASS
+            user: process.env.MAILER_AUTH_EMAIL || localENV.LOCAL_MAILER_AUTH_EMAIL,
+            pass: process.env.MAILER_AUTH_PASS || localENV.LOCAL_MAILER_AUTH_PASS
         }
     });
     const mailOptions = {
         to: user.email,
-        from: process.env.AUTH_USER,
+        from: process.env.MAILER_AUTH_EMAIL || localENV.LOCAL_MAILER_AUTH_EMAIL,
         subject: 'Password Reset from ' + req.body.domain,
         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
             'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
@@ -658,19 +658,17 @@ module.exports.newPassword = async (req, res) => {
     })
 }
 
-
-
 module.exports.postContactForm = async (req, res, next) => {
     try {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.AUTH_USER || localENV.LOCAL_MAILER_AUTH_EMAIL,
-                pass: process.env.AUTH_PASS || localENV.LOCAL_MAILER_AUTH_PASS
+                user: process.env.MAILER_AUTH_EMAIL || localENV.LOCAL_MAILER_AUTH_EMAIL,
+                pass: process.env.MAILER_AUTH_PASS || localENV.LOCAL_MAILER_AUTH_PASS
             }
         });
         const mailOptions = {
-            from: process.env.AUTH_USER,
+            from: process.env.MAILER_AUTH_EMAIL,
             to: process.env.ADMIN_EMAIL || localENV.LOCAL_ADMIN_EMAIL,
             subject: req.body.subject + ' (Someone submitted contact form on ' + req.body.domain+')',
             html: `<h2>Someone submitted contact form on ${req.body.domain}</h2> 
@@ -699,12 +697,12 @@ module.exports.postAppointMentForm = async (req, res, next) => {
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: process.env.AUTH_USER || localENV.LOCAL_MAILER_AUTH_EMAIL,
-                pass: process.env.AUTH_PASS || localENV.LOCAL_MAILER_AUTH_PASS
+                user: process.env.MAILER_AUTH_EMAIL || localENV.LOCAL_MAILER_AUTH_EMAIL,
+                pass: process.env.MAILER_AUTH_PASS || localENV.LOCAL_MAILER_AUTH_PASS
             }
         });
         const mailOptions = {
-            from: process.env.AUTH_USER,
+            from: process.env.MAILER_AUTH_EMAIL || localENV.LOCAL_MAILER_AUTH_EMAIL,
             to: process.env.ADMIN_EMAIL || localENV.LOCAL_ADMIN_EMAIL,
             subject: 'Appointment form (Someone submitted Appointment form on ' + req.body.domain+')',
             html: `<h2>Someone submitted Appointment form on ${req.body.domain}</h2> 

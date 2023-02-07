@@ -11,6 +11,7 @@ export class PricingPlanService {
     {
       _id: 'p1',
       planPrice: '1000',
+      mrpPrice: '2000',
       planName: 'Starter',
       currency: 'INR',
       planDuration: '15 days',
@@ -27,6 +28,7 @@ export class PricingPlanService {
     {
       _id: 'p2',
       planPrice: '1400',
+      mrpPrice: '2800',
       planName: 'Advance',
       currency: 'INR',
       planDuration: '30 days',
@@ -43,6 +45,7 @@ export class PricingPlanService {
     {
       _id: 'p3',
       planPrice: '2000',
+      mrpPrice: '4000',
       planName: 'Premium',
       currency: 'INR',
       planDuration: '90 days',
