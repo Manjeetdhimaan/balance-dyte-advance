@@ -13,3 +13,4 @@ require('./user.model');
 require('./orders.model');
 require('./pricing-plans.model');
 require('./contact-details.model');
+require('./testimonials.model');

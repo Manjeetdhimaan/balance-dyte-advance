@@ -20,8 +20,8 @@ export class ContactComponent implements OnInit {
   submitted: boolean = false;
   isLoading: boolean = false;
 
-  phones: string[];
-  emails: string[];
+  phones: string[] = ['+91 7696492843'];
+  emails: string[] = ['balancedyte@gmail.com'];
   socialMediaLinks: any;
 
   constructor(private userApiService: UserApiService, private toasTMessageService: ToasTMessageService, private contactDetailsApiService: ContactDetailsApiService) {}

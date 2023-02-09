@@ -7,6 +7,7 @@ import { HomeComponent } from './components/home/home.component';
 import { PlanDetailsComponent } from './components/plan-details/plan-details.component';
 import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 import { TermsConditionsComponent } from './components/terms-conditions/terms-conditions.component';
+import { TestimonialsComponent } from './components/testimonials/testimonials.component';
 
 
 const routes: Routes = [
@@ -21,6 +22,9 @@ const routes: Routes = [
     },
     {
         path: 'terms-conditions', component: TermsConditionsComponent, data: {title: 'Terms and Conditions'}
+    },
+    {
+        path: 'testimonials', component: TestimonialsComponent, data: {title: 'Client Testimonials'}
     },
     {
         path: 'contact', component: ContactComponent, data: {title: 'Contact Us'}

@@ -1,0 +1,125 @@
+<!-- <div class="testimonial-widget-area pt-100 pb-70">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6">
+                <div class="testimonial-card">
+                    <div class="content">
+                        <img
+                            src="assets/images/testimonials/testimonial-profile1.jpg"
+                            alt="Testimonials Images">
+                        <h3>Moris Jacker</h3>
+                        <span>Developer</span>
+                    </div>
+                    <div class="rating">
+                        <i class='bx bxs-star'></i>
+                        <i class='bx bxs-star'></i>
+                        <i class='bx bxs-star'></i>
+                        <i class='bx bxs-star'></i>
+                        <i class='bx bxs-star'></i>
+                    </div>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur
+                        adipiscing elit, sed do eiusmod tempor
+                        incididunt ut labore
+                        dolore magna aliqua. Quis ipsum viverra
+                        suspendisse ultrices gravida risus commodo.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="testimonial-card">
+                    <div class="content">
+                        <img
+                            src="assets/images/testimonials/testimonial-profile2.jpg"
+                            alt="Testimonials Images">
+                        <h3>Orbindu Jeason</h3>
+                        <span>Manager</span>
+                    </div>
+                    <div class="rating">
+                        <i class='bx bxs-star'></i>
+                        <i class='bx bxs-star'></i>
+                        <i class='bx bxs-star'></i>
+                        <i class='bx bxs-star'></i>
+                        <i class='bx bxs-star'></i>
+                    </div>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur
+                        adipiscing elit, sed do eiusmod tempor
+                        incididunt ut labore
+                        dolore magna aliqua. Quis ipsum viverra
+                        suspendisse ultrices gravida risus commodo.
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="testimonial-card">
+                    <div class="content">
+                        <img
+                            src="assets/images/testimonials/testimonial-profile3.jpg"
+                            alt="Testimonials Images">
+                        <h3>Lithiya Gera</h3>
+                        <span>Designer</span>
+                    </div>
+                    <div class="rating">
+                        <i class='bx bxs-star'></i>
+                        <i class='bx bxs-star'></i>
+                        <i class='bx bxs-star'></i>
+                        <i class='bx bxs-star'></i>
+                        <i class='bx bxs-star'></i>
+                    </div>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur
+                        adipiscing elit, sed do eiusmod tempor
+                        incididunt ut labore
+                        dolore magna aliqua. Quis ipsum viverra
+                        suspendisse ultrices gravida risus commodo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div class="testimonials-area ptb-100">
+    <div class="container">
+        <div class="testimonials-slider ">
+            <owl-carousel-o [options]="customOptionshome" class="owl-dot">
+                <ng-container>
+                    <ng-template carouselSlide *ngFor="let testimonial of
+                        testimonialsArray">
+                        <div class="testimonials-item">
+                            <div class="section-title text-center">
+                                <span>Testimonials</span>
+                                <h2>Client Testimonials</h2>
+                            </div>
+                            <div class="content">
+                                <h3>{{ testimonial.clientName }}</h3>
+                                <span *ngIf="testimonial.clientProfession">{{
+                                    testimonial.clientProfession }}</span>
+                            </div>
+                            <!-- <i class='bx bxs-quote-left'></i> -->
+                            <div class="content" *ngIf="testimonial.clientImageSrcObject.beforeImageSrc || testimonial.clientImageSrcObject.afterImageSrc">
+                                <img *ngIf="testimonial.clientImageSrcObject?.beforeImageSrc" style="max-width: 340px; margin: auto; display: inline-block;"
+                                    [src]="testimonial.clientImageSrcObject.beforeImageSrc"
+                                    [alt]="testimonial.clientName">
+                                <img *ngIf="testimonial.clientImageSrcObject?.afterImageSrc" style="max-width: 340px; margin: auto; display: inline-block;"
+                                    [src]="testimonial.clientImageSrcObject.afterImageSrc"
+                                    [alt]="testimonial.clientName">
+                            </div>
+                            <p>
+                                {{ testimonial.reviewContent }}
+                            </p>
+                            <!-- <div class="content">
+                                <h3>{{ testimonial.clientName }}</h3>
+                                <span *ngIf="testimonial.clientProfession">{{
+                                    testimonial.clientProfession }}</span>
+                            </div> -->
+                        </div>
+                    </ng-template>
+                </ng-container>
+            </owl-carousel-o>
+        </div>
+    </div>
+</div>
+
+<app-spinner *ngIf="isLoading"></app-spinner>

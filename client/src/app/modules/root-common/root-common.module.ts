@@ -12,6 +12,7 @@ import { ContactComponent } from './components/contact/contact.component';
 import { PlanDetailsComponent } from './components/plan-details/plan-details.component';
 import { DietPlansComponent } from './components/diet-plans/diet-plans.component';
 import { TermsConditionsComponent } from './components/terms-conditions/terms-conditions.component';
+import { TestimonialsComponent } from './components/testimonials/testimonials.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { TermsConditionsComponent } from './components/terms-conditions/terms-co
     ContactComponent,
     PlanDetailsComponent,
     DietPlansComponent,
-    TermsConditionsComponent
+    TermsConditionsComponent,
+    TestimonialsComponent
   ],
   imports: [
     CommonModule,

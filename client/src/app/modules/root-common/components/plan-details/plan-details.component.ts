@@ -38,7 +38,6 @@ export class PlanDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     // user form
-    console.log(this.router.url)
     this.userForm = this.fb.group({
       fullName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.pattern(RegexEnum.email)]),
@@ -73,7 +72,7 @@ export class PlanDetailsComponent implements OnInit {
               this.selectedPricingPlan = plan;
               this.isLoading = false;
               this.userForm.patchValue({
-                planDuration: this.selectedPricingPlan['planDuration'],
+                'planDuration': this.selectedPricingPlan['planDuration'],
               })
             }
           })
@@ -306,7 +305,6 @@ export class PlanDetailsComponent implements OnInit {
         planDuration: this.userForm.value.planDuration,
       }
       const formObj = Object.assign({}, formBody, { domain: environment.domain, planUrl: this.router.url });
-      console.log(formObj)
       this.userApiService.postPlaceOrder(formObj).subscribe((res: any) => {
         this.isLoading = false;
         this.userId = res['userId'];
@@ -320,11 +318,9 @@ export class PlanDetailsComponent implements OnInit {
         this.razorPayOptions.handler = this.razorPayResponseHandler.bind(this);
         let rzp1 = new Razorpay(this.razorPayOptions);
         rzp1.open(this.razorPayOptions);
-
       }, error => {
         this.isLoading = false;
         this.toastMessageService.error('An error occured with payment, please try again');
-        console.log("error", error);
       })
     }
 

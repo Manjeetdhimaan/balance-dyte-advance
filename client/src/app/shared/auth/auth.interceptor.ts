@@ -7,7 +7,6 @@ import {
 
 import { tap } from 'rxjs/operators';
 // import { UserService } from 'src/app/modules/employe/services/user.service';
-import { Router } from '@angular/router';
 // import { AdminService } from 'src/app/modules/admin/services/admin.service';
 import { UserApiService } from '../services/user-api.service';
 import { ToasTMessageService } from '../services/toast-message.service';
@@ -15,7 +14,7 @@ import { ToasTMessageService } from '../services/toast-message.service';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-    constructor(private userApiService: UserApiService, private router: Router, private toasterMsgService: ToasTMessageService) { }
+    constructor(private userApiService: UserApiService, private toasterMsgService: ToasTMessageService) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler) {
 

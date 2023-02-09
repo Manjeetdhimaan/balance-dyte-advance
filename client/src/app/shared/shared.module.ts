@@ -15,6 +15,9 @@ import { SkeletonComponent } from './components/ui-components/skeleton/skeleton.
 import { InlineSpinnerComponent } from './components/ui-components/inline-spinner/inline-spinner.component';
 import { BlogComponent } from './components/resusable-components/blog/blog.component';
 import { LatestBlogsComponent } from './components/resusable-components/latest-blogs/latest-blogs.component';
+import { TestimonialComponent } from './components/resusable-components/testimonial/testimonial.component';
+import { CardComponent } from './components/resusable-components/card/card.component';
+import { CarouselModule } from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [
@@ -28,13 +31,16 @@ import { LatestBlogsComponent } from './components/resusable-components/latest-b
     SkeletonComponent,
     InlineSpinnerComponent,
     BlogComponent,
-    LatestBlogsComponent
+    LatestBlogsComponent,
+    TestimonialComponent,
+    CardComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
+    CarouselModule,
     NgxSkeletonLoaderModule.forRoot({ animation: 'pulse', loadingText: 'This item is actually loading...' })
   ],
   exports: [
@@ -47,7 +53,9 @@ import { LatestBlogsComponent } from './components/resusable-components/latest-b
     AppointmentComponent,
     SkeletonComponent,
     InlineSpinnerComponent,
-    LatestBlogsComponent
+    LatestBlogsComponent,
+    TestimonialComponent,
+    CardComponent
   ]
 })
 export class SharedModule { }
