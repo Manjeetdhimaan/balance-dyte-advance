@@ -10,7 +10,7 @@ export class TestimonialsApiService {
   constructor(private http: HttpClient) { }
   baseUrl:string = environment.apiBaseUrl+'/testimonials';
 
-  getPricingPlans() {
+  getTestimonials() {
     return this.http.get(this.baseUrl + '/gettestimonials');
   }
 }

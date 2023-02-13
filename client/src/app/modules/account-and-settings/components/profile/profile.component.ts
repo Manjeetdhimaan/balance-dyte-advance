@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { fade, fallIn } from 'src/app/shared/common/animations';
+import { Store } from '@ngrx/store';
+
+import { fallIn } from 'src/app/shared/common/animations';
 import { RegexEnum } from 'src/app/shared/common/constants/regex';
+import { User } from 'src/app/shared/models/user.model';
 import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
 import { UserApiService } from 'src/app/shared/services/user-api.service';
+import { AppState } from 'src/app/store/app.reducer';
+import * as AccountActions from "../../store/account.actions";
 
 @Component({
   selector: 'app-profile',
@@ -14,13 +18,14 @@ import { UserApiService } from 'src/app/shared/services/user-api.service';
   host: { '[@fallIn]': '' }
 })
 export class ProfileComponent implements OnInit {
-  constructor(private router: Router, private fb: FormBuilder, private userApiService: UserApiService, private toastMessageService: ToasTMessageService) { }
+  constructor(private fb: FormBuilder, private userApiService: UserApiService, private toastMessageService: ToasTMessageService, private store: Store<AppState>) { }
   userForm: FormGroup;
 
   submitted: boolean;
   isLoading: boolean = false;
   isConflictErr: boolean = false;
   emailInputValue: string;
+  user: User = null;
   
   ngOnInit(): void {
     this.scrollTop();
@@ -45,29 +50,58 @@ export class ProfileComponent implements OnInit {
     });
 
     if (this.isLoggedIn()) {
-      this.userApiService.getUserProfile().subscribe((res: any) => {
-        this.userForm.patchValue({
-          fullName: res['user']['fullName'],
-          email: res['user']['email'],
-          phone: res['user']['phone'],
-          goals: res['user']['goals'],
-          age: res['user']['age'],
-          gender: res['user']['gender'],
-          height: res['user']['height'],
-          weight: res['user']['weight'],
-          loseOrGain: res['user']['loseOrGain'],
-          goingGym: res['user']['goingGym'],
-          physicallyActive: res['user']['physicallyActive'],
-          foodType: res['user']['foodType'],
-          medicalIssue: res['user']['medicalIssue'],
-          foodAllergy: res['user']['foodAllergy']
+      this.store.select('account').subscribe(stateData => {
+        if(stateData.user || stateData.user !== null) {
+          this.user = stateData.user;
+          this.userForm.patchValue({
+            fullName: stateData['user']['fullName'],
+            email: stateData['user']['email'],
+            phone: stateData['user']['phone'],
+            goals: stateData['user']['goals'],
+            age: stateData['user']['age'],
+            gender: stateData['user']['gender'],
+            height: stateData['user']['height'],
+            weight: stateData['user']['weight'],
+            loseOrGain: stateData['user']['loseOrGain'],
+            goingGym: stateData['user']['goingGym'],
+            physicallyActive: stateData['user']['physicallyActive'],
+            foodType: stateData['user']['foodType'],
+            medicalIssue: stateData['user']['medicalIssue'],
+            foodAllergy: stateData['user']['foodAllergy']
+          });
+          this.isLoading = false;
+        }
+      });
+
+      if (!this.user) {
+        this.userApiService.getUserProfile().subscribe((res: any) => {
+          this.user = res['user'];
+          this.store.dispatch(new AccountActions.FetchUserProfile(res['user']));
+          this.userForm.patchValue({
+            fullName: res['user']['fullName'],
+            email: res['user']['email'],
+            phone: res['user']['phone'],
+            goals: res['user']['goals'],
+            age: res['user']['age'],
+            gender: res['user']['gender'],
+            height: res['user']['height'],
+            weight: res['user']['weight'],
+            loseOrGain: res['user']['loseOrGain'],
+            goingGym: res['user']['goingGym'],
+            physicallyActive: res['user']['physicallyActive'],
+            foodType: res['user']['foodType'],
+            medicalIssue: res['user']['medicalIssue'],
+            foodAllergy: res['user']['foodAllergy']
+          })
+          this.isLoading = false;
+        }, err => {
+          this.toastMessageService.error('An unknown error occured!');
+          this.isLoading = false;
+          console.log(err)
         })
-        this.isLoading = false;
-      }, err => {
-        this.toastMessageService.error('An unknown error occured!');
-        this.isLoading = false;
-        console.log(err)
-      })
+      }
+
+     
     }
   }
 

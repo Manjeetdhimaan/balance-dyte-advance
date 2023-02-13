@@ -1,6 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PricingPlan } from 'src/app/shared/models/pricing-plan/pricing-plan.model';
+import { Store } from '@ngrx/store';
+
+import { PricingPlan } from 'src/app/shared/models/pricing-plan.model';
 import { PricingPlanApiService } from 'src/app/shared/services/pricing-plan-api.service';
+import { AppState } from 'src/app/store/app.reducer';
+import * as RootCommonActions from "../../../../modules/root-common/store/root-common.actions";
 
 @Component({
   selector: 'app-pricing-plan',
@@ -8,10 +12,13 @@ import { PricingPlanApiService } from 'src/app/shared/services/pricing-plan-api.
   styleUrls: ['./pricing-plan.component.css']
 })
 export class PricingPlanComponent implements OnInit {
-  constructor (private pricingPlanApiService: PricingPlanApiService) {}
+  constructor (private pricingPlanApiService: PricingPlanApiService, private store: Store<AppState>) {}
   isLoading: boolean = false;
   serverErrMsg: string;
-  @Input() pricingPlanData: PricingPlan[] = [
+  @Input() pricingPlanData: PricingPlan[] = [];
+
+  //just for reference
+  localPricingPlans = [
     {
       _id: 'p1',
       planPrice: '1000',
@@ -67,21 +74,36 @@ export class PricingPlanComponent implements OnInit {
       ],
       selectPlanBtnName: 'Purchase',
       planUrlLink: '/diet-plans/premium-plan'
-    }
-  ];
+    }]
 
   ngOnInit() {
     this.isLoading = true;
-    this.pricingPlanApiService.getPricingPlans().subscribe(async (res: any) => {
-      this.pricingPlanData = await res['plans'];
+    this.serverErrMsg = '';
+    this.store.select('rootCommon').subscribe(stateData => {
+      if (stateData.pricingPlans.length > 0) {
+        this.pricingPlanData = stateData['pricingPlans'];
         this.isLoading = false;
         this.serverErrMsg = '';
+      }
     }, err => {
-      console.log(err);
-      this.serverErrMsg = "Error while fetching plans! Please try again."
-      // this.pricingPlanData = this.pricingPlanService.getPricingPlans();
       this.isLoading = false;
-    })
+      this.serverErrMsg = "Error while fetching plans! Please try again."
+      console.log(err);
+    });
+
+    if (this.pricingPlanData.length <= 0) {
+      this.pricingPlanApiService.getPricingPlans().subscribe(async (res: any) => {
+        this.store.dispatch(new RootCommonActions.FetchPricingPlans(res['plans']));
+        this.pricingPlanData = await res['plans'];
+          this.isLoading = false;
+          this.serverErrMsg = '';
+      }, err => {
+        console.log(err);
+        this.serverErrMsg = "Error while fetching plans! Please try again."
+        // this.pricingPlanData = this.pricingPlanService.getPricingPlans();
+        this.isLoading = false;
+      })
+    }
   }
 
 

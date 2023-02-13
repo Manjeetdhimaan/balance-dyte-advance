@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 
 import { environment } from 'src/environments/environment';
+import { AppState } from 'src/app/store/app.reducer';
+import * as AuthActions from "../../modules/register/store/auth.actions";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserApiService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private store: Store<AppState>) { }
   
   noAuthHeader = { headers: new HttpHeaders({ 'NoAuth': 'True' }) };
 
@@ -82,6 +85,7 @@ export class UserApiService {
   }
 
   deleteToken() {
+    this.store.dispatch(new AuthActions.UserLogout());
     localStorage.removeItem('token');
   }
 

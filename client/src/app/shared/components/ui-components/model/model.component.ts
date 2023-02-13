@@ -22,7 +22,6 @@ export class ModelComponent {
   serverErrorMessages: string;
 
   ngOnInit(): void {
-    console.log(this.emailInputValue);
     this.loginForm = this.formBuilder.group({
       email: [this.emailInputValue, [Validators.required]],
       password: ['', [Validators.required]]

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { fade, fallIn } from 'src/app/shared/common/animations';
+
+import { fallIn } from 'src/app/shared/common/animations';
 import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
 import { UserApiService } from 'src/app/shared/services/user-api.service';
+// import { AppState } from 'src/app/store/app.reducer';
+// import * as AuthActions from "../../store/auth.actions";
 
 @Component({
   selector: 'app-user-login',
@@ -37,6 +40,7 @@ export class UserLoginComponent implements OnInit {
     else {
       this.isLoading = true;
       try {
+        // this.store.dispatch(new AuthActions.UserLogIn());
         this.userApiService.postLogin(this.loginForm.value).subscribe(
           (res: any) => {
             this.userApiService.setToken(res['token']);

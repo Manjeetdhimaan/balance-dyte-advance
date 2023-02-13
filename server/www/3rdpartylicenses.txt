@@ -16,6 +16,9 @@ MIT
 @angular/router
 MIT
 
+@ngrx/store
+MIT
+
 ngx-owl-carousel-o
 MIT
 

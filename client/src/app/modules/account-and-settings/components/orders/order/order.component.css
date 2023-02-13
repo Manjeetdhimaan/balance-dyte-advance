@@ -22,10 +22,11 @@
     /* box-shadow: 1px 1px 1px black; */
     padding: 16px;
     left: 25%;
-    top: 3%;
+    top: 13%;
     bottom: 0;
     box-sizing: border-box;
-    transform: translateY(-100vh);
+    transform: translateY(100vh);
+    /* transform: scale(0); */
     transition: all 0.3s ease-out;
 }
 

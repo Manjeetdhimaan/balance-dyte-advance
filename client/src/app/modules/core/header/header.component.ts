@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AccordionService } from 'src/app/shared/components/ui-components/accordion/accordion.service';
-import { ContactDetails } from 'src/app/shared/models/contact-details/contact-details.model';
+import { ContactDetails } from 'src/app/shared/models/contact-details.model';
 import { ContactDetailsApiService } from 'src/app/shared/services/contact-details.api.service';
 import { UserApiService } from 'src/app/shared/services/user-api.service';
 

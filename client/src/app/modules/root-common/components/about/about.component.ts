@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { fade, fallIn } from 'src/app/shared/common/animations';
-import { PricingPlan } from 'src/app/shared/models/pricing-plan/pricing-plan.model';
+import { PricingPlan } from 'src/app/shared/models/pricing-plan.model';
 import { PricingPlanApiService } from 'src/app/shared/services/pricing-plan-api.service';
 import { PricingPlanService } from 'src/app/shared/services/pricing-plan.service';
 

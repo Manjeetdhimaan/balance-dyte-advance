@@ -1,18 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { fade, fallIn } from 'src/app/shared/common/animations';
+import { Store } from '@ngrx/store';
+import { fallIn } from 'src/app/shared/common/animations';
 import { RegexEnum } from 'src/app/shared/common/constants/regex';
-import { PricingPlan } from 'src/app/shared/models/pricing-plan/pricing-plan.model';
+import { PricingPlan } from 'src/app/shared/models/pricing-plan.model';
+import { User } from 'src/app/shared/models/user.model';
 import { PricingPlanApiService } from 'src/app/shared/services/pricing-plan-api.service';
 
-import { PricingPlanService } from 'src/app/shared/services/pricing-plan.service';
 import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
 import { UserApiService } from 'src/app/shared/services/user-api.service';
+import { AppState } from 'src/app/store/app.reducer';
 import { environment } from 'src/environments/environment';
+import * as AccountActions from "../../../account-and-settings/store/account.actions";
+import * as RootCommonActions from "../../store/root-common.actions";
 
 declare let Razorpay: any;
-
+export interface SuccessResponse  {
+  success?: boolean,
+  user?: User
+}
 @Component({
   selector: 'app-plan-details',
   templateUrl: './plan-details.component.html',
@@ -20,14 +27,16 @@ declare let Razorpay: any;
   animations: [fallIn()],
   host: { '[@fallIn]': '' }
 })
-export class PlanDetailsComponent implements OnInit {
-  constructor(private router: Router, private fb: FormBuilder, private userApiService: UserApiService, private toastMessageService: ToasTMessageService, private pricingPlanApiService: PricingPlanApiService) { }
 
+
+export class PlanDetailsComponent implements OnInit {
+  constructor(private router: Router, private fb: FormBuilder, private userApiService: UserApiService, private toastMessageService: ToasTMessageService, private pricingPlanApiService: PricingPlanApiService, private store: Store<AppState>) { }
 
   pricingPlanData: PricingPlan[] = [];
   selectedPricingPlan: PricingPlan;
   userForm: FormGroup;
   submitted: boolean;
+  isLoadingPlans: boolean = false;
   isLoading: boolean = false;
   isConflictErr: boolean = false;
   emailInputValue: string;
@@ -35,6 +44,7 @@ export class PlanDetailsComponent implements OnInit {
   serverErrMsg: string;
   razorOrderId: string = '';
   userId: string;
+  user: User = null;
 
   ngOnInit(): void {
     // user form
@@ -62,35 +72,66 @@ export class PlanDetailsComponent implements OnInit {
         validator: this.ConfirmedValidator('password', 'confirmPassword'),
       });
 
-      this.isLoading = true;
-      this.pricingPlanApiService.getPricingPlans().subscribe(async (res: any) => {
-        this.pricingPlanData = await res['plans'];
+    this.isLoadingPlans = true;
+    this.store.select('rootCommon').subscribe(stateData => {
+      if (stateData.pricingPlans.length > 0 ) {
+        this.pricingPlanData = stateData['pricingPlans'];
         if (this.pricingPlanData.length > 0) {
-          this.isLoading = false;
+          this.isLoadingPlans = false;
           this.pricingPlanData.map((plan: PricingPlan) => {
             if (this.router.url.toLowerCase() === plan['planUrlLink'].toLowerCase()) {
               this.selectedPricingPlan = plan;
-              this.isLoading = false;
+              this.isLoadingPlans = false;
               this.userForm.patchValue({
                 'planDuration': this.selectedPricingPlan['planDuration'],
               })
             }
           })
-    
           if (this.router.url.toLowerCase() !== this.selectedPricingPlan?.['planUrlLink'].toLowerCase()) {
             this.router.navigate(['/not-found']);
-            this.isLoading = false;
+            this.isLoadingPlans = false;
           }
         }
-          this.isLoading = false;
+        this.isLoadingPlans = false;
+      }
+    }, err => {
+      console.log(err);
+        this.serverErrMsg = "Error while fetching plans! Please try again."
+        // this.pricingPlanData = this.pricingPlanService.getPricingPlans();
+        this.isLoadingPlans = false;
+    });
+
+    if (this.pricingPlanData.length <=0 ) {
+      this.pricingPlanApiService.getPricingPlans().subscribe(async (res: any) => {
+        console.log('Dispacth')
+        this.store.dispatch(new RootCommonActions.FetchPricingPlans(res['plans']));
+        this.pricingPlanData = await res['plans'];
+        if (this.pricingPlanData.length > 0) {
+          this.isLoadingPlans = false;
+          this.pricingPlanData.map((plan: PricingPlan) => {
+            if (this.router.url.toLowerCase() === plan['planUrlLink'].toLowerCase()) {
+              this.selectedPricingPlan = plan;
+              this.isLoadingPlans = false;
+              this.userForm.patchValue({
+                'planDuration': this.selectedPricingPlan['planDuration'],
+              })
+            }
+          })
+          if (this.router.url.toLowerCase() !== this.selectedPricingPlan?.['planUrlLink'].toLowerCase()) {
+            this.router.navigate(['/not-found']);
+            this.isLoadingPlans = false;
+          }
+        }
+        this.isLoadingPlans = false;
       }, err => {
         console.log(err);
         this.serverErrMsg = "Error while fetching plans! Please try again."
         // this.pricingPlanData = this.pricingPlanService.getPricingPlans();
-        this.isLoading = false;
+        this.isLoadingPlans = false;
       })
+    }
+  
     // getting pricing plans
-    this.isLoading = true;
 
     if (this.isLoggedIn()) {
       this.isLoading = true;
@@ -104,26 +145,48 @@ export class PlanDetailsComponent implements OnInit {
       this.userForm.controls['confirmPassword'].clearValidators();
       this.userForm.controls['phone'].setErrors(null);
       this.userForm.controls['phone'].clearValidators();
+      this.store.select('account').subscribe(stateData => {
+        if (stateData.user) {
+          this.user = stateData['user'];
+          this.userForm.patchValue({
+            goals: stateData['user']['goals'],
+            age: stateData['user']['age'],
+            gender: stateData['user']['gender'],
+            height: stateData['user']['height'],
+            weight: stateData['user']['weight'],
+            loseOrGain: stateData['user']['loseOrGain'],
+            goingGym: stateData['user']['goingGym'],
+            physicallyActive: stateData['user']['physicallyActive'],
+            foodType: stateData['user']['foodType'],
+            medicalIssue: stateData['user']['medicalIssue'],
+            foodAllergy: stateData['user']['foodAllergy']
+          });
+          this.isLoading = false;
+        };
+      });
 
-      this.userApiService.getUserProfile().subscribe((res: any) => {
-        this.userForm.patchValue({
-          goals: res['user']['goals'],
-          age: res['user']['age'],
-          gender: res['user']['gender'],
-          height: res['user']['height'],
-          weight: res['user']['weight'],
-          loseOrGain: res['user']['loseOrGain'],
-          goingGym: res['user']['goingGym'],
-          physicallyActive: res['user']['physicallyActive'],
-          foodType: res['user']['foodType'],
-          medicalIssue: res['user']['medicalIssue'],
-          foodAllergy: res['user']['foodAllergy']
+      if (!this.user || this.user === null) {
+        this.userApiService.getUserProfile().subscribe((res: SuccessResponse) => {
+          this.store.dispatch(new AccountActions.FetchUserProfile(res['user']));
+          this.userForm.patchValue({
+            goals: res['user']['goals'],
+            age: res['user']['age'],
+            gender: res['user']['gender'],
+            height: res['user']['height'],
+            weight: res['user']['weight'],
+            loseOrGain: res['user']['loseOrGain'],
+            goingGym: res['user']['goingGym'],
+            physicallyActive: res['user']['physicallyActive'],
+            foodType: res['user']['foodType'],
+            medicalIssue: res['user']['medicalIssue'],
+            foodAllergy: res['user']['foodAllergy']
+          })
+          this.isLoading = false;
+        }, err => {
+          this.isLoading = false;
+          this.toastMessageService.error(err.error.message);
         })
-        this.isLoading = false;
-      }, err => {
-        this.isLoading = false;
-        this.toastMessageService.error(err.error.message);
-      })
+      }
     }
   }
 
@@ -191,7 +254,7 @@ export class PlanDetailsComponent implements OnInit {
         planDuration: this.userForm.value.planDuration,
       }
 
-      const formObj = Object.assign({}, formBody, { domain: environment.domain, order_id: this.razorOrderId, userId: this.userId, planUrl: this.router.url  });
+      const formObj = Object.assign({}, formBody, { domain: environment.domain, order_id: this.razorOrderId, userId: this.userId, planUrl: this.router.url });
 
       this.userApiService.postOrderResponse(formObj).subscribe((res: any) => {
         this.isLoading = false;
