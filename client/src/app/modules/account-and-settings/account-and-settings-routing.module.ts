@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserAuthGuard } from 'src/app/shared/auth/user-auth.guard';
+import { OrdersResolverService } from 'src/app/shared/services/user-resolver.service';
 import { OrderComponent } from './components/orders/order/order.component';
 import { OrdersComponent } from './components/orders/orders.component';
 import { ProfileComponent } from './components/profile/profile.component';
@@ -13,7 +14,7 @@ const routes: Routes = [
         path: '', component: ProfileComponent, canActivate: [UserAuthGuard], data: {title: 'User Profile'}
       },
       {
-        path: 'orders', component: OrdersComponent, canActivate: [UserAuthGuard], data: {title: 'My orders'}, children: [
+        path: 'orders', component: OrdersComponent, canActivate: [UserAuthGuard], data: {title: 'My orders'}, resolve: [OrdersResolverService], children: [
           {
             path: 'view-order/:orderId', component: OrderComponent, canActivate: [UserAuthGuard], data: {title: 'View order details'}
           }

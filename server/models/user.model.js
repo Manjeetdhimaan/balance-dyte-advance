@@ -126,7 +126,6 @@ userSchema.methods.verifyPassword = function (password) {
     return bcrypt.compareSync(password, this.password);
 };
 
-
 userSchema.methods.generateJwt = function(remeberMe)  {
     return jwt.sign({
             _id: this._id
