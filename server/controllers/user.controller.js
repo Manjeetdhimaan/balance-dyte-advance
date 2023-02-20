@@ -106,7 +106,6 @@ module.exports.postRegisterUser = async (req, res, next) => {
         user.fullName = req.body.fullName;
         user.email = req.body.email;
         user.password = User.hashPassword(req.body.password);
-        user.confirmPassword = req.body.confirmPassword;
 
         if (req.body.password !== req.body.confirmPassword) {
             return res.status(422).send({
@@ -221,9 +220,16 @@ module.exports.postCreateOrder = async (req, res, next) => {
         // const currentUser = await User.findById(req._id).then((user) => {
         //     return user;
         // });
-        const selectedPlan = await PricingPlan.find({planUrlLink: req.body.planUrl}).then(plan => {
-            return plan[0];
+        const selectedPlan = await PricingPlan.find({planUrlLink: req.body.planUrl}).then(plans => {
+            return plans[0];
         });
+
+        if (!selectedPlan) {
+            return res.status(404).json({
+                success: false,
+                message: 'No plan found with this name.'
+            })
+        }
 
         let options = {
             amount: +selectedPlan['planPrice'] * 100, // amount in the smallest currency unit

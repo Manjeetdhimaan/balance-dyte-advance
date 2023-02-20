@@ -21,7 +21,7 @@ export function clearState(reducer: ActionReducer<AppState>): ActionReducer<AppS
     return function(state: AppState, action: any): AppState {
       if (action.type === USER_LOGOUT) {
         state = undefined
-        // return reducer(state = {} as State, { type: INIT });
+        return reducer(state = undefined , { type: INIT });
       }
       return reducer(state, action);
     };

@@ -135,5 +135,4 @@ userSchema.methods.generateJwt = function(remeberMe)  {
         });
 }
 
-
 mongoose.model('User', userSchema);

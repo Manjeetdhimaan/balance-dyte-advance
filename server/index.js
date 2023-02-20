@@ -13,7 +13,7 @@ const compression = require('compression')
 const localENV = require('./localenv/localenv');
 const userRoutes = require('./routes/user.routes');
 const pricingPlanRoutes = require('./routes/pricing-plans.routes');
-const contactDetailRoutes = require('./routes/contact-details.routes');
+const contactDetailRoutes = require('./routes/contact-detail.routes');
 const testimonialRoutes = require('./routes/testimonials.routes');
 
 const PORT = process.env.PORT || localENV.LOCAL_PORT;
