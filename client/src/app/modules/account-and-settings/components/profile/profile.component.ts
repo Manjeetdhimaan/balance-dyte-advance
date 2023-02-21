@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Store } from '@ngrx/store';
 
 import { fallIn } from 'src/app/shared/common/animations';
 import { RegexEnum } from 'src/app/shared/common/constants/regex';
 import { User } from 'src/app/shared/models/user.model';
 import { ToasTMessageService } from 'src/app/shared/services/toast-message.service';
 import { UserApiService } from 'src/app/shared/services/user-api.service';
-import { AppState } from 'src/app/store/app.reducer';
-import * as AccountActions from "../../store/account.actions";
 
 @Component({
   selector: 'app-profile',
@@ -18,7 +15,7 @@ import * as AccountActions from "../../store/account.actions";
   host: { '[@fallIn]': '' }
 })
 export class ProfileComponent implements OnInit {
-  constructor(private fb: FormBuilder, private userApiService: UserApiService, private toastMessageService: ToasTMessageService, private store: Store<AppState>) { }
+  constructor(private fb: FormBuilder, private userApiService: UserApiService, private toastMessageService: ToasTMessageService) { }
   userForm: FormGroup;
 
   submitted: boolean;
@@ -26,7 +23,7 @@ export class ProfileComponent implements OnInit {
   isConflictErr: boolean = false;
   emailInputValue: string;
   user: User = null;
-  
+
   ngOnInit(): void {
     this.scrollTop();
     this.isLoading = true;
@@ -48,60 +45,36 @@ export class ProfileComponent implements OnInit {
       foodAllergy: new FormControl(''),
       // image: new FormControl('', {asyncValidators: mimeType})
     });
+    if (!this.user) {
+
+    }
 
     if (this.isLoggedIn()) {
-      this.store.select('account').subscribe(stateData => {
-        if(stateData.user || stateData.user !== null) {
-          this.user = stateData.user;
-          this.userForm.patchValue({
-            fullName: stateData['user']['fullName'],
-            email: stateData['user']['email'],
-            phone: stateData['user']['phone'],
-            goals: stateData['user']['goals'],
-            age: stateData['user']['age'],
-            gender: stateData['user']['gender'],
-            height: stateData['user']['height'],
-            weight: stateData['user']['weight'],
-            loseOrGain: stateData['user']['loseOrGain'],
-            goingGym: stateData['user']['goingGym'],
-            physicallyActive: stateData['user']['physicallyActive'],
-            foodType: stateData['user']['foodType'],
-            medicalIssue: stateData['user']['medicalIssue'],
-            foodAllergy: stateData['user']['foodAllergy']
-          });
-          this.isLoading = false;
-        }
-      });
-
-      if (!this.user) {
-        this.userApiService.getUserProfile().subscribe((res: any) => {
-          this.user = res['user'];
-          this.store.dispatch(new AccountActions.FetchUserProfile(res['user']));
-          this.userForm.patchValue({
-            fullName: res['user']['fullName'],
-            email: res['user']['email'],
-            phone: res['user']['phone'],
-            goals: res['user']['goals'],
-            age: res['user']['age'],
-            gender: res['user']['gender'],
-            height: res['user']['height'],
-            weight: res['user']['weight'],
-            loseOrGain: res['user']['loseOrGain'],
-            goingGym: res['user']['goingGym'],
-            physicallyActive: res['user']['physicallyActive'],
-            foodType: res['user']['foodType'],
-            medicalIssue: res['user']['medicalIssue'],
-            foodAllergy: res['user']['foodAllergy']
-          })
-          this.isLoading = false;
-        }, err => {
-          this.toastMessageService.error('An unknown error occured!');
-          this.isLoading = false;
-          console.log(err)
+      this.userApiService.getUserProfile().subscribe((res: any) => {
+        this.user = res['user'];
+        // this.store.dispatch(new AccountActions.FetchUserProfile(res['user']));
+        this.userForm.patchValue({
+          fullName: res['user']['fullName'],
+          email: res['user']['email'],
+          phone: res['user']['phone'],
+          goals: res['user']['goals'],
+          age: res['user']['age'],
+          gender: res['user']['gender'],
+          height: res['user']['height'],
+          weight: res['user']['weight'],
+          loseOrGain: res['user']['loseOrGain'],
+          goingGym: res['user']['goingGym'],
+          physicallyActive: res['user']['physicallyActive'],
+          foodType: res['user']['foodType'],
+          medicalIssue: res['user']['medicalIssue'],
+          foodAllergy: res['user']['foodAllergy']
         })
-      }
-
-     
+        this.isLoading = false;
+      }, err => {
+        this.toastMessageService.error('An unknown error occured!');
+        this.isLoading = false;
+        console.log(err)
+      })
     }
   }
 
@@ -134,7 +107,7 @@ export class ProfileComponent implements OnInit {
             else {
               this.toastMessageService.error(err['error']['message']);
             }
-            
+
             this.isLoading = false;
           })
       }
@@ -143,7 +116,7 @@ export class ProfileComponent implements OnInit {
         this.isLoading = false;
       }
     }
-   
+
   }
 
   scrollTop() {
@@ -164,5 +137,5 @@ export class ProfileComponent implements OnInit {
     const model = document.getElementById('custom-modal') as HTMLElement;
     model.style.transform = 'translateY(0)'
   }
-   
+
 }

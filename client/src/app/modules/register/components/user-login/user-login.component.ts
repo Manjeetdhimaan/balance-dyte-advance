@@ -43,7 +43,6 @@ export class UserLoginComponent implements OnInit {
         // this.store.dispatch(new AuthActions.UserLogIn());
         this.userApiService.postLogin(this.loginForm.value).subscribe(
           (res: any) => {
-            console.log(res)
             this.userApiService.setToken(res['token']);
             this.router.navigate([`/diet-plans`]);
             this.scrollTop();

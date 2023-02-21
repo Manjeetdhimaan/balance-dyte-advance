@@ -46,6 +46,19 @@ export class PlanDetailsComponent implements OnInit {
   userId: string;
   user: User = null;
 
+  razorPayOptions = {
+    "key": "YOUR_KEY_ID", // Enter the Key ID generated from the Dashboard
+    "amount": 0, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+    "currency": "INR",
+    "name": "Younedia",
+    "description": "Test Transaction",
+    "image": "/assets/images/logo/balancedyte-logo.png",
+    "order_id": "order_IluGWxBm9U8zJ8", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+    "handler": (res: any) => {
+      console.log(res);
+    }
+  }
+
   ngOnInit(): void {
     // user form
     this.userForm = this.fb.group({
@@ -103,7 +116,6 @@ export class PlanDetailsComponent implements OnInit {
 
     if (this.pricingPlanData.length <=0 ) {
       this.pricingPlanApiService.getPricingPlans().subscribe(async (res: any) => {
-        console.log('Dispacth')
         this.store.dispatch(new RootCommonActions.FetchPricingPlans(res['plans']));
         this.pricingPlanData = await res['plans'];
         if (this.pricingPlanData.length > 0) {
@@ -130,7 +142,7 @@ export class PlanDetailsComponent implements OnInit {
         this.isLoadingPlans = false;
       })
     }
-  
+
     // getting pricing plans
 
     if (this.isLoggedIn()) {
@@ -210,19 +222,6 @@ export class PlanDetailsComponent implements OnInit {
         matchingControl.setErrors(null);
       }
     };
-  }
-
-  razorPayOptions = {
-    "key": "YOUR_KEY_ID", // Enter the Key ID generated from the Dashboard
-    "amount": 0, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-    "currency": "INR",
-    "name": "Younedia",
-    "description": "Test Transaction",
-    "image": "/assets/images/logo/balancedyte-logo.png",
-    "order_id": "order_IluGWxBm9U8zJ8", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-    "handler": (res: any) => {
-      console.log(res);
-    }
   }
 
   razorPayResponseHandler(res: any) {
@@ -322,13 +321,6 @@ export class PlanDetailsComponent implements OnInit {
         rzp1.on('payment.failed', (response: any) => {
           // Todo - store this information in the server
           console.log(response);
-          console.log(response.error.code);
-          console.log(response.error.description);
-          console.log(response.error.source);
-          console.log(response.error.step);
-          console.log(response.error.reason);
-          console.log(response.error.metadata.order_id);
-          console.log(response.error.metadata.payment_id);
         }
         );
 

@@ -17,12 +17,12 @@ export const appReducer: ActionReducerMap<AppState> = {
     auth: fromAuth.authReducer
 }
 
-export function clearState(reducer: ActionReducer<AppState>): ActionReducer<AppState> {
-    return function(state: AppState, action: any): AppState {
-      if (action.type === USER_LOGOUT) {
-        state = undefined
-        return reducer(state = undefined , { type: INIT });
-      }
-      return reducer(state, action);
-    };
-  }
+// export function clearState(reducer: ActionReducer<AppState>): ActionReducer<AppState> {
+//     return function(state: AppState, action: any): AppState {
+//       if (action.type === USER_LOGOUT) {
+//         state = undefined
+//         return reducer(state = undefined , { type: INIT });
+//       }
+//       return reducer(state, action);
+//     };
+//   }

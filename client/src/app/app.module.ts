@@ -29,7 +29,8 @@ import * as fromApp from './store/app.reducer';
       closeButton: true,
       timeOut: 5000
     }),
-    StoreModule.forRoot(fromApp.appReducer, { metaReducers: [fromApp.clearState] })
+    // StoreModule.forRoot(fromApp.appReducer, { metaReducers: [fromApp.clearState] })
+    StoreModule.forRoot(fromApp.appReducer)
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,

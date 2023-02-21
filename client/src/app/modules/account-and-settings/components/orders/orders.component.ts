@@ -1,13 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 
 import { fallIn } from 'src/app/shared/common/animations';
 import { Order } from 'src/app/shared/models/order.model';
 import { UserApiService } from 'src/app/shared/services/user-api.service';
-import { AppState } from 'src/app/store/app.reducer';
-import * as AccountActions from "../../store/account.actions";
 
 @Component({
   selector: 'app-orders',
@@ -18,7 +15,7 @@ import * as AccountActions from "../../store/account.actions";
 })
 export class OrdersComponent implements OnInit, OnDestroy {
 
-  constructor(private userApiService: UserApiService, private router: Router, private store: Store<AppState>) { }
+  constructor(private userApiService: UserApiService, private router: Router) { }
 
   isLoading: boolean = false;
 
@@ -29,18 +26,17 @@ export class OrdersComponent implements OnInit, OnDestroy {
     this.scrollTop();
     if (this.isLoggedIn()) {
       this.isLoading = true;
-      this.subscription = this.store.select('account').subscribe(stateStata => {
-        if (stateStata.orders.length > 0) {
-          this.orders = stateStata['orders'].slice().reverse();
-          this.getTotalOfOrders();
-          this.isLoading = false;
-        }
-      });
+      // this.subscription = this.store.select('account').subscribe(stateStata => {
+      //   if (stateStata.orders.length > 0) {
+      //     this.orders = stateStata['orders'].slice().reverse();
+      //     this.getTotalOfOrders();
+      //     this.isLoading = false;
+      //   }
+      // });
 
-      if (this.orders.length <=0) {
         this.userApiService.getUserOrders().subscribe((res: any) => {
-          this.store.dispatch(new AccountActions.FetchOrders(res['orders']));
-          // this.orders = res['orders'].slice().reverse();
+          // this.store.dispatch(new AccountActions.FetchOrders(res['orders']));
+          this.orders = res['orders'].slice().reverse();
           this.getTotalOfOrders();
           this.isLoading = false;
         }, err => {
@@ -48,7 +44,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           console.log(err);
         })
-      }
     }
   }
 
