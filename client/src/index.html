@@ -1,44 +1,37 @@
 <!doctype html>
 <html lang="en">
 
-<head>
-  <meta charset="utf-8">
-  <title>We help you manage your weight with help of diet plan - Balance Dyte</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
+  <head>
+    <meta charset="utf-8">
+    <title>We help you manage your weight with help of diet plan - Balance Dyte</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 
-  <link rel="stylesheet" href="assets/css/animate.min.css">
+    <link rel="stylesheet" href="assets/css/animate.min.css">
 
-  <link rel="stylesheet" href="assets/fonts/flaticon.css">
+    <link rel="stylesheet" href="assets/fonts/flaticon.css">
 
-  <link rel="stylesheet" href="assets/css/boxicons.min.css">
+    <link rel="stylesheet" href="assets/css/boxicons.min.css">
 
-  <!-- <link rel="stylesheet" href="assets/css/owl.carousel.min.css"> -->
-  <!-- <link rel="stylesheet" href="assets/css/owl.theme.default.min.css"> -->
+    <link rel="stylesheet" href="assets/css/meanmenu.min.css">
 
-  <!-- <link rel="stylesheet" href="assets/css/jquery-ui.min.css"> -->
+    <link rel="stylesheet" href="assets/css/style.css">
 
-  <!-- <link rel="stylesheet" href="assets/css/magnific-popup.min.css"> -->
+    <link rel="stylesheet" href="assets/css/responsive.css">
 
-  <!-- <link rel="stylesheet" href="assets/css/odometer.min.css"> -->
+    <link rel="stylesheet" href="assets/css/theme-dark.css">
 
-  <link rel="stylesheet" href="assets/css/meanmenu.min.css">
-
-  <link rel="stylesheet" href="assets/css/style.css">
-
-  <link rel="stylesheet" href="assets/css/responsive.css">
-
-  <link rel="stylesheet" href="assets/css/theme-dark.css">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="icon" type="image/png" href="assets/images/logo/balancedyte-logo.png">
+    <link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="icon" type="image/png"
+      href="assets/images/logo/balancedyte-logo.png">
 
 
-  <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-256451884-1"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async
+      src="https://www.googletagmanager.com/gtag/js?id=UA-256451884-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
@@ -46,25 +39,70 @@
 
       gtag('config', 'UA-256451884-1');
     </script>
+  </head>
 
-</head>
+  <body>
 
-<body>
-
-  <!-- <div class="preloader">
+    <!-- <div class="preloader">
     <div class="spinner">
       <div class="dot1"></div>
       <div class="dot2"></div>
     </div>
   </div> -->
+    <app-root></app-root>
 
-  <app-root></app-root>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
 
-  <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/custom.js"></script>
 
-  <script src="assets/js/custom.js"></script>
-</body>
+    <div id="smart-button-container">
+      <div style="text-align: center;">
+        <div id="paypal-button-container"></div>
+      </div>
+    </div>
+    <script
+      src="https://www.paypal.com/sdk/js?client-id=sb&enable-funding=venmo&currency=USD"
+      data-sdk-integration-source="button-factory"></script>
+    <!-- <script>
+  function initPayPalButton() {
+    paypal.Buttons({
+      style: {
+        shape: 'rect',
+        color: 'blue',
+        layout: 'horizontal',
+        label: 'checkout',
+      },
 
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{"amount":{"currency_code":"USD","value":5}}]
+        });
+      },
+
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(orderData) {
+
+          // Full available details
+          console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+
+          // Show a success message within this page, e.g.
+          const element = document.getElementById('paypal-button-container');
+          element.innerHTML = '';
+          element.innerHTML = '<h3>Thank you for your payment!</h3>';
+
+          // Or go to another URL:  actions.redirect('thank_you.html');
+
+        });
+      },
+
+      onError: function(err) {
+        console.log(err);
+      }
+    }).render('#paypal-button-container');
+  }
+  initPayPalButton();
+</script> -->
+  </body>
 </html>

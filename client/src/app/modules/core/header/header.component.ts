@@ -31,10 +31,8 @@ export class HeaderComponent implements OnInit {
     window.scrollTo({
       top: 0
     });
-  
     // this.router.navigate([route])
   }
-
 
   isLoggedIn() {
     return this.userApiService.isLoggedIn();

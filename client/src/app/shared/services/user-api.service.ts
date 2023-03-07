@@ -12,12 +12,13 @@ import * as AuthActions from "../../modules/register/store/auth.actions";
 export class UserApiService {
 
   constructor(private http: HttpClient, private store: Store<AppState>) { }
-  
+
   noAuthHeader = { headers: new HttpHeaders({ 'NoAuth': 'True' }) };
 
   postRegisterUserAndPlaceOrder(user: any){
     return this.http.post(environment.apiBaseUrl+'/user/register-and-create-order',user,this.noAuthHeader);
   }
+
   postRegisterUser(user: any){
     return this.http.post(environment.apiBaseUrl+'/user/register-user',user,this.noAuthHeader);
   }

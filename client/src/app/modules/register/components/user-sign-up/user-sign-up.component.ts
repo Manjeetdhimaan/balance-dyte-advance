@@ -80,7 +80,6 @@ export class UserSignUpComponent implements OnInit {
         this.isLoading = false;
         this.toastMessageService.success(res['message']);
         this.router.navigate(['/user/login'])
-
       }, error => {
           this.isLoading = false;
           this.toastMessageService.error(error.error.message);

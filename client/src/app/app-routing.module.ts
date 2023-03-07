@@ -14,6 +14,9 @@ const routes: Routes = [
     path: 'account', loadChildren: () => import('./modules/account-and-settings/account-and-settings.module').then(m => m.AccountAndSettingsModule), canActivate: [UserAuthGuard]
   },
   {
+    path: 'blogs', loadChildren: () => import('./modules/blog/blog.module').then(m => m.BlogModule)
+  },
+  {
     path: 'not-found', component: PageNotFoundComponent, data: {title: 'Page Not Found'}
   },
   {

@@ -9,7 +9,7 @@ const contactDetailsSchema = new mongoose.Schema({
     email: {
         type: Array,
         trim: true,
-        required: [true, 'Plan Name can\'t be empty']
+        required: [true, 'Email can\'t be empty']
     },
     socialMediaLinks: {
         facebook: {

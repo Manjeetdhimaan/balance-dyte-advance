@@ -122,6 +122,14 @@
                                         </a>
                                     </li>
                                     <li class="nav-item mean-last">
+                                        <a routerLink="/blogs"
+                                            (click)="scrollTop()"
+                                            routerLinkActive="active"
+                                            class="nav-link">
+                                            Blogs
+                                        </a>
+                                    </li>
+                                    <li class="nav-item mean-last">
                                         <a routerLink="/contact"
                                             (click)="scrollTop()"
                                             routerLinkActive="active"
@@ -194,7 +202,7 @@
                             <a routerLink="/" (click)="scrollTop()" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-link">
                                 Home
                             </a>
-                            
+
                         </li> -->
                             <li class="nav-item">
                                 <a routerLink="/" [routerLinkActiveOptions]="{exact:true}" (click)="scrollTop()"
@@ -247,6 +255,15 @@
                                     routerLinkActive="active"
                                     class="nav-link">
                                     Testimonials
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a routerLink="/blogs"
+                                    (click)="scrollTop()"
+                                    routerLinkActive="active"
+                                    class="nav-link">
+                                    Blogs
                                 </a>
                             </li>
                             <li class="nav-item">

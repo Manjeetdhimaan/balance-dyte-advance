@@ -1,0 +1,78 @@
+<div class="inner-banner inner-bg3">
+  <div class="container">
+      <div class="inner-title text-center">
+          <h3>{{ blog.header }}</h3>
+          <ul>
+              <li>
+                  <a routerLink="/">Home</a>
+              </li>
+              <li>{{ blog.header }}</li>
+          </ul>
+      </div>
+  </div>
+</div>
+
+
+<div class="blog-details-area pt-100 pb-70">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-8">
+              <div class="blog-details-content">
+                  <div class="blog-preview-img">
+                      <img [src]="blog?.imgSrc"
+                          alt="Blog Images">
+                  </div>
+                  <ul class="tag-list">
+                      <!-- <li class="active"><a href="author.html"> <i
+                                  class='bx bx-user'></i>By John </a></li> -->
+                      <li><i class='bx bx-calendar'></i> {{ blog.dateOfCreatingBlog }}
+                      </li>
+                      <!-- <li><i class='bx bx-comment-dots'></i> 3
+                          Comments </li> -->
+                  </ul>
+                  <h2>{{ blog.title }}</h2>
+                  <div  *ngFor="let fact of blog.otherFacts">
+                    <p [innerHTML]="fact.fact"></p>
+                  </div>
+                  <div class="blog-article-content" style="margin-top: 2rem;">
+                      <p [innerHTML]="blog.subTitleFactHeader"></p>
+                      <ul *ngFor="let subTitle of blog.subTitleFactPoints">
+                          <li style="font-weight: 400"> <strong>{{subTitle.title}}</strong> {{ subTitle.point }}</li>
+                      </ul>
+                  </div>
+                  <div  *ngFor="let note of blog.finalNotes">
+                    <p [innerHTML]="note.finalNote"></p>
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-4">
+              <div class="side-bar-area pl-20">
+                  <div class="side-bar-widget">
+                      <h3 class="title">Recent Post</h3>
+                      <div class="widget-popular-post" *ngFor="let blog of latestBlogs">
+                          <article class="item">
+                              <a (click)="onNavigate(blog.urlTitle)"
+                                  class="thumb">
+                                  <img width="120"
+                                      role="img" [src]="blog.imgSrc">
+                              </a>
+                              <div class="info">
+                                  <h4 class="title-text">
+                                      <a (click)="onNavigate(blog.urlTitle)">
+                                          {{ blog.header }}
+                                      </a>
+                                  </h4>
+                                  <a (click)="onNavigate(blog.urlTitle)"
+                                      class="read-btn"
+                                      target="_blank">Read More</a>
+                              </div>
+                          </article>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<app-spinner *ngIf="isLoading"></app-spinner>

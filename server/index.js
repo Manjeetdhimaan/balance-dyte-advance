@@ -1,4 +1,4 @@
-// require('dotenv').config();
+require('dotenv').config();
 
 require('./models/db.model');
 require('./config/passportConfig');
@@ -15,6 +15,7 @@ const userRoutes = require('./routes/user.routes');
 const pricingPlanRoutes = require('./routes/pricing-plans.routes');
 const contactDetailRoutes = require('./routes/contact-detail.routes');
 const testimonialRoutes = require('./routes/testimonials.routes');
+const blogRoutes = require('./routes/blog.routes');
 
 const PORT = process.env.PORT || localENV.LOCAL_PORT;
 // const rtsAdmin = require('./routes/admin.router');
@@ -33,7 +34,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/plans', pricingPlanRoutes);
 app.use('/api/contact', contactDetailRoutes);
 app.use('/api/testimonials', testimonialRoutes);
-// app.use('/api/admin', rtsAdmin);
+app.use('/api/blogs', blogRoutes);
 
 // error handler
 app.use((err, req, res, next) => {
