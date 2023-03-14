@@ -36,7 +36,7 @@
             <h3><a (click)="onNavigate(blog.urlTitle)">
                 {{ blog.header }}
               </a></h3>
-            <p> {{ blog.otherFacts[0].fact.slice(0, 80) }}... </p>
+            <p> {{blog.otherFacts[1] ? blog.otherFacts[1].fact.slice(0, 85) : blog.otherFacts[0].fact.slice(0, 80) }}.......</p>
             <a (click)="onNavigate(blog.urlTitle)" class="read-btn">Read
               More</a>
           </div>
