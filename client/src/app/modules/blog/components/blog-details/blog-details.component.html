@@ -1,12 +1,12 @@
 <div class="inner-banner inner-bg3">
   <div class="container">
       <div class="inner-title text-center">
-          <h3>{{ blog.header }}</h3>
-          <ul>
+          <h3 *ngIf="blog">{{ blog.header }}</h3>
+          <ul >
               <li>
                   <a routerLink="/">Home</a>
               </li>
-              <li>{{ blog.header }}</li>
+              <li *ngIf="blog">{{ blog.header }}</li>
           </ul>
       </div>
   </div>
@@ -17,7 +17,7 @@
   <div class="container">
       <div class="row">
           <div class="col-lg-8">
-              <div class="blog-details-content">
+              <div class="blog-details-content" *ngIf="blog">
                   <div class="blog-preview-img">
                       <img [src]="blog?.imgSrc"
                           alt="Blog Images">
@@ -37,7 +37,7 @@
                   <div class="blog-article-content" style="margin-top: 2rem;">
                       <p [innerHTML]="blog.subTitleFactHeader"></p>
                       <ul *ngFor="let subTitle of blog.subTitleFactPoints">
-                          <li style="font-weight: 400"> <strong>{{subTitle.title}}</strong> {{ subTitle.point }}</li>
+                          <li style="font-weight: 400"> <strong>{{subTitle.title}}</strong> <span [innerHTML]="subTitle.point" style="margin-left: 3px;"></span></li>
                       </ul>
                   </div>
                   <div  *ngFor="let note of blog.finalNotes">
@@ -50,7 +50,7 @@
                   <div class="side-bar-widget">
                       <h3 class="title">Recent Post</h3>
                       <div class="widget-popular-post" *ngFor="let blog of latestBlogs">
-                          <article class="item">
+                          <article class="item" style="margin-top: 2rem;">
                               <a (click)="onNavigate(blog.urlTitle)"
                                   class="thumb">
                                   <img width="120"

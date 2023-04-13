@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -20,17 +21,21 @@ export class BlogDetailsComponent implements OnInit {
   subscription: Subscription;
   isError: boolean = false;
   constructor(private blogService: BlogService,
-    private router: Router) {}
+    private router: Router, private titleService: Title, private metaService: Meta) { }
 
-    ngOnInit(): void {
-      this.isLoading = true;
-      if(this.blogService.blogs) {
+  ngOnInit(): void {
+    this.isLoading = true;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    if (this.blogService.blogs) {
       const blogs = this.blogService.getStoredBlogs();
       this.blogService.getStoredBlogs().map((a: any) => {
         if (this.router.url.toLowerCase() == "/blogs/" + a.urlTitle.toLowerCase().split(' ').join('-')) {
           this.router.url.toLowerCase();
           this.blog = a;
-          localStorage.setItem("blog", JSON.stringify(this.blog));
+          this.titleService.setTitle(`${this.blog.metaTitle} - Balance Dyte`);
+          this.metaService.updateTag({ property: 'og:url', content: `https://www.balancedyte.com/${this.router.url.slice(1)}` });
+          this.metaService.updateTag({ property: 'title', content: this.blog.metaTitle });
+          this.metaService.updateTag({ property: 'description', content: this.blog.metaDesc });
           // let blogs = this.blogService.blogsArray.slice(-10).reverse();
           // this.moreBlogs = blogs.sort(() => 0.5 - Math.random());
           this.latestBlogs = blogs.slice(-8).reverse();
@@ -48,13 +53,16 @@ export class BlogDetailsComponent implements OnInit {
       this.isLoading = false;
       this.isError = false;
     }
-      else {
+    else {
       this.blogService.getBlogsFromServer().then((res: any) => {
         res.blogs.map((a: any) => {
           if (this.router.url.toLowerCase() == "/blogs/" + a.urlTitle.toLowerCase().split(' ').join('-')) {
             this.router.url.toLowerCase();
             this.blog = a;
-            localStorage.setItem("blog", JSON.stringify(this.blog));
+            this.titleService.setTitle(`${this.blog.metaTitle} - Balance Dyte`);
+            this.metaService.updateTag({ property: 'og:url', content: `https://www.balancedyte.com/${this.router.url.slice(1)}` });
+            this.metaService.updateTag({ property: 'title', content: this.blog.metaTitle });
+            this.metaService.updateTag({ property: 'description', content: this.blog.metaDesc });
             // let blogs = this.blogService.blogsArray.slice(-10).reverse();
             // this.moreBlogs = blogs.sort(() => 0.5 - Math.random());
             this.latestBlogs = res.blogs.slice(-8).reverse();
@@ -76,10 +84,10 @@ export class BlogDetailsComponent implements OnInit {
     }
   }
 
-  onNavigate(route:any) {
+  onNavigate(route: any) {
     window.scrollTo({
-      behavior:'smooth',
-      top:0
+      behavior: 'smooth',
+      top: 0
     });
     const selectedBlog = route.toLowerCase().split(' ').join('-');
     this.router.navigate(['/blogs/', selectedBlog]);

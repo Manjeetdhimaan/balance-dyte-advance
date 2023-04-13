@@ -23,19 +23,18 @@ export class AppComponent {
         let child = this.activatedRoute.firstChild;
 
         const blogChild = this.activatedRoute.firstChild?.firstChild?.routeConfig?.data?.['isBlog'];
-        console.log(blogChild)
 
         if (blogChild) {
           if (child?.firstChild.snapshot.data['title']) {
-            const userJson = localStorage.getItem('blog');
-            let blog;
-            if (userJson !== null) {
-              blog = JSON.parse(userJson);
-            }
-            child.snapshot.data['title'] = blog.title;
-            this.metaService.updateTag({ property: 'og:url', content: `https://www.balancedyte.com/${this.router.url.slice(1)}` });
-            this.metaService.updateTag({ property: 'title', content: blog.metaTitle });
-            this.metaService.updateTag({ property: 'description', content: blog.metaDesc });
+            // const userJson = localStorage.getItem('blog');
+            // let blog;
+            // if (userJson !== null) {
+            //   blog = JSON.parse(userJson);
+            // }
+            // child.snapshot.data['title'] = blog.title;
+            // this.metaService.updateTag({ property: 'og:url', content: `https://www.balancedyte.com/${this.router.url.slice(1)}` });
+            // this.metaService.updateTag({ property: 'title', content: blog.metaTitle });
+            // this.metaService.updateTag({ property: 'description', content: blog.metaDesc });
             return child.snapshot.data['title'];
           }
         }
