@@ -1,77 +1,81 @@
 <div class="inner-banner inner-bg3">
   <div class="container">
-      <div class="inner-title text-center">
-          <h3 *ngIf="blog">{{ blog.header }}</h3>
-          <ul >
-              <li>
-                  <a routerLink="/">Home</a>
-              </li>
-              <li *ngIf="blog">{{ blog.header }}</li>
-          </ul>
-      </div>
+    <div class="inner-title text-center">
+      <h3 *ngIf="blog">{{ blog.header }}</h3>
+      <ul>
+        <li>
+          <a routerLink="/">Home</a>
+        </li>
+        <li *ngIf="blog">{{ blog.header }}</li>
+      </ul>
+    </div>
   </div>
 </div>
 
 
 <div class="blog-details-area pt-100 pb-70">
   <div class="container">
-      <div class="row">
-          <div class="col-lg-8">
-              <div class="blog-details-content" *ngIf="blog">
-                  <div class="blog-preview-img">
-                      <img [src]="blog?.imgSrc"
-                          alt="Blog Images">
-                  </div>
-                  <ul class="tag-list">
-                      <!-- <li class="active"><a href="author.html"> <i
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="blog-details-content" *ngIf="blog">
+          <div class="blog-preview-img">
+            <img [src]="blog?.imgSrc" alt="Blog Images">
+          </div>
+          <ul class="tag-list">
+            <!-- <li class="active"><a href="author.html"> <i
                                   class='bx bx-user'></i>By John </a></li> -->
-                      <li><i class='bx bx-calendar'></i> {{ blog.dateOfCreatingBlog }}
-                      </li>
-                      <!-- <li><i class='bx bx-comment-dots'></i> 3
+            <li><i class='bx bx-calendar'></i> {{ blog.dateOfCreatingBlog }}
+            </li>
+            <!-- <li><i class='bx bx-comment-dots'></i> 3
                           Comments </li> -->
-                  </ul>
-                  <h2>{{ blog.title }}</h2>
-                  <div  *ngFor="let fact of blog.otherFacts">
-                    <p [innerHTML]="fact.fact"></p>
-                  </div>
-                  <div class="blog-article-content" style="margin-top: 2rem;">
-                      <p [innerHTML]="blog.subTitleFactHeader"></p>
-                      <ul *ngFor="let subTitle of blog.subTitleFactPoints">
-                          <li style="font-weight: 400"> <strong>{{subTitle.title}}</strong> <span [innerHTML]="subTitle.point" style="margin-left: 3px;"></span></li>
-                      </ul>
-                  </div>
-                  <div  *ngFor="let note of blog.finalNotes">
-                    <p [innerHTML]="note.finalNote"></p>
-                  </div>
-              </div>
+          </ul>
+          <h2>{{ blog.title }}</h2>
+          <div *ngFor="let fact of blog.otherFacts">
+            <p [innerHTML]="fact.fact"></p>
           </div>
-          <div class="col-lg-4">
-              <div class="side-bar-area pl-20">
-                  <div class="side-bar-widget">
-                      <h3 class="title">Recent Post</h3>
-                      <div class="widget-popular-post" *ngFor="let blog of latestBlogs">
-                          <article class="item" style="margin-top: 2rem;">
-                              <a (click)="onNavigate(blog.urlTitle)"
-                                  class="thumb">
-                                  <img width="120"
-                                      role="img" [src]="blog.imgSrc">
-                              </a>
-                              <div class="info">
-                                  <h4 class="title-text">
-                                      <a (click)="onNavigate(blog.urlTitle)">
-                                          {{ blog.header }}
-                                      </a>
-                                  </h4>
-                                  <a (click)="onNavigate(blog.urlTitle)"
-                                      class="read-btn"
-                                      target="_blank">Read More</a>
-                              </div>
-                          </article>
-                      </div>
-                  </div>
-              </div>
+          <div class="blog-article-content" style="margin-top: 2rem;">
+            <p [innerHTML]="blog.subTitleFactHeader"></p>
+            <ul *ngFor="let subTitle of blog.subTitleFactPoints; let i = index">
+              <li style="font-weight: 400; list-style: none;">
+                <img *ngIf="subTitle.imgSrc && subTitle.floatImage=='left'"
+                  style="max-width: 200px; border-radius: 12px; float:left; margin: 10px;" [src]="subTitle.imgSrc"
+                  class="preview" loading="lazy" alt="jump" />
+                 <strong>{{ i+1 }}. {{subTitle.title}}</strong>
+                <span [innerHTML]="subTitle.point" style="margin-left: 3px;"></span>
+                <img *ngIf="subTitle.imgSrc && subTitle.floatImage=='right'"
+                  style="max-width: 200px; border-radius: 12px; float:right; margin: 10px;" [src]="subTitle.imgSrc"
+                  class="preview" loading="lazy" alt="jump" />
+              </li>
+            </ul>
           </div>
+          <div *ngFor="let note of blog.finalNotes">
+            <p [innerHTML]="note.finalNote"></p>
+          </div>
+        </div>
       </div>
+      <div class="col-lg-4">
+        <div class="side-bar-area pl-20">
+          <div class="side-bar-widget">
+            <h3 class="title">Recent Post</h3>
+            <div class="widget-popular-post" *ngFor="let blog of latestBlogs">
+              <article class="item" style="margin-top: 2rem;">
+                <a (click)="onNavigate(blog.urlTitle)" class="thumb">
+                  <img width="120" role="img" [src]="blog.imgSrc">
+                </a>
+                <div class="info">
+                  <h4 class="title-text">
+                    <a (click)="onNavigate(blog.urlTitle)">
+                      {{ blog.header }}
+                    </a>
+                  </h4>
+                  <a (click)="onNavigate(blog.urlTitle)" class="read-btn" target="_blank">Read More</a>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
