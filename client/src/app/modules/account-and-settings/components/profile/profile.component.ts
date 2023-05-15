@@ -73,7 +73,6 @@ export class ProfileComponent implements OnInit {
       }, err => {
         this.toastMessageService.error('An unknown error occured!');
         this.isLoading = false;
-        console.log(err)
       })
     }
   }
@@ -100,7 +99,6 @@ export class ProfileComponent implements OnInit {
           this.isLoading = false;
         },
           err => {
-            console.log(err);
             if(err.error.message.code === 11000) {
               this.toastMessageService.error('An account with this email address exists already!');
             }
